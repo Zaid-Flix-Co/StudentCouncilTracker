@@ -1,4 +1,4 @@
-﻿using StudentCouncilTracker.Application.DynamicProperties.Enums;
+﻿using StudentCouncilTracker.Application.DynamicFields.Enums;
 
 namespace StudentCouncilTracker.Application.DynamicProperties.Interfaces;
 

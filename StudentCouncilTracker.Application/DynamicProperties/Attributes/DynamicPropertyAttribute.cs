@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using StudentCouncilTracker.Application.DataAnnotations;
-using StudentCouncilTracker.Application.DynamicProperties.Enums;
+﻿using StudentCouncilTracker.Application.DataAnnotations;
+using StudentCouncilTracker.Application.DynamicFields.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace StudentCouncilTracker.Application.DynamicProperties.Attributes;
 
