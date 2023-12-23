@@ -1,6 +1,6 @@
 ﻿namespace StudentCouncilTracker.Application.Entities.Base.UserCU;
 
-public class UserCUInfo
+public class UserCuInfo
 {
     public string? User { get; set; }
 

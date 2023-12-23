@@ -1,19 +1,15 @@
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StudentCouncilTracker.API.Controllers;
 
+[ApiController]
+[Authorize]
 [Route("api/[controller]")]
-public class BaseController<TEntity, TRepository> : ControllerBase
+public abstract class BaseController : ControllerBase
 {
-    private readonly TRepository _repository;
+    private IMediator _mediator;
 
-    private readonly IWebHostEnvironment _environment;
-
-    private const string Resources = "Resources";
-
-    public BaseController(TRepository repository, IWebHostEnvironment environment)
-    {
-        _repository = repository;
-        _environment = environment;
-    }
+    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 }

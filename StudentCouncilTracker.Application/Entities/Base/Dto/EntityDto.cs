@@ -20,3 +20,8 @@ public class EntityDto<TData, TPermission> : IHavePermissions<TPermission> where
 
     public TPermission Permissions { get; set; } = new();
 }
+
+public class EntityDtoData
+{
+
+}

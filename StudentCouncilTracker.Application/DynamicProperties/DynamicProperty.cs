@@ -1,4 +1,4 @@
-﻿using StudentCouncilTracker.Application.DynamicProperties.Enums;
+﻿using StudentCouncilTracker.Application.DynamicFields.Enums;
 
 namespace StudentCouncilTracker.Application.DynamicProperties;
 
@@ -12,7 +12,7 @@ public class DynamicProperty
 
     public DynamicFieldType Type { get; set; }
 
-    public DynamicPropertyLabel Label { get; set; } = new DynamicPropertyLabel();
+    public DynamicPropertyLabel Label { get; set; } = new();
 
-    public List<string> Validators { get; set; } = new List<string>();
+    public List<string> Validators { get; set; } = new();
 }

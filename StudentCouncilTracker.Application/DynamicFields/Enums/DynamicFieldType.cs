@@ -1,4 +1,4 @@
-﻿namespace StudentCouncilTracker.Application.DynamicProperties.Enums;
+﻿namespace StudentCouncilTracker.Application.DynamicFields.Enums;
 
 /// <summary>
 /// Enum DynamicFieldType
@@ -6,7 +6,7 @@
 public enum DynamicFieldType
 {
     /// <summary>
-    /// The textbox
+    /// The text box
     /// </summary>
     Textbox,
 
@@ -136,107 +136,27 @@ public enum DynamicFieldType
     Year,
 
     /// <summary>
-    /// The functional direction
+    /// The catalog organization
     /// </summary>
-    FunctionalDirection,
+    CatalogOrganization,
 
     /// <summary>
-    /// The functional directions
+    /// The catalog stock
     /// </summary>
-    FunctionalDirections,
+    CatalogStock,
 
     /// <summary>
-    /// The tasks
+    /// The catalog bonus
     /// </summary>
-    Tasks,
+    CatalogBonus,
 
     /// <summary>
-    /// The target
+    /// The catalog sticker
     /// </summary>
-    Target,
+    CatalogSticker,
 
     /// <summary>
-    /// The targets
+    /// The catalog combination
     /// </summary>
-    Targets,
-
-    /// <summary>
-    /// The subject of searches
-    /// </summary>
-    SubjectOfSearches,
-
-    /// <summary>
-    /// The sed documents
-    /// </summary>
-    SedDocument,
-
-    /// <summary>
-    /// The report view
-    /// </summary>
-    ReportView,
-
-    /// <summary>
-    /// The report views
-    /// </summary>
-    ReportViews,
-
-    /// <summary>
-    /// The expert employees
-    /// </summary>
-    ExpertEmployees,
-
-    /// <summary>
-    /// The executor employees
-    /// </summary>
-    ExecutorEmployees,
-
-    /// <summary>
-    /// The executor head employees
-    /// </summary>
-    ExecutorHeadEmployees,
-
-    /// <summary>
-    /// The customer employees
-    /// </summary>
-    CustomerEmployees,
-
-    /// <summary>
-    /// The customer head employees
-    /// </summary>
-    CustomerHeadEmployees,
-
-    /// <summary>
-    /// The observer employees
-    /// </summary>
-    ObserverEmployees,
-
-    /// <summary>
-    /// The division type
-    /// </summary>
-    DivisionType,
-
-    /// <summary>
-    /// The employee type
-    /// </summary>
-    EmployeeType,
-
-    /// <summary>
-    /// The roles
-    /// </summary>
-    Roles,
-
-    /// <summary>
-    /// The expert group
-    /// </summary>
-    ExpertGroup,
-
-    /// <summary>
-    /// The menu item
-    /// </summary>
-    MenuItem,
-
-    /// <summary>
-    /// The statuses
-    /// </summary>
-    Statuses
+    CatalogCombination
 }
