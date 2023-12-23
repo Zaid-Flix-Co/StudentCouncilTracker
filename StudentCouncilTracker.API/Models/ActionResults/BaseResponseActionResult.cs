@@ -5,9 +5,9 @@ namespace StudentCouncilTracker.API.Models.ActionResults;
 
 public sealed class BaseResponseActionResult<TValue> : IConvertToActionResult
 {
-    public ActionResult Result { get; }
+    public ActionResult Result { get; } = null!;
 
-    public BaseResponse<TValue> Value { get; }
+    public BaseResponse<TValue> Value { get; } = null!;
 
     public BaseResponseActionResult(TValue value)
     {

@@ -17,9 +17,7 @@ using StudentCouncilTracker.Application.Services.Hubs.Progress;
 
 namespace StudentCouncilTracker.API.Controllers;
 
-public class CatalogUserController(IHubContext<HubProgress, IHubProgress> hubProgress,
-        FileSaverService fileSaverService, IHostEnvironment env, ICatalogUserRepository catalogUserRepository)
-    : BaseController
+public class CatalogUserController(IHubContext<HubProgress, IHubProgress> hubProgress, FileSaverService fileSaverService, IHostEnvironment env, ICatalogUserRepository catalogUserRepository) : BaseController
 {
     [AllowAnonymous]
     [HttpPost("Get/{id:int}")]

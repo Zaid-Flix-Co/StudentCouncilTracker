@@ -5,34 +5,14 @@ using StudentCouncilTracker.Application.DynamicFields.Enums;
 
 namespace StudentCouncilTracker.Application.DynamicFields.Helpers;
 
-/// <summary>
-/// Class DynamicFieldHelper.
-/// </summary>
 public static class DynamicFieldHelper
 {
-    /// <summary>
-    /// The default visible
-    /// </summary>
     public const bool DefaultVisible = true;
 
-    /// <summary>
-    /// The default editable
-    /// </summary>
     public const bool DefaultEditable = false;
 
-    /// <summary>
-    /// The default value hidden
-    /// </summary>
     public const bool DefaultValueHidden = false;
 
-    /// <summary>
-    /// Creates the fields.
-    /// </summary>
-    /// <param name="sourceValue">The source value.</param>
-    /// <param name="destinationValue">The destination value.</param>
-    /// <param name="dynProps">The dyn props.</param>
-    /// <param name="requireds">The requireds.</param>
-    /// <returns>List&lt;BaseDynamicField&gt;.</returns>
     public static List<DynamicFieldInfo> CreateFields(object sourceValue, object destinationValue, List<DynamicFieldInfo> dynProps, List<string> requireds)
     {
         var ret = new List<DynamicFieldInfo>();
@@ -49,16 +29,6 @@ public static class DynamicFieldHelper
         return ret;
     }
 
-    /// <summary>
-    /// Creates the field.
-    /// </summary>
-    /// <param name="sourceProperty">The source property.</param>
-    /// <param name="destinationProperty">The destination property.</param>
-    /// <param name="sourceType">Type of the source.</param>
-    /// <param name="destinationType">Type of the destination.</param>
-    /// <param name="dynProps">The dyn props.</param>
-    /// <param name="requireds">The requireds.</param>
-    /// <returns>DynamicFieldInfo.</returns>
     private static DynamicFieldInfo CreateField(PropertyInfo? sourceProperty, PropertyInfo destinationProperty, Type? sourceType, Type? destinationType, List<DynamicFieldInfo> dynProps, List<string> requireds)
     {
         var type = DynamicFieldType.Textbox;
@@ -101,7 +71,7 @@ public static class DynamicFieldHelper
             validators = dynProp.Validators ?? validators;
         }
 
-        return new DynamicFieldInfo()
+        return new DynamicFieldInfo
         {
             FieldName = pName,
             Label = label,
@@ -114,11 +84,6 @@ public static class DynamicFieldHelper
         };
     }
 
-    /// <summary>
-    /// Creates the default field.
-    /// </summary>
-    /// <param name="pName">Name of the p.</param>
-    /// <returns>DynamicFieldInfo.</returns>
     public static DynamicFieldInfo CreateDefaultField(string pName)
     {
         return new DynamicFieldInfo

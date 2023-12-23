@@ -1,19 +1,8 @@
 ﻿namespace StudentCouncilTracker.Application.DynamicFields;
 
-/// <summary>
-/// Class DynamicFieldLabel.
-/// </summary>
 public class DynamicFieldLabel
 {
-    /// <summary>
-    /// Gets or sets the label.
-    /// </summary>
-    /// <value>The label.</value>
-    public string Label { get; set; } = "";
+    public string Label { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Gets or sets the label hint.
-    /// </summary>
-    /// <value>The label hint.</value>
-    public string LabelHint { get; set; } = "";
+    public string LabelHint { get; set; } = string.Empty;
 }

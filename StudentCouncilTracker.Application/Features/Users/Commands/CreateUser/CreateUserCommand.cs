@@ -14,7 +14,10 @@ public class CreateCatalogUserCommandHandler(ICatalogUserRepository repository, 
     public async Task<OperationResult<CatalogUserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var result = OperationResult.CreateResult(new CatalogUserDto());
-        var catalogUser = new CatalogUser();
+        var catalogUser = new CatalogUser
+        {
+            CreatedDate = DateTime.UtcNow
+        };
         repository.Insert(catalogUser);
         await repository.SaveChangesAsync();
 

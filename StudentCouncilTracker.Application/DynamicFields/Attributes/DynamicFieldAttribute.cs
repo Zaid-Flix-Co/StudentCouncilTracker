@@ -13,7 +13,7 @@ public class DynamicFieldAttribute : ValidationAttribute
         return ValidationResult.Success!;
     }
 
-    public DynamicFieldAttribute(DynamicFieldType fieldType, string label = null, string labelHint = null)
+    public DynamicFieldAttribute(DynamicFieldType fieldType, string label = null!, string labelHint = null!)
     {
         FieldType = fieldType;
         Label = label;
