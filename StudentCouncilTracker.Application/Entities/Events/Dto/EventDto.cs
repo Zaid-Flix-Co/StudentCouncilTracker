@@ -2,7 +2,4 @@
 
 namespace StudentCouncilTracker.Application.Entities.Events.Dto;
 
-public class EventDto : EntityDto<EventDtoData>
-{
-    
-}
+public class EventDto : EntityDto<EventDtoData>;

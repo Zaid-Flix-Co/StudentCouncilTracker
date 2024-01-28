@@ -30,10 +30,6 @@
     <Folder Include="Entities\EventActionTypes\Interfaces\" />
     <Folder Include="Entities\EventActionTypes\Mappers\" />
     <Folder Include="Entities\EventActionTypes\Repositories\" />
-    <Folder Include="Entities\EventTypes\Dto\" />
-    <Folder Include="Entities\EventTypes\Interfaces\" />
-    <Folder Include="Entities\EventTypes\Mappers\" />
-    <Folder Include="Entities\EventTypes\Repositories\" />
   </ItemGroup>
 
 </Project>
