@@ -23,12 +23,12 @@ public class EventRepository(IStudentCouncilTrackerDbContext context, IMapper ma
 
     public async Task<Event> GetCardByIdAsync(long id)
     {
-        var users =
+        var events =
             context.Events
                 .AsNoTracking();
-        var card = await users.FirstOrDefaultAsync(w => w.Id == id);
+        var card = await events.FirstOrDefaultAsync(w => w.Id == id);
 
-        return card;
+        return card!;
     }
 
     private async Task<ListDto> _getList(ListFilter filter, Func<Event, object> selector)
@@ -39,7 +39,7 @@ public class EventRepository(IStudentCouncilTrackerDbContext context, IMapper ma
 
         var filterQueries = (filterQuery ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
         foreach (var q in filterQueries)
-            query = query.Where(w => EF.Functions.Like((w.Name!).ToLower(), $"%{q}%"));
+            query = query.Where(w => EF.Functions.Like(w.Name.ToLower(), $"%{q}%"));
 
         var ret = await query.ToPagedListAsync(1, 300);
         var items = ret.Select(selector);
