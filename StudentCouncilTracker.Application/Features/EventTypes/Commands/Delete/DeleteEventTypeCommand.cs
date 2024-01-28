@@ -1,14 +1,14 @@
 ﻿using MediatR;
-using StudentCouncilTracker.Application.Entities.Users.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventTypes.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.Users.Commands.DeleteUser;
+namespace StudentCouncilTracker.Application.Features.EventTypes.Commands.Delete;
 
-public record DeleteUserCommand(int Id) : IRequest<OperationResult>;
+public record DeleteEventTypeCommand(int Id) : IRequest<OperationResult>;
 
-public class DeleteCatalogUserCommandHandler(ICatalogUserRepository repository) : IRequestHandler<DeleteUserCommand, OperationResult>
+public class DeleteEventTypeCommandHandler(IEventTypeRepository repository) : IRequestHandler<DeleteEventTypeCommand, OperationResult>
 {
-    public async Task<OperationResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(DeleteEventTypeCommand request, CancellationToken cancellationToken)
     {
         var result = new OperationResult();
         var id = request.Id;

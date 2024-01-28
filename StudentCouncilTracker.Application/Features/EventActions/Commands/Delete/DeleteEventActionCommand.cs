@@ -1,14 +1,14 @@
 ﻿using MediatR;
-using StudentCouncilTracker.Application.Entities.Events.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.Events.Commands.DeleteEvent;
+namespace StudentCouncilTracker.Application.Features.EventActions.Commands.Delete;
 
-public record DeleteEventCommand(int Id) : IRequest<OperationResult>;
+public record DeleteEventActionCommand(int Id) : IRequest<OperationResult>;
 
-public class DeleteEventCommandHandler(IEventRepository repository) : IRequestHandler<DeleteEventCommand, OperationResult>
+public class DeleteEventActionCommandHandler(IEventActionRepository repository) : IRequestHandler<DeleteEventActionCommand, OperationResult>
 {
-    public async Task<OperationResult> Handle(DeleteEventCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(DeleteEventActionCommand request, CancellationToken cancellationToken)
     {
         var result = new OperationResult();
         var id = request.Id;

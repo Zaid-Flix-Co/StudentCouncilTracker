@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 using MediatR;
-using StudentCouncilTracker.Application.Entities.EventActionTypes.Dto;
-using StudentCouncilTracker.Application.Entities.EventActionTypes.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventActions.Dto;
+using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.EventActionTypes.Commands.UpdateEventActionType;
+namespace StudentCouncilTracker.Application.Features.EventActions.Commands.Update;
 
-public record UpdateEventActionTypeCommand(int Id, EventActionTypeDtoData Model) : IRequest<OperationResult<EventActionTypeDto>>;
+public record UpdateEventActionCommand(int Id, EventActionDtoData Model) : IRequest<OperationResult<EventActionDto>>;
 
-public class UpdateEventActionTypeCommandHandler(IEventActionTypeRepository repository, IMapper mapper) : IRequestHandler<UpdateEventActionTypeCommand, OperationResult<EventActionTypeDto>>
+public class UpdateEventActionCommandHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<UpdateEventActionCommand, OperationResult<EventActionDto>>
 {
-    public async Task<OperationResult<EventActionTypeDto>> Handle(UpdateEventActionTypeCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<EventActionDto>> Handle(UpdateEventActionCommand request, CancellationToken cancellationToken)
     {
-        var result = OperationResult.CreateResult(new EventActionTypeDto());
+        var result = OperationResult.CreateResult(new EventActionDto());
         var id = request.Id;
         var stored = await repository.GetByIdAsync(id);
 
@@ -42,7 +42,7 @@ public class UpdateEventActionTypeCommandHandler(IEventActionTypeRepository repo
         }
 
         var card = await repository.GetCardByIdAsync(id);
-        var dto = mapper.Map<EventActionTypeDto>(card);
+        var dto = mapper.Map<EventActionDto>(card);
         result.SetValue(dto);
 
         return result;
