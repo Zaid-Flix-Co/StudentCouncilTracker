@@ -44,12 +44,13 @@ public class Event : UserCuBase, IHaveId
         if (!operationResult.Ok)
             return operationResult;
 
-        Name = data.Name.Value!;
+        Name = data.Name.Value;
         Description = data.Description?.Value;
         EventTypeId = data.EventType?.Value.Id;
         ResponsibleUserId = data.ResponsibleUser?.Value.Id;
         DateEvent = data.DateEvent?.Value;
         IsDeactivated = data.IsDeactivated!.Value;
+        UpdatedDate = DateTime.Now;
 
         return operationResult;
     }
