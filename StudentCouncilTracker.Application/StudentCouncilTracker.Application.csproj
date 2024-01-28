@@ -21,4 +21,19 @@
     <PackageReference Include="X.PagedList" Version="8.4.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\EventActions\Dto\" />
+    <Folder Include="Entities\EventActions\Interfaces\" />
+    <Folder Include="Entities\EventActions\Mappers\" />
+    <Folder Include="Entities\EventActions\Repositories\" />
+    <Folder Include="Entities\EventActionTypes\Dto\" />
+    <Folder Include="Entities\EventActionTypes\Interfaces\" />
+    <Folder Include="Entities\EventActionTypes\Mappers\" />
+    <Folder Include="Entities\EventActionTypes\Repositories\" />
+    <Folder Include="Entities\EventTypes\Dto\" />
+    <Folder Include="Entities\EventTypes\Interfaces\" />
+    <Folder Include="Entities\EventTypes\Mappers\" />
+    <Folder Include="Entities\EventTypes\Repositories\" />
+  </ItemGroup>
+
 </Project>

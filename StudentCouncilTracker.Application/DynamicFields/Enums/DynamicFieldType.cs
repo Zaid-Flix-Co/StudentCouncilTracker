@@ -158,5 +158,9 @@ public enum DynamicFieldType
     /// <summary>
     /// The catalog combination
     /// </summary>
-    CatalogCombination
+    CatalogCombination,
+
+    EventType,
+
+    CatalogUser
 }

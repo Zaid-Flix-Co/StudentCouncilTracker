@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using StudentCouncilTracker.Application.Entities.Events.Interfaces;
+using StudentCouncilTracker.Application.Entities.Events.Repositories;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.FileSavers;
@@ -20,6 +22,7 @@ public static class ApplicationServiceCollectionExtensions
         #region REPOSITORIES
 
         services.AddScoped<ICatalogUserRepository, CatalogUserRepository>();
+        services.AddScoped<IEventRepository, EventRepository>();
 
         #endregion
 
