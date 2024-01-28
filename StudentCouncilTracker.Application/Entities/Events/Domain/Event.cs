@@ -8,6 +8,9 @@ using StudentCouncilTracker.Application.Entities.Events.Dto;
 
 namespace StudentCouncilTracker.Application.Entities.Events.Domain;
 
+/// <summary>
+/// Мероприятие
+/// </summary>
 public class Event : UserCuBase, IHaveId
 {
     public int Id { get; set; }
