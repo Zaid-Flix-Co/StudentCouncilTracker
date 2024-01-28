@@ -13,7 +13,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.API.Controllers;
 
-public class EventTypeTypeController : BaseController
+public class EventTypeController : BaseController
 {
     [AllowAnonymous]
     [HttpPost("Get/{id:int}")]
