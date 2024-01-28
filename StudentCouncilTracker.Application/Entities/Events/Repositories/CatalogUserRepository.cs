@@ -2,36 +2,36 @@
 using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Base.Filters;
+using StudentCouncilTracker.Application.Entities.Events.Domain;
+using StudentCouncilTracker.Application.Entities.Events.Dto;
+using StudentCouncilTracker.Application.Entities.Events.Interfaces;
 using StudentCouncilTracker.Application.Entities.Interfaces;
-using StudentCouncilTracker.Application.Entities.Users.Domain;
-using StudentCouncilTracker.Application.Entities.Users.Dto;
-using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.Repositories.Bases;
 using X.PagedList;
 
-namespace StudentCouncilTracker.Application.Entities.Users.Repositories;
+namespace StudentCouncilTracker.Application.Entities.Events.Repositories;
 
-public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<CatalogUser>((DbContext)context, mapper),
-        ICatalogUserRepository
+public class EventRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<Event>((DbContext)context, mapper),
+        IEventRepository
 {
     #region GETLIST
 
     public Task<ListDto> GetList(ListFilter filter)
     {
-        return _getList(filter, s => mapper.Map<CatalogUserDtoCard>(s));
+        return _getList(filter, s => mapper.Map<EventDtoCard>(s));
     }
 
-    public async Task<CatalogUser> GetCardByIdAsync(long id)
+    public async Task<Event> GetCardByIdAsync(long id)
     {
         var users =
-            context.CatalogUsers
+            context.Events
                 .AsNoTracking();
         var card = await users.FirstOrDefaultAsync(w => w.Id == id);
 
         return card;
     }
 
-    private async Task<ListDto> _getList(ListFilter filter, Func<CatalogUser, object> selector)
+    private async Task<ListDto> _getList(ListFilter filter, Func<Event, object> selector)
     {
         var query = _getQueue();
 
@@ -51,9 +51,9 @@ public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMap
         };
     }
 
-    private IQueryable<CatalogUser> _getQueue()
+    private IQueryable<Event> _getQueue()
     {
-        var queue = context.CatalogUsers;
+        var queue = context.Events;
         return queue.OrderBy(q => q.Name);
     }
 

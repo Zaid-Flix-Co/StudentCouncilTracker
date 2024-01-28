@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StudentCouncilTracker.Application.Entities.Events.Domain;
+using StudentCouncilTracker.Application.Entities.EventTypes.Domain;
 using StudentCouncilTracker.Application.Entities.Interfaces;
 using StudentCouncilTracker.Application.Entities.Users.Domain;
 
@@ -15,4 +17,8 @@ public class StudentCouncilTrackerDbContext : DbContext, IStudentCouncilTrackerD
     public DbSet<DataProtectionKey> DataProtectionKeys => null!;
 
     public DbSet<CatalogUser> CatalogUsers { get; set; } = null!;
+
+    public DbSet<Event> Events { get; set; } = null!;
+
+    public DbSet<EventType> EventTypes { get; set; } = null!;
 }
