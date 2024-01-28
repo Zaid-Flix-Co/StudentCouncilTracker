@@ -2,7 +2,7 @@
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.EventActionTypes.Commands.DeleteEventActionType;
+namespace StudentCouncilTracker.Application.Features.EventActionTypes.Commands.Delete;
 
 public record DeleteEventActionTypeCommand(int Id) : IRequest<OperationResult>;
 

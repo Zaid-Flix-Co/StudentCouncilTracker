@@ -4,7 +4,7 @@ using StudentCouncilTracker.Application.Entities.EventTypes.Dto;
 using StudentCouncilTracker.Application.Entities.EventTypes.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.EventTypes.Commands.UpdateEventType;
+namespace StudentCouncilTracker.Application.Features.EventTypes.Commands.Update;
 
 public record UpdateEventTypeCommand(int Id, EventTypeDtoData Model) : IRequest<OperationResult<EventTypeDto>>;
 

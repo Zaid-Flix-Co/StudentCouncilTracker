@@ -5,7 +5,7 @@ using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.Users.Commands.CreateUser;
+namespace StudentCouncilTracker.Application.Features.Users.Commands.Create;
 
 public record CreateUserCommand : IRequest<OperationResult<CatalogUserDto>>;
 

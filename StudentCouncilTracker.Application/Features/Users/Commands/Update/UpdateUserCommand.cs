@@ -4,7 +4,7 @@ using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.Users.Commands.UpdateUser;
+namespace StudentCouncilTracker.Application.Features.Users.Commands.Update;
 
 public record UpdateUserCommand(int Id, CatalogUserDtoData Model) : IRequest<OperationResult<CatalogUserDto>>;
 

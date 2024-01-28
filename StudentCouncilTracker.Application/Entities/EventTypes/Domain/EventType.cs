@@ -1,5 +1,4 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.UserCU;
-using StudentCouncilTracker.Application.Entities.Events.Dto;
 using StudentCouncilTracker.Application.Entities.EventTypes.Dto;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.OperationResults;

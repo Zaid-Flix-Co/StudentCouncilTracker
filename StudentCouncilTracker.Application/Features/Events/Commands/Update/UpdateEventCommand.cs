@@ -4,7 +4,7 @@ using StudentCouncilTracker.Application.Entities.Events.Dto;
 using StudentCouncilTracker.Application.Entities.Events.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.Events.Commands.UpdateEvent;
+namespace StudentCouncilTracker.Application.Features.Events.Commands.Update;
 
 public record UpdateEventCommand(int Id, EventDtoData Model) : IRequest<OperationResult<EventDto>>;
 

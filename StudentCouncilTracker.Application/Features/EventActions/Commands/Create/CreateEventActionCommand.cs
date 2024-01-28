@@ -5,7 +5,7 @@ using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
-namespace StudentCouncilTracker.Application.Features.EventActions.Commands.CreateEventAction;
+namespace StudentCouncilTracker.Application.Features.EventActions.Commands.Create;
 
 public record CreateEventActionCommand : IRequest<OperationResult<EventActionDto>>;
 
