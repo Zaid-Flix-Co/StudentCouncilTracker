@@ -1,10 +1,16 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventActions.Repositories;
+using StudentCouncilTracker.Application.Entities.EventActionTypes.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventActionTypes.Repositories;
 using StudentCouncilTracker.Application.Entities.Events.Interfaces;
 using StudentCouncilTracker.Application.Entities.Events.Repositories;
+using StudentCouncilTracker.Application.Entities.EventTypes.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventTypes.Repositories;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.FileSavers;
+using System.Reflection;
 
 namespace StudentCouncilTracker.Application.DependencyInjection;
 
@@ -23,6 +29,9 @@ public static class ApplicationServiceCollectionExtensions
 
         services.AddScoped<ICatalogUserRepository, CatalogUserRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<IEventTypeRepository, EventTypeRepository>();
+        services.AddScoped<IEventActionRepository, EventActionRepository>();
+        services.AddScoped<IEventActionTypeRepository, EventActionTypeRepository>();
 
         #endregion
 

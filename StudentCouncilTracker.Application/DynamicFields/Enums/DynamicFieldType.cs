@@ -162,5 +162,7 @@ public enum DynamicFieldType
 
     EventType,
 
-    CatalogUser
+    CatalogUser,
+
+    EventActionType,
 }
