@@ -1,0 +1,88 @@
+﻿@page "/event"
+
+<h3>Add or Update Event</h3>
+
+@if (_isLoading)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="@_event" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="eventName">Event Name:</label>
+            <InputText id="eventName" class="form-control" @bind-Value="_event.Name.Value" />
+        </div>
+
+        <div class="form-group">
+            <label for="eventDescription">Event Description:</label>
+            <InputTextArea id="eventDescription" class="form-control" @bind-Value="_event.Description!.Value" />
+            <ValidationMessage For="@(() => _event.Description!.Value)" />
+        </div>
+
+        <div class="form-group">
+            <label for="eventType">Event Type:</label>
+            <InputSelect id="eventType" class="form-control" @bind-Value="_event.EventType!.Value">
+                @foreach (var eventType in _eventTypes)
+                {
+                    <option value="@eventType.Id">@eventType.Name</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <label for="responsibleUser">Responsible User:</label>
+            <InputSelect id="responsibleUser" class="form-control" @bind-Value="_event.ResponsibleUser!.Value">
+                @foreach (var user in _users)
+                {
+                    <option value="@user.Id">@user.Name</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <label for="eventDate">Event Date:</label>
+            <InputDate id="eventDate" class="form-control" @bind-Value="_event.DateEvent!.Value" />
+        </div>
+
+        <div class="form-group">
+            <label for="isDeactivated">Is Deactivated:</label>
+            <InputCheckbox id="isDeactivated" @bind-Value="_event.IsDeactivated!.Value" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+}
+
+@code {
+    [Inject]
+    private HttpClient HttpClient { get; set; } = null!;
+
+    private EventDtoData _event = new();
+
+    private bool _isLoading;
+
+    private List<EventTypeDtoCombobox> _eventTypes = new();
+
+    private List<CatalogUserDtoCombobox> _users = new();
+
+    protected async Task HandleSubmit()
+    {
+        _isLoading = true;
+
+        if (_event.Id == 0)
+        {
+            var response = await HttpService<Event, EventDtoData>.CreateAsync(_event, HttpClient);
+        }
+        else
+        {
+            var response = await HttpService<Event, EventDtoData>.PutAsync(_event.Id, _event, HttpClient);
+        }
+
+        _isLoading = false;
+    }
+}

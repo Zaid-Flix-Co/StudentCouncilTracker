@@ -13,20 +13,20 @@ public class EventDtoData : EntityDtoData, IHaveId
     public int Id { get; set; }
 
     [DynamicField(DynamicFieldType.Textbox)]
-    public DynamicFieldValue<string> Name { get; set; } = null!;
+    public DynamicFieldValue<string> Name { get; set; } = new();
 
     [DynamicField(DynamicFieldType.TextArea)]
-    public DynamicFieldValue<string>? Description { get; set; }
+    public DynamicFieldValue<string>? Description { get; set; } = new();
 
     [DynamicField(DynamicFieldType.EventType)]
-    public DynamicFieldValue<EventTypeDtoCombobox>? EventType { get; set; }
+    public DynamicFieldValue<EventTypeDtoCombobox>? EventType { get; set; } = new();
 
     [DynamicField(DynamicFieldType.CatalogUser)]
-    public DynamicFieldValue<CatalogUserDtoCombobox>? ResponsibleUser { get; set; }
+    public DynamicFieldValue<CatalogUserDtoCombobox>? ResponsibleUser { get; set; } = new();
 
     [DynamicField(DynamicFieldType.Date)]
-    public DynamicFieldValue<DateTime>? DateEvent { get; set; }
+    public DynamicFieldValue<DateTime>? DateEvent { get; set; } = new();
 
     [DynamicField(DynamicFieldType.CheckBox)]
-    public DynamicFieldValue<bool>? IsDeactivated { get; set; }
+    public DynamicFieldValue<bool>? IsDeactivated { get; set; } = new();
 }

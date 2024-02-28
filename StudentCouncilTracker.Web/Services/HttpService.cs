@@ -4,69 +4,54 @@ using StudentCouncilTracker.Application.Entities.Base.Filters;
 
 namespace StudentCouncilTracker.Web.Services;
 
-public class HttpService<TEntity> where TEntity : class
+public class HttpService<TEntity, TEntityDtoData> where TEntity : class
 {
-    protected string Url = $"api/{typeof(TEntity)}";
+    private static string _url = $"api/{typeof(TEntity).Name}";
 
-    public async Task<TEntity> GetAsync(int id, HttpClient client)
+    public static async Task<TEntityDtoData> GetAsync(int id, HttpClient client)
     {
-        Url += $"/{id}";
+        _url += $"/{id}";
 
-        using (client)
-        {
-            var response = await client.GetAsync(Url);
-            var responseContent = await response.Content.ReadAsStringAsync();
+        var response = await client.GetAsync(_url);
+        var responseContent = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<TEntity>(responseContent);
-        }
+        return JsonConvert.DeserializeObject<TEntityDtoData>(responseContent);
     }
 
-    public async Task<TEntity> GetListAsync(ListFilter entity, HttpClient client)
+    public static async Task<TEntityDtoData> GetListAsync(ListFilter entity, HttpClient client)
     {
-        Url += "/GetList";
+        _url += "/GetList";
 
         var content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
 
-        using (client)
-        {
-            var response = await client.PostAsync(Url, content);
-            var responseContent = await response.Content.ReadAsStringAsync();
+        var response = await client.PostAsync(_url, content);
+        var responseContent = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<TEntity>(responseContent);
-        }
+        return JsonConvert.DeserializeObject<TEntityDtoData>(responseContent);
     }
-    
-    public async Task<HttpResponseMessage> CreateAsync(TEntity entity, HttpClient client)
+
+    public static async Task<HttpResponseMessage> CreateAsync(TEntityDtoData entity, HttpClient client)
     {
-        Url += "/Create";
+        _url += "/Create";
 
         var content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
 
-        using (client)
-        {
-            return await client.PostAsync(Url, content);
-        }
+        return await client.PostAsync(_url, content);
     }
 
-    public async Task<HttpResponseMessage> PutAsync(int id, TEntity entity, HttpClient client)
+    public static async Task<HttpResponseMessage> PutAsync(int id, TEntityDtoData entity, HttpClient client)
     {
-        Url += $"/{id}";
+        _url += $"/{id}";
 
         var content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
 
-        using (client)
-        {
-            return await client.PutAsync(Url, content);
-        }
+        return await client.PutAsync(_url, content);
     }
 
-    public async Task<HttpResponseMessage> DeleteAsync(int id, HttpClient client)
+    public static async Task<HttpResponseMessage> DeleteAsync(int id, HttpClient client)
     {
-        Url += $"/{id}";
+        _url += $"/{id}";
 
-        using (client)
-        {
-            return await client.DeleteAsync(Url);
-        }
+        return await client.DeleteAsync(_url);
     }
 }
