@@ -1,0 +1,20 @@
+﻿@inherits SelectMultipleBase<TValue, EventTypeDtoCombobox, int?, EventTypeService>
+@typeparam TValue
+
+<Select Mode="multiple"
+        DataSource="List"
+        @bind-Values="CurrentValue"
+        LabelName="@nameof(EventTypeDtoCombobox.Name)"
+        ValueName="@nameof(EventTypeDtoCombobox.Id)"
+        TItem="EventTypeDtoCombobox"
+        TItemValue="int?"
+        Placeholder="@Placeholder"
+        ShowArrowIcon="true"
+        OnSearch="OnSearch"
+        OnBlur="OnBlur"
+        OnFocus="OnFocus"
+        Loading="IsLoading"
+        DefaultActiveFirstOption="false"
+        EnableSearch
+        AllowClear="true" OnSelectedItemsChanged="OnSelectedItemsChanged">
+</Select>
