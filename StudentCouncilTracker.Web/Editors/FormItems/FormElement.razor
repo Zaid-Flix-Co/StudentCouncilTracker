@@ -1,0 +1,87 @@
+﻿@using StudentCouncilTracker.Application.DynamicFields
+@typeparam TValue
+
+<div class="form-group row">
+    @if (IsShowLabel)
+    {
+        @if (Control.Type == DynamicFieldType.CheckBox)
+        {
+            <div class="@LabelClass"></div>
+        }
+        else
+        {
+            <label for="@_id" class="@LabelClass col-form-label">
+                @Control.Label.Label
+                @if (Control.Label.LabelHint.IsNotEmpty())
+                {
+                    <Popover Placement="@Placement.BottomLeft" ContentTemplate="@_content" Trigger="@(new[] { Trigger.Click })">
+                        <Unbound>
+                            <AntDesign.Button RefBack="@context" OnClickStopPropagation="true" Danger Type="@ButtonType.Link" Size="small">
+                                <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                            </AntDesign.Button>
+                        </Unbound>
+                    </Popover>
+                }
+            </label>
+        }
+    }
+    <div class="@ValueClass">
+        <FormElementValue Value="Control.Value" ValueChanged="@(async (TValue v) => await ValueChangedAsync(v))" ValueExpression="() => Control.Value" Control="@Control" OnBlur="OnBlur" />
+        @if (Legend != null)
+        {
+            <div class="text-label">@Legend</div>
+        }
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public DynamicFieldValue<TValue> Control { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<DynamicFieldValue<TValue>> ControlChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue> OnChange { get; set; }
+
+    [Parameter]
+    public EventCallback OnBlur { get; set; }
+
+    [Parameter]
+    public bool IsShowLabel { get; set; } = true;
+
+    [Parameter]
+    public string Layout { get; set; } = FormElementLayout.Horizontal;
+
+    [Parameter]
+    public RenderFragment Legend { get; set; } = null!;
+
+    public int ValueCol => IsShowLabel && Layout == FormElementLayout.Horizontal ? _valueCol - LabelCol : _valueCol;
+
+    public int LabelCol => Layout == FormElementLayout.Horizontal ? 2 : 12;
+
+    private RenderFragment _content = null!;
+
+    private string _id = Guid.NewGuid().ToString();
+
+    private string LabelClass => $"col-sm-{LabelCol}";
+
+    private string ValueClass => $"col-sm-{ValueCol}";
+
+    private int _valueCol = 12;
+
+    public async Task ValueChangedAsync(TValue value)
+    {
+        Control.Value = value;
+        await ControlChanged.InvokeAsync(Control);
+
+        if (OnChange.HasDelegate)
+            await OnChange.InvokeAsync(value);
+    }
+
+    protected override void OnInitialized()
+    {
+        _content = @<span>@Control.Label.LabelHint</span>;
+    }
+}

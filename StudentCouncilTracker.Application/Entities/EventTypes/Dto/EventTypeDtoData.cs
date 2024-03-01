@@ -10,6 +10,6 @@ public class EventTypeDtoData : EntityDtoData, IHaveId
 {
     public int Id { get; set; }
 
-    [DynamicField(DynamicFieldType.Textbox)]
+    [DynamicField(DynamicFieldType.Textbox, "Наименование")]
     public DynamicFieldValue<string> Name { get; set; } = null!;
 }

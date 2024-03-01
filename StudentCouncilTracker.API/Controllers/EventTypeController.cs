@@ -16,7 +16,7 @@ namespace StudentCouncilTracker.API.Controllers;
 public class EventTypeController : BaseController
 {
     [AllowAnonymous]
-    [HttpPost("Get/{id:int}")]
+    [HttpGet("Get/{id:int}")]
     public async Task<BaseResponseActionResult<EventTypeDto>> Get(int id)
     {
         return Ok(await Mediator.Send(new GetEventTypeByIdQuery(id)));

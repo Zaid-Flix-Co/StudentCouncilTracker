@@ -1,0 +1,24 @@
+﻿@if (string.IsNullOrWhiteSpace(Label))
+{
+    <AntDesign.DatePicker TValue="DateTime?" Picker="@DatePickerType.Date" Format="dd.MM.yyyy" @bind-Value="@Value" Placeholder="new OneOf<string, string[]>()" ShowToday="true" />
+}
+else
+{
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            @Label
+        </label>
+        <div class="col-sm-10">
+            <AntDesign.DatePicker TValue="DateTime?" Picker="@DatePickerType.Date" Format="dd.MM.yyyy" @bind-Value="@Value" Placeholder="new OneOf<string, string[]>()" ShowToday="true" />
+        </div>
+    </div>
+}
+
+@code
+{
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public DateTime? Value { get; set; }
+}

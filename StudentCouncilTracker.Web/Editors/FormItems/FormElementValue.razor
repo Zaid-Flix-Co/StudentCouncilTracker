@@ -1,0 +1,166 @@
+﻿@typeparam T
+@inherits InputBase<T>
+
+<div>
+    @if (Control is { IsEditable: true, IsVisible: true, IsValueHidden: false })
+    {
+        @switch (Control.Type)
+        {
+            case DynamicFieldType.Textbox:
+                if (typeof(T) == typeof(int))
+                {
+                    <AntDesign.Input Placeholder="" Type="number" @bind-Value="CurrentValue" AllowClear="true" OnBlur="OnBlur" DebounceMilliseconds="3000" />
+                }
+                else
+                {
+                    <AntDesign.Input Placeholder="" @bind-Value="CurrentValueAsString" AllowClear="true" OnBlur="OnBlur" DebounceMilliseconds="3000" />
+                }
+                break;
+            case DynamicFieldType.Date:
+                <AntDesign.DatePicker TValue="T" Picker="@DatePickerType.Date" Format="dd.MM.yyyy" @bind-Value="CurrentValue" Placeholder="new OneOf<string, string[]>()" ShowToday="true" />
+                break;
+            case DynamicFieldType.TextArea:
+                <AntDesign.TextArea Placeholder="" @bind-Value="CurrentValueAsString" MinRows="2" AutoSize="true" AllowClear="true" DebounceMilliseconds="3000" />
+                break;
+            case DynamicFieldType.CheckBox:
+                <AntDesign.Checkbox @bind-Value="CurrentValueAsBool">@Control.Label.Label</AntDesign.Checkbox>
+                break;
+            case DynamicFieldType.EventType:
+                <EventType @bind-Value="CurrentValue"/>
+                break;
+        }
+    }
+    else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: false })
+    {
+        @switch (Control.Type)
+        {
+            case DynamicFieldType.Textbox:
+                @CurrentValueAsString
+                break;
+            case DynamicFieldType.TextArea:
+                <div style="white-space: pre-line">@CurrentValueAsString</div>
+                break;
+            case DynamicFieldType.CheckBox:
+                <AntDesign.Checkbox Disabled="true" Checked="CurrentValueAsBool">@Control.Label.Label</AntDesign.Checkbox>
+                break;
+            case DynamicFieldType.Date:
+                @((Control.Value as DateTime?)?.DateText())
+                break;
+            case DynamicFieldType.Year:
+                @Control.Value
+                break;
+            case DynamicFieldType.EventType:
+                <EventType @bind-Value="CurrentValue"/>
+                break;
+        }
+    }
+    else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: true })
+    {
+        <div>
+            *
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnBlur { get; set; }
+
+    [Parameter]
+    public DynamicFieldValue<T> Control { get; set; }
+
+    bool _currentValueAsBool;
+
+    private bool CurrentValueAsBool
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(CurrentValueAsString))
+                _currentValueAsBool = false;
+            else
+            {
+                if (bool.TryParse(CurrentValueAsString, out bool _currentBool))
+                    _currentValueAsBool = _currentBool;
+                else
+                    _currentValueAsBool = false;
+            }
+
+            return _currentValueAsBool;
+        }
+        set
+        {
+            _currentValueAsBool = value;
+            CurrentValue = (T)(object)value;
+        }
+    }
+
+    protected override bool TryParseValueFromString(string value, out T result, out string validationErrorMessage)
+    {
+        if (typeof(T) == typeof(string))
+        {
+            result = (T)(object)value;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+        else if (typeof(T) == typeof(object))
+        {
+            result = (T)(object)value;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+        else if (typeof(T) == typeof(bool))
+        {
+            bool.TryParse(value, out var parsedValue);
+            result = (T)(object)parsedValue;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+        else if (typeof(T) == typeof(int))
+        {
+            int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
+            result = (T)(object)parsedValue;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+        else if (typeof(T) == typeof(Guid))
+        {
+            Guid.TryParse(value, out var parsedValue);
+            result = (T)(object)parsedValue;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+        else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?))
+        {
+            DateTime.TryParse(value, out var parsedValue);
+            result = (T)(object)parsedValue;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+        else if (typeof(T).IsEnum)
+        {
+            try
+            {
+                result = (T)Enum.Parse(typeof(T), value);
+                validationErrorMessage = null!;
+
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                result = default!;
+                validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not valid.";
+
+                return false;
+            }
+        }
+
+        throw new InvalidOperationException($"{GetType()} does not support the type '{typeof(T)}'.");
+    }
+
+}

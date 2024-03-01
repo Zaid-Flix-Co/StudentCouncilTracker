@@ -4,11 +4,11 @@ namespace StudentCouncilTracker.Application.DynamicFields;
 
 public class DynamicField
 {
-    public bool IsEditable { get; set; }
+    public bool IsEditable { get; set; } = true;
 
-    public bool IsVisible { get; set; }
+    public bool IsVisible { get; set; } = true;
 
-    public bool IsValueHidden { get; set; }
+    public bool IsValueHidden { get; set; } = false;
 
     public string Name { get; set; }
 
