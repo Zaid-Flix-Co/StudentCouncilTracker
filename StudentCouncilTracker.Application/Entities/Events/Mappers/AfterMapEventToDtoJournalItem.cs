@@ -5,7 +5,7 @@ using StudentCouncilTracker.Application.Entities.Events.Dto;
 
 namespace StudentCouncilTracker.Application.Entities.Events.Mappers;
 
-public class AfterMapEventToJournalItem : IMappingAction<Event, EventDtoJournalItem>
+public class AfterMapEventToDtoJournalItem : IMappingAction<Event, EventDtoJournalItem>
 {
     public void Process(Event source, EventDtoJournalItem destination, ResolutionContext context)
     {

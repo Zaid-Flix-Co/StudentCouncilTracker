@@ -21,6 +21,18 @@
                                 <div class="text-label">Наименование</div>
                                 <div>@item.Name</div>
                             </div>
+                            <div class="col-4">
+                                <div class="text-label">Дата проведения</div>
+                                <div>@item.DateEvent.ToString("D")</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-label">Тип события</div>
+                                <div>@item.EventType</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-label">Ответственный</div>
+                                <div>@item.ResponsibleUser</div>
+                            </div>
                         </div>
                         </Body>
                         <ActionTemplate>

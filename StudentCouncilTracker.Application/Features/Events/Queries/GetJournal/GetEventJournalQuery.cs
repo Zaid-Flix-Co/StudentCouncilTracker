@@ -17,6 +17,9 @@ public class GetEventJournalQueryHandler(IEventRepository repository, IMapper ma
         var operationResult = new OperationResult<EventDtoJournal>();
         var events = repository
             .GetAll()
+            .Include(e => e.EventType)
+            .Include(e => e.ResponsibleUser)
+            .OrderByDescending(e => e.CreatedDate)
             .AsNoTracking();
 
         var journalDto = new EventDtoJournal

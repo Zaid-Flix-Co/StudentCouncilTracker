@@ -1,7 +1,6 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Events.Dto;
 using StudentCouncilTracker.Application.OperationResults;
-using StudentCouncilTracker.Web.Services.Catalogs;
 
 namespace StudentCouncilTracker.Web.Services.Catalogs.Events;
 
