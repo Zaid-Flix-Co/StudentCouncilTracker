@@ -25,6 +25,8 @@ public class EventRepository(IStudentCouncilTrackerDbContext context, IMapper ma
     {
         var events =
             context.Events
+                .Include(e => e.EventType)
+                .Include(e => e.ResponsibleUser)
                 .AsNoTracking();
         var card = await events.FirstOrDefaultAsync(w => w.Id == id);
 

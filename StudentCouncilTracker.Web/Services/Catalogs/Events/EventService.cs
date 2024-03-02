@@ -32,4 +32,16 @@ public class EventService(IHttpClientFactory clientFactory) : BaseCatalogService
         var result = await SendAsync<EventDto>("Create", HttpMethod.Post);
         return result;
     }
+
+    public async Task<OperationResult<EventDto>> PutCardAsync(EventDto model)
+    {
+        var result = await SendAsync<EventDto>($"{model.Data.Id}", HttpMethod.Put, model.Data);
+        return result;
+    }
+
+    public async Task<OperationResult<EventDto>> DeleteAsync(EventDtoJournalItem model)
+    {
+        var result = await SendAsync<EventDto>($"{model.Id}", HttpMethod.Delete);
+        return result;
+    }
 }

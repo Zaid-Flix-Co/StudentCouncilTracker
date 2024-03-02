@@ -21,14 +21,6 @@
                                 <div class="text-label">Наименование</div>
                                 <div>@item.Name</div>
                             </div>
-                            <div class="col">
-                                <div class="text-label">Добавил</div>
-                                <PatentAnalytics.Web.Components.Displays.UserCU Value="item.Created.Value"/>
-                            </div>
-                            <div class="col">
-                                <div class="text-label">Изменил</div>
-                                <PatentAnalytics.Web.Components.Displays.UserCU Value="item.Updated.Value"/>
-                            </div>
                         </div>
                         </Body>
                         <ActionTemplate>
@@ -36,7 +28,7 @@
                                 @if (item.Permissions.Edit)
                                 {
                                     <SpaceItem>
-                                        <NavLink href="@($"catalogs/executor/{item.Id}")" class="px-2">
+                                        <NavLink href="@($"catalogs/event/{item.Id}")" class="px-2">
                                             <span class="fa fa-pencil"></span>
                                         </NavLink>
                                     </SpaceItem>
@@ -58,10 +50,10 @@
 
 @code {
     [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    protected NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
-    private EventService EventService { get; set; } = null!;
+    protected EventService EventService { get; set; } = null!;
 
     private EventDtoJournal List { get; set; } = null!;
 
@@ -99,5 +91,14 @@
             NavigationManager.NavigateTo($"catalogs/event/{response.Value.Data.Id}");
 
         IsCreateLoading = false;
+    }
+
+    private async Task DeleteAsync(EventDtoJournalItem item)
+    {
+        var response = await EventService.DeleteAsync(item);
+        if (response.Ok)
+        {
+            await GetListAsync();
+        }
     }
 }

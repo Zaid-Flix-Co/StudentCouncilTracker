@@ -50,7 +50,7 @@
                 @Control.Value
                 break;
             case DynamicFieldType.EventType:
-                <EventType @bind-Value="CurrentValue"/>
+                @((Control.Value as EventTypeDtoCombobox)?.Name)
                 break;
         }
     }

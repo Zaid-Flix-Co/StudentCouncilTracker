@@ -1,0 +1,37 @@
+﻿<Popconfirm @ref="Popconfirm" OnConfirm="OnConfirmAsync" OkText="Да" CancelText="Нет" Placement="@Placement.BottomLeft">
+    <TitleTemplate>Вы действительно хотите удалить запись?</TitleTemplate>
+    <Unbound>
+        <AntDesign.Button RefBack="@context" OnClickStopPropagation="true" Danger Type="@ButtonType.Link" Size="small" Block="@Block" Loading="IsLoading" Icon="@IconType.Outline.Delete">
+            @(IsHasText ? Text : "")
+        </AntDesign.Button>
+    </Unbound>
+</Popconfirm>
+
+@code {
+    [Parameter]
+    public EventCallback OnConfirm { get; set; }
+
+    [Parameter]
+    public string Text { get; set; } = null!;
+
+    [Parameter]
+    public bool Block { get; set; } = false;
+
+    private bool IsHasText => !string.IsNullOrEmpty(Text);
+
+    private bool IsLoading { get; set; }
+
+    private Popconfirm Popconfirm { get; set; } = null!;
+
+    private async Task OnConfirmAsync(MouseEventArgs args)
+    {
+        IsLoading = true;
+
+        await Popconfirm.Close();
+
+        if (OnConfirm.HasDelegate)
+            await OnConfirm.InvokeAsync();
+
+        IsLoading = false;
+    }
+}

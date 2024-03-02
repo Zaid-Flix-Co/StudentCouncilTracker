@@ -49,8 +49,8 @@ public class Event : UserCuBase, IHaveId
 
         Name = data.Name.Value;
         Description = data.Description?.Value;
-        EventTypeId = data.EventType?.Value.Id;
-        ResponsibleUserId = data.ResponsibleUser?.Value.Id;
+        EventTypeId = data.EventType?.Value.Id == 0 ? null : data.EventType?.Value.Id;
+        ResponsibleUserId = data.ResponsibleUser?.Value.Id == 0 ? null : data.ResponsibleUser?.Value.Id;
         DateEvent = data.DateEvent?.Value;
         IsDeactivated = data.IsDeactivated!.Value;
         UpdatedDate = DateTime.Now;

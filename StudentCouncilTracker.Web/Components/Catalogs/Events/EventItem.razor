@@ -2,9 +2,67 @@
 
 <PageHeadTitle Title="Мероприятия"></PageHeadTitle>
 
-@EventId
+@if (Event != null)
+{
+    <EditForm Model="Event.Data" OnSubmit="@SaveEvent">
+        <div class="row">
+            <div class="col-md-8">
+                <FormElement @bind-Control="Event.Data.Name" />
+                <FormElement @bind-Control="Event.Data.EventType" />
+                <FormElement @bind-Control="Event.Data.DateEvent" />
+                <FormElement @bind-Control="Event.Data.Description" />
+                <FormElement @bind-Control="Event.Data.IsDeactivated" />
+            </div>
+        </div>
+
+        <div class="sticky-bottom">
+            <SaveButton IsLoading="IsLoading" />
+            <NavLink href="@("events")">
+                <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
+            </NavLink>
+        </div>
+    </EditForm>
+}
 
 @code {
     [Parameter]
     public int EventId { get; set; }
+
+    [Inject]
+    protected EventService EventService { get; set; } = null!;
+
+    protected EventDto Event { get; set; } = null!;
+
+    private bool IsLoading { get; set; }
+
+    protected async Task GetEvent()
+    {
+        var result = await EventService.GetCardAsync(EventId);
+        if (result.Ok)
+            Event = result.Value;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await GetEvent();
+            StateHasChanged();
+        }
+    }
+
+    protected async Task SaveEvent()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        var ret = await EventService.PutCardAsync(Event);
+        if (ret.Ok)
+        {
+            await GetEvent();
+            StateHasChanged();
+        }
+
+        IsLoading = false;
+    }
 }
