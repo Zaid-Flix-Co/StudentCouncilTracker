@@ -20,7 +20,6 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
         {
             _value = value;
             CurrentValueAsInt = FormatValueAsInt(value);
-            CurrentValueAsGuid = FormatValueAsGuid(value);
         }
     }
 
@@ -37,8 +36,6 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
     protected TService Service { get; set; } = default!;
 
     #endregion
-
-    private Guid? _currentValueAsGuid;
 
     private int? _currentValueAsInt;
 
@@ -61,19 +58,6 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
             return _currentValueAsInt;
         }
         set => _currentValueAsInt = value;
-    }
-
-    protected Guid? CurrentValueAsGuid
-    {
-        get
-        {
-            if (_value is IHaveId<Guid?> ngv)
-                _currentValueAsGuid = ngv.Id;
-            if (_value is IHaveId<Guid> gv)
-                _currentValueAsGuid = gv.Id;
-            return _currentValueAsGuid;
-        }
-        set => _currentValueAsGuid = value;
     }
 
     protected bool DebounceEnabled => DebounceMilliseconds != 0;
@@ -104,7 +88,7 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
         IsLoading = true;
         StateHasChanged();
 
-        var result = (await ((BaseCatalogService)(object)Service).GetListAsync(query, GetParameters())).Value;
+        var result = (await ((BaseCatalogService)(object)Service!).GetListAsync(query, GetParameters())!).Value;
 
         var list = JsonConvert.DeserializeObject<List<TItem>>(result.Items.ToString());
 
@@ -140,40 +124,9 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
 
         Search = value;
 
-        var list = await GetDataAsync(value);
-
-        list.RemoveAll(r => !list.Any(a => a?.Equals(((IHaveId<int?>)r).Id) ?? false) &&
-                            !list.Any(a => ((IHaveId<int?>)a).Id?.Equals(((IHaveId<int?>)r).Id) ?? false));
-
-        var toAdd = list.Where(r => !list.Any(a => a?.Equals(((IHaveId<int?>)r).Id) ?? false) &&
-                                    !List.Any(a => ((IHaveId<int?>)a).Id?.Equals(((IHaveId<int?>)r).Id) ?? false));
-
-        List.AddRange(toAdd);
+        List = await GetDataAsync(value);
 
         StateHasChanged();
-    }
-
-    private IEnumerable<TItem> GetFiltered(List<TItem> list)
-    {
-        var tItemType = typeof(TItem);
-
-        var selectList = FormatValueAsItem(Value).ToList();
-        if (selectList.Any())
-        {
-            if (typeof(IHaveId<int?>).IsAssignableFrom(tItemType))
-                selectList.RemoveAll(r => list.Any(a => ((IHaveId<int?>)a!)!.Id == ((IHaveId<int?>)r!)!.Id));
-            if (typeof(IHaveId).IsAssignableFrom(tItemType))
-                selectList.RemoveAll(r => list.Any(a => ((IHaveId<Guid?>)a!)!.Id == ((IHaveId<Guid?>)r!)!.Id));
-            if (typeof(IHaveId<Guid?>).IsAssignableFrom(tItemType))
-                selectList.RemoveAll(r =>
-                    list.Any(a => (((IHaveId<Guid?>)a!)!).Id == ((IHaveId<Guid?>)r!)!.Id));
-            if (typeof(IHaveId<Guid>).IsAssignableFrom(tItemType))
-                selectList.RemoveAll(r => list.Any(a => ((IHaveId<Guid>)a!)!.Id == ((IHaveId<Guid>)r!)!.Id));
-
-            list.AddRange(selectList);
-        }
-
-        return list;
     }
 
     protected void OnSearch(string value)
@@ -227,7 +180,7 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
         }
 
         int? valuesAsInt = null;
-        var nullId = (currentValue as IHaveId<int?>)?.Id;
+        var nullId = (currentValue as IHaveId<int>)?.Id;
         if (nullId != null)
             valuesAsInt = nullId;
         if (currentValue is IHaveId id)
@@ -236,58 +189,23 @@ public class SelectBase<TValue, TItem, TService> : ComponentBase, IDisposable
         return valuesAsInt;
     }
 
-    private static Guid? FormatValueAsGuid(TValue value)
-    {
-        if (value == null)
-            return null;
-        
-        var currentValue = default(TItem);
-        try
-        {
-            var d = JsonConvert.DeserializeObject<TItem>(JsonConvert.SerializeObject(value));
-            if (d != null)
-                currentValue = d;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-        Guid? valuesAsGuid = currentValue switch
-        {
-            IHaveId<Guid?> ngv => ngv.Id ?? Guid.Empty,
-            IHaveId<Guid> gv => gv.Id,
-            _ => null
-        };
-
-        return valuesAsGuid;
-    }
-
     private static IEnumerable<TItem> FormatValueAsItem(TValue value)
     {
         if (value == null)
             return new List<TItem>().AsEnumerable();
-
 
         var currentValue = new List<TItem>();
         try
         {
             var d = JsonConvert.DeserializeObject<TItem>(JsonConvert.SerializeObject(value));
             if (d != null)
-            {
-                if (d is IHaveId<int?> { Id: not null } || d is IHaveId)
-                    currentValue.Add(d);
-                if (d is IHaveId<Guid?> { Id: not null } || d is IHaveId<Guid>)
-                    currentValue.Add(d);
-            }
+                currentValue.Add(d);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
-
 
         return currentValue.AsEnumerable();
     }

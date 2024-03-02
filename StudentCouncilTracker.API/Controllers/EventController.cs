@@ -9,6 +9,7 @@ using StudentCouncilTracker.Application.Features.Events.Commands.Delete;
 using StudentCouncilTracker.Application.Features.Events.Commands.Update;
 using StudentCouncilTracker.Application.Features.Events.Queries.Get;
 using StudentCouncilTracker.Application.Features.Events.Queries.GetById;
+using StudentCouncilTracker.Application.Features.Events.Queries.GetJournal;
 using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.API.Controllers;
@@ -16,10 +17,18 @@ namespace StudentCouncilTracker.API.Controllers;
 public class EventController : BaseController
 {
     [AllowAnonymous]
-    [HttpPost("Get/{id:int}")]
+    [HttpGet("Get/{id:int}")]
     public async Task<BaseResponseActionResult<EventDto>> Get(int id)
     {
         return Ok(await Mediator.Send(new GetEventByIdQuery(id)));
+    }
+    
+    [AllowAnonymous]
+    [HttpGet("GetJournal")]
+    public async Task<ActionResult<BaseResponseActionResult<EventDtoJournal>>> GetJournal()
+    {
+        var result = await Mediator.Send(new GetEventJournalQuery());
+        return Ok(result);
     }
 
     [AllowAnonymous]

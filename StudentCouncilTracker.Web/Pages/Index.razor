@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using StudentCouncilTracker.Application.Entities.Base.Dto.Permissions
 
 <PageTitle>Index</PageTitle>
 
@@ -9,19 +8,19 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<FormElement @bind-Control="Event.Data.Name"></FormElement>
+@* <FormElement @bind-Control="Event.Data.Name"></FormElement> *@
 
 @code
 {
-    [Inject]
-    private EventTypeService EventTypeService { get; set; } = null!;
+    // [Inject]
+    // private EventTypeService EventTypeService { get; set; } = null!;
 
-    private EventTypeDto Event { get; set; }
+    // private EventTypeDto Event { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        var result = await EventTypeService.GetCardAsync(1);
-        if (result.Ok)
-            Event = result.Value;
-    }
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var result = await EventTypeService.GetCardAsync(1);
+    //     if (result.Ok)
+    //         Event = result.Value;
+    // }
 }

@@ -41,7 +41,7 @@ public class OperationResult<TValue> : OperationResultBase<OperationResult<TValu
     public TValue Value
     {
         get => _value;
-        private set => _value = value;
+        set => _value = value;
     }
 
     public OperationResult<TValue> SetValue(TValue value)

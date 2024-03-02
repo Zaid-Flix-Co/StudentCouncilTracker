@@ -1,4 +1,6 @@
-using StudentCouncilTracker.Web.Services;
+using StudentCouncilTracker.Web.Services.Catalogs.Events;
+using StudentCouncilTracker.Web.Services.Catalogs.EventTypes;
+using StudentCouncilTracker.Web.Services.Catalogs.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +8,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddAntDesign();
 
+builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<EventTypeService>();
+builder.Services.AddScoped<CatalogUserService>();
 
 builder.Services.AddHttpClient("StudentCouncilTrackerWebApi", client =>
 {

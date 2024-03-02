@@ -21,6 +21,10 @@ public class MapperCatalogUser : Profile
             .ForMember(c => c.Permissions, opt => opt.Ignore())
             .AfterMap<AfterMapCatalogUserToDto>();
 
+        CreateMap<CatalogUser, CatalogUserDtoJournalItem>()
+            .ForMember(d => d.Permissions, s => s.Ignore())
+            .AfterMap<AfterMapCatalogUserToDtoJournalItem>();
+
         this.CreateMapPropertyNullableId<CatalogUser, CatalogUserDtoCard>();
         this.CreateMapDynamicPropertyValue<CatalogUser, CatalogUserDtoCard>();
 

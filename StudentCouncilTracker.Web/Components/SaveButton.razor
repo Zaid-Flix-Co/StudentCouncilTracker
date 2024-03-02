@@ -1,0 +1,61 @@
+﻿<AntDesign.Button OnClick="OnClick" Loading="IsLoading" Type="@ButtonType" HtmlType="submit">
+    @if (_icon.IsNotEmpty())
+    {
+        <Icon Type="check" Theme="outline" Class="me-2" />
+    }
+    @_text
+</AntDesign.Button>
+
+@code {
+
+    [Parameter]
+    public bool IsLoading
+    {
+        get => _isLoading;
+        set
+        {
+            if (_isLoading != value)
+            {
+                _isLoading = value;
+
+                if (!_isLoading)
+                {
+                    _text = TextSuccess;
+                    _icon = IconCheck;
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1500);
+                        _text = Text;
+                        _icon = IconDefault;
+                        await InvokeAsync(StateHasChanged);
+                    });
+                }
+            }
+        }
+    }
+
+    private bool _isLoading;
+
+[Parameter]
+public string Text { get; set; } = "Сохранить";
+
+[Parameter]
+public string TextSuccess { get; set; } = "Сохранено";
+
+[Parameter]
+public string ButtonType { get; set; } = AntDesign.ButtonType.Primary;
+
+[Parameter]
+public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+private string _text;
+private string _icon;
+
+const string IconDefault = "";
+const string IconCheck = "check";
+
+protected override void OnInitialized()
+{
+_text = Text;
+}
+}

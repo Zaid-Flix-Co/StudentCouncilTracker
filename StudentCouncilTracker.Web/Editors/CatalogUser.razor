@@ -1,0 +1,21 @@
+﻿@inherits SelectBase<TValue, CatalogUserDtoCombobox, CatalogUserService>
+
+@typeparam TValue
+
+<Select DataSource="List"
+        @bind-Value="CurrentValueAsInt"
+        LabelName="@nameof(CatalogUserDtoCombobox.Name)"
+        ValueName="@nameof(CatalogUserDtoCombobox.Id)"
+        TItem="CatalogUserDtoCombobox"
+        TItemValue="int?"
+        Placeholder="@Placeholder"
+        ShowArrowIcon="true"
+        OnSearch="OnSearch"
+        OnBlur="OnBlur"
+        OnFocus="OnFocus"
+        Loading="IsLoading"
+        DefaultActiveFirstOption="false"
+        EnableSearch
+        AllowClear="true"
+        OnSelectedItemChanged="OnSelectedItemChanged">
+</Select>

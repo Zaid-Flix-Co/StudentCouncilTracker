@@ -28,6 +28,9 @@
             case DynamicFieldType.EventType:
                 <EventType @bind-Value="CurrentValue"/>
                 break;
+            case DynamicFieldType.CatalogUser:
+                <CatalogUser @bind-Value="CurrentValue"/>
+                break;
         }
     }
     else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: false })
@@ -50,7 +53,10 @@
                 @Control.Value
                 break;
             case DynamicFieldType.EventType:
-                <EventType @bind-Value="CurrentValue"/>
+                @((Control.Value as EventTypeDtoCombobox)?.Name)
+                break;
+            case DynamicFieldType.CatalogUser:
+                @((Control.Value as CatalogUserDtoCombobox)?.Name)
                 break;
         }
     }

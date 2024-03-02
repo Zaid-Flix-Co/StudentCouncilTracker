@@ -1,0 +1,10 @@
+﻿<div>@Value.CreatedUserName</div>
+<div>@Value.CreatedDate.DateText(IsWithTime)</div>
+
+@code {
+    [Parameter]
+    public UserCuBase Value { get; set; } = null!;
+
+    [Parameter]
+    public bool IsWithTime { get; set; }
+}

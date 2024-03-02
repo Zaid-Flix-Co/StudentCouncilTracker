@@ -8,5 +8,6 @@ public class AfterMapCatalogUserToDto : IMappingAction<CatalogUser, CatalogUserD
 {
     public void Process(CatalogUser source, CatalogUserDto destination, ResolutionContext context)
     {
+
     }
 }
