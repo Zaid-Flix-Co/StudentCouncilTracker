@@ -2,6 +2,7 @@
 using StudentCouncilTracker.Application.DynamicFields.Attributes;
 using StudentCouncilTracker.Application.DynamicFields.Enums;
 using StudentCouncilTracker.Application.Entities.Base.Dto;
+using StudentCouncilTracker.Application.Entities.EventActionStatuses.Dto.Combobox;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Dto.Combobox;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.Entities.Users.Dto.Combobox;
@@ -23,4 +24,7 @@ public class EventActionDtoData : EntityDtoData, IHaveId
 
     [DynamicField(DynamicFieldType.EventActionType)]
     public DynamicFieldValue<EventActionTypeDtoCombobox>? EventActionType { get; set; }
+
+    [DynamicField(DynamicFieldType.EventActionStatus)]
+    public DynamicFieldValue<EventActionStatusDtoCombobox>? Status { get; set; }
 }

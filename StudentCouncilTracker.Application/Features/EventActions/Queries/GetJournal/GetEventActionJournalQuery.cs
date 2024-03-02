@@ -19,6 +19,7 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
             .GetAll()
             .Where(e => e.EventId == request.EventId)
             .Include(e => e.EventActionType)
+            .Include(e => e.Status)
             .Include(e => e.ResponsibleManager)
             .OrderByDescending(e => e.CreatedDate)
             .AsNoTracking();

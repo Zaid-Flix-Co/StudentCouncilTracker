@@ -1,12 +1,12 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.UserCU;
 using StudentCouncilTracker.Application.Entities.EventActions.Dto;
-using StudentCouncilTracker.Application.Entities.EventActions.Enums;
+using StudentCouncilTracker.Application.Entities.EventActionStatuses.Domain;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Domain;
+using StudentCouncilTracker.Application.Entities.Events.Domain;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.Entities.Users.Domain;
 using StudentCouncilTracker.Application.OperationResults;
 using System.ComponentModel.DataAnnotations;
-using StudentCouncilTracker.Application.Entities.Events.Domain;
 
 namespace StudentCouncilTracker.Application.Entities.EventActions.Domain;
 
@@ -28,8 +28,10 @@ public class EventAction : UserCuBase, IHaveId
     [Display(Name = "Ответственный за задачу")]
     public virtual CatalogUser? ResponsibleManager { get; set; }
 
+    public int? StatusId { get; set; }
+
     [Display(Name = "Статус задачи")]
-    public EventActionStatus Status { get; set; } = EventActionStatus.None;
+    public virtual EventActionStatus? Status { get; set; }
 
     public int? EventActionTypeId { get; set; }
 
@@ -52,6 +54,7 @@ public class EventAction : UserCuBase, IHaveId
 
         Name = data.Name.Value;
         DeadlineCompletion = data.DeadlineCompletion?.Value;
+        StatusId = data.Status?.Value.Id == 0 ? null : data.Status?.Value.Id;
         ResponsibleManagerId = data.ResponsibleManager?.Value.Id == 0 ? null : data.ResponsibleManager?.Value.Id;
         EventActionTypeId = data.EventActionType?.Value.Id == 0 ? null : data.EventActionType?.Value.Id;
         UpdatedDate = DateTime.Now;

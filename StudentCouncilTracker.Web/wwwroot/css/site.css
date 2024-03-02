@@ -66,3 +66,21 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+a {
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.text-label {
+    color: #888;
+    color: #737373;
+}
+
+.text-label-gray {
+    color: #888;
+}
+
+.text-label-sm {
+    font-size: 13px;
+    line-height: 1.2;
+}

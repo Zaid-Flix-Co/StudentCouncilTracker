@@ -14,19 +14,23 @@
                     <BoxCard>
                         <Body>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col">
                                 <div class="text-label">Наименование</div>
                                 <div>@item.Name</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
                                 <div class="text-label">Ответственный</div>
                                 <div>@item.ResponsibleManager</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
                                 <div class="text-label">Тип задачи</div>
                                 <div>@item.EventActionType</div>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
+                                <div class="text-label">Статус</div>
+                                <div>@item.Status</div>
+                            </div>
+                            <div class="col">
                                 <div class="text-label">Крайний срок</div>
                                 <div>@item.DeadlineCompletion.ToString("D")</div>
                             </div>

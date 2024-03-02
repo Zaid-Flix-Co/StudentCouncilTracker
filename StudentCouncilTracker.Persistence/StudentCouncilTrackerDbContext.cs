@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.EventActions.Domain;
+using StudentCouncilTracker.Application.Entities.EventActionStatuses.Domain;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Domain;
 using StudentCouncilTracker.Application.Entities.Events.Domain;
 using StudentCouncilTracker.Application.Entities.EventTypes.Domain;
@@ -10,16 +11,13 @@ using StudentCouncilTracker.Persistence.DataSeeders;
 
 namespace StudentCouncilTracker.Persistence;
 
-public class StudentCouncilTrackerDbContext : DbContext, IStudentCouncilTrackerDbContext, IDataProtectionKeyContext
+public class StudentCouncilTrackerDbContext(DbContextOptions<StudentCouncilTrackerDbContext> options)
+    : DbContext(options), IStudentCouncilTrackerDbContext, IDataProtectionKeyContext
 {
-    public StudentCouncilTrackerDbContext(DbContextOptions<StudentCouncilTrackerDbContext> options) : base(options)
-    {
-
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         DataSeederEventType.SeedData(modelBuilder);
+        DataSeederEventActionStatus.SeedData(modelBuilder);
     }
 
     public DbSet<DataProtectionKey> DataProtectionKeys => null!;
@@ -33,4 +31,6 @@ public class StudentCouncilTrackerDbContext : DbContext, IStudentCouncilTrackerD
     public DbSet<EventAction> EventActions { get; set; } = null!;
 
     public DbSet<EventActionType> EventActionTypes { get; set; } = null!;
+
+    public DbSet<EventActionStatus> EventActionStatuses { get; set; } = null!;
 }

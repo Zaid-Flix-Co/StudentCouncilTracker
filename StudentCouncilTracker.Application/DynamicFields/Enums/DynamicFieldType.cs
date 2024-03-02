@@ -165,4 +165,6 @@ public enum DynamicFieldType
     CatalogUser,
 
     EventActionType,
+
+    EventActionStatus,
 }

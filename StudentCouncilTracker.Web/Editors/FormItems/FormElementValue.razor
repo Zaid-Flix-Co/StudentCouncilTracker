@@ -34,6 +34,9 @@
             case DynamicFieldType.EventActionType:
                 <EventActionType @bind-Value="CurrentValue"/>
                 break;
+            case DynamicFieldType.EventActionStatus:
+                <EventActionStatus @bind-Value="CurrentValue"/>
+                break;
         }
     }
     else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: false })
@@ -63,6 +66,9 @@
                 break;
             case DynamicFieldType.EventActionType:
                 @((Control.Value as EventActionTypeDtoCombobox)?.Name)
+                break;
+            case DynamicFieldType.EventActionStatus:
+                @((Control.Value as EventActionStatusDtoCombobox)?.Name)
                 break;
         }
     }
