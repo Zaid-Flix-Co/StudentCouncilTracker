@@ -1,0 +1,116 @@
+﻿@layout EventActionLayout
+
+<PageHeadTitle Title="Задачи" Count="List.TotalCount" Loading="IsLoading"></PageHeadTitle>
+
+@if (List.Items != null)
+{
+    <AntDesign.Button OnClick="CreateAsync" Loading="IsCreateLoading" Icon="plus" Type="@ButtonType.Link" Size="small">Добавить</AntDesign.Button>
+
+    <Loading Spinning="IsLoading">
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var item in List.Items)
+                {
+                    <BoxCard>
+                        <Body>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="text-label">Наименование</div>
+                                <div>@item.Name</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-label">Ответственный</div>
+                                <div>@item.ResponsibleManager</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-label">Тип задачи</div>
+                                <div>@item.EventActionType</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-label">Крайний срок</div>
+                                <div>@item.DeadlineCompletion.ToString("D")</div>
+                            </div>
+                        </div>
+                        </Body>
+                        <ActionTemplate>
+                            <Space Size="@("1")">
+                                @if (item.Permissions.Edit)
+                                {
+                                    <SpaceItem>
+                                        <NavLink href="@($"catalogs/event/{EventId}/action/{item.Id}")" class="px-2">
+                                            <span class="fa fa-pencil"></span>
+                                        </NavLink>
+                                    </SpaceItem>
+                                }
+                                @if (item.Permissions.Delete)
+                                {
+                                    <SpaceItem>
+                                        <DeleteConfirm OnConfirm="async () => { await DeleteAsync(item); }"/>
+                                    </SpaceItem>
+                                }
+                            </Space>
+                        </ActionTemplate>
+                    </BoxCard>
+                }
+            </div>
+        </div>
+    </Loading>
+}
+
+@code {
+    [Parameter]
+    public int EventId { get; set; }
+
+    [Inject]
+    protected NavigationManager NavigationManager { get; set; } = null!;
+
+    [Inject]
+    protected EventActionService EventActionService { get; set; } = null!;
+
+    private EventActionDtoJournal List { get; set; } = new();
+
+    private bool IsLoading { get; set; }
+
+    public bool IsCreateLoading { get; set; }
+
+    protected async Task GetListAsync()
+    {
+        IsLoading = true;
+        StateHasChanged();
+        var response = await EventActionService.GetJournalAsync(EventId);
+
+        if (response.Ok)
+            List = response.Value;
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await GetListAsync();
+    }
+
+    private async Task CreateAsync()
+    {
+        IsCreateLoading = true;
+        StateHasChanged();
+
+        var response = await EventActionService.CreateAsync(EventId);
+
+        if (response.Ok)
+            NavigationManager.NavigateTo($"catalogs/event/{EventId}/action/{response.Value.Data.Id}");
+
+        IsCreateLoading = false;
+    }
+
+    private async Task DeleteAsync(EventActionDtoJournalItem item)
+    {
+        var response = await EventActionService.DeleteAsync(item);
+        if (response.Ok)
+        {
+            await GetListAsync();
+        }
+    }
+}
