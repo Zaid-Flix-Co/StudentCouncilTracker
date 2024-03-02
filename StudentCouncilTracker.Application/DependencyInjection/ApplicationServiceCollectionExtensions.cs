@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.Entities.EventActions.Repositories;
+using StudentCouncilTracker.Application.Entities.EventActionStatuses.Interfaces;
+using StudentCouncilTracker.Application.Entities.EventActionStatuses.Repositories;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Interfaces;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Repositories;
 using StudentCouncilTracker.Application.Entities.Events.Interfaces;
@@ -32,6 +34,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IEventTypeRepository, EventTypeRepository>();
         services.AddScoped<IEventActionRepository, EventActionRepository>();
         services.AddScoped<IEventActionTypeRepository, EventActionTypeRepository>();
+        services.AddScoped<IEventActionStatusRepository, EventActionStatusRepository>();
 
         #endregion
 

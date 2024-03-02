@@ -15,5 +15,7 @@ public class EventActionDtoJournalItem : IHaveId
 
     public string EventActionType { get; set; }
 
+    public string? Status { get; set; }
+
     public Permission Permissions { get; set; }
 }

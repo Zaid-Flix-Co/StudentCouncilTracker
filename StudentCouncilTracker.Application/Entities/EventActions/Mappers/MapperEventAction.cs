@@ -24,6 +24,7 @@ public class MapperEventAction : Profile
         CreateMap<EventAction, EventActionDtoJournalItem>()
             .ForMember(d => d.ResponsibleManager, s => s.MapFrom(f => f.ResponsibleManager!.Name))
             .ForMember(d => d.EventActionType, s => s.MapFrom(f => f.EventActionType!.Name))
+            .ForMember(d => d.Status, s => s.MapFrom(f => f.Status!.Name))
             .ForMember(d => d.DeadlineCompletion, s => s.MapFrom(f => f.DeadlineCompletion))
             .ForMember(d => d.Permissions, s => s.Ignore())
             .AfterMap<AfterMapEventActionToDtoJournalItem>();

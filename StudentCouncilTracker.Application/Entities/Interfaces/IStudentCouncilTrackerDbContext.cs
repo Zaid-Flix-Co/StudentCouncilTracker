@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.EventActions.Domain;
+using StudentCouncilTracker.Application.Entities.EventActionStatuses.Domain;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Domain;
 using StudentCouncilTracker.Application.Entities.Events.Domain;
 using StudentCouncilTracker.Application.Entities.EventTypes.Domain;
@@ -18,4 +19,6 @@ public interface IStudentCouncilTrackerDbContext
     DbSet<EventAction> EventActions { get; set; }
 
     DbSet<EventActionType> EventActionTypes { get; set; }
+
+    DbSet<EventActionStatus> EventActionStatuses { get; set; }
 }

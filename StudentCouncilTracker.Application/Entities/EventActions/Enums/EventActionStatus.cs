@@ -1,6 +1,6 @@
 ﻿namespace StudentCouncilTracker.Application.Entities.EventActions.Enums;
 
-public enum EventActionStatus
+public enum ActionStatus
 {
     None = 0,
 

@@ -1,4 +1,5 @@
 using StudentCouncilTracker.Web.Services.Catalogs.EventActions;
+using StudentCouncilTracker.Web.Services.Catalogs.EventActionStatuses;
 using StudentCouncilTracker.Web.Services.Catalogs.EventActionTypes;
 using StudentCouncilTracker.Web.Services.Catalogs.Events;
 using StudentCouncilTracker.Web.Services.Catalogs.EventTypes;
@@ -14,6 +15,7 @@ builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<EventActionService>();
 builder.Services.AddScoped<EventTypeService>();
 builder.Services.AddScoped<EventActionTypeService>();
+builder.Services.AddScoped<EventActionStatusService>();
 builder.Services.AddScoped<CatalogUserService>();
 
 builder.Services.AddHttpClient("StudentCouncilTrackerWebApi", client =>
