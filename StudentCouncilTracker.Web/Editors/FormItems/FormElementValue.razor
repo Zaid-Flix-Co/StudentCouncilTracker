@@ -31,6 +31,9 @@
             case DynamicFieldType.CatalogUser:
                 <CatalogUser @bind-Value="CurrentValue"/>
                 break;
+            case DynamicFieldType.EventActionType:
+                <EventActionType @bind-Value="CurrentValue"/>
+                break;
         }
     }
     else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: false })
@@ -57,6 +60,9 @@
                 break;
             case DynamicFieldType.CatalogUser:
                 @((Control.Value as CatalogUserDtoCombobox)?.Name)
+                break;
+            case DynamicFieldType.EventActionType:
+                @((Control.Value as EventActionTypeDtoCombobox)?.Name)
                 break;
         }
     }
@@ -85,8 +91,8 @@
                 _currentValueAsBool = false;
             else
             {
-                if (bool.TryParse(CurrentValueAsString, out bool _currentBool))
-                    _currentValueAsBool = _currentBool;
+                if (bool.TryParse(CurrentValueAsString, out var currentBool))
+                    _currentValueAsBool = currentBool;
                 else
                     _currentValueAsBool = false;
             }

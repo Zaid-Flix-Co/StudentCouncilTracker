@@ -20,6 +20,13 @@ public class MapperEventAction : Profile
             .ForMember(c => c.Data, opt => opt.MapFrom(f => f))
             .ForMember(c => c.Permissions, opt => opt.Ignore())
             .AfterMap<AfterMapEventActionToDto>();
+        
+        CreateMap<EventAction, EventActionDtoJournalItem>()
+            .ForMember(d => d.ResponsibleManager, s => s.MapFrom(f => f.ResponsibleManager!.Name))
+            .ForMember(d => d.EventActionType, s => s.MapFrom(f => f.EventActionType!.Name))
+            .ForMember(d => d.DeadlineCompletion, s => s.MapFrom(f => f.DeadlineCompletion))
+            .ForMember(d => d.Permissions, s => s.Ignore())
+            .AfterMap<AfterMapEventActionToDtoJournalItem>();
 
         this.CreateMapPropertyNullableId<EventAction, EventActionDtoCard>();
         this.CreateMapDynamicPropertyValue<EventAction, EventActionDtoCard>();

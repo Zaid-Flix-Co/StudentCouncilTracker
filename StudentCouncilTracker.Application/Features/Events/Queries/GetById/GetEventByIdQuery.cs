@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Events.Dto;
 using StudentCouncilTracker.Application.Entities.Events.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;

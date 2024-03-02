@@ -9,6 +9,7 @@ using StudentCouncilTracker.Application.Features.EventActions.Commands.Delete;
 using StudentCouncilTracker.Application.Features.EventActions.Commands.Update;
 using StudentCouncilTracker.Application.Features.EventActions.Queries.Get;
 using StudentCouncilTracker.Application.Features.EventActions.Queries.GetById;
+using StudentCouncilTracker.Application.Features.EventActions.Queries.GetJournal;
 using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.API.Controllers;
@@ -16,10 +17,18 @@ namespace StudentCouncilTracker.API.Controllers;
 public class EventActionController : BaseController
 {
     [AllowAnonymous]
-    [HttpPost("Get/{id:int}")]
+    [HttpGet("Get/{id:int}")]
     public async Task<BaseResponseActionResult<EventActionDto>> Get(int id)
     {
         return Ok(await Mediator.Send(new GetEventActionByIdQuery(id)));
+    }
+    
+    [AllowAnonymous]
+    [HttpGet("GetJournal/{eventId:int}")]
+    public async Task<ActionResult<BaseResponseActionResult<EventActionDtoJournal>>> GetJournal(int eventId)
+    {
+        var result = await Mediator.Send(new GetEventActionJournalQuery(eventId));
+        return Ok(result);
     }
 
     [AllowAnonymous]
@@ -31,9 +40,9 @@ public class EventActionController : BaseController
 
     [AllowAnonymous]
     [HttpPost("Create")]
-    public async Task<ActionResult<OperationResult<EventActionDto>>> Create()
+    public async Task<ActionResult<OperationResult<EventActionDto>>> Create([FromBody] int eventId)
     {
-        var result = await Mediator.Send(new CreateEventActionCommand());
+        var result = await Mediator.Send(new CreateEventActionCommand(eventId));
         return Ok(result);
     }
 
