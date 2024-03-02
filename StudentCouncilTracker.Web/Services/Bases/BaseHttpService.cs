@@ -4,6 +4,8 @@ using StudentCouncilTracker.Application.OperationResults;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using StudentCouncilTracker.Application.Entities.Events.Dto;
+using StudentCouncilTracker.Application.Entities.EventTypes.Dto;
 
 namespace StudentCouncilTracker.Web.Services.Bases;
 
@@ -61,7 +63,7 @@ public abstract class BaseHttpService
 
             var content = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"{uri}, content: {content}");
-            var res = JsonConvert.DeserializeObject<T>(content);
+            var res = JsonConvert.DeserializeObject<OperationResult<T>>(content);
 
             if (res == null)
             {

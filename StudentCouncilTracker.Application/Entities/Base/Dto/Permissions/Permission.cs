@@ -2,9 +2,9 @@
 
 public class Permission
 {
-    public bool Create { get; set; } = true;
+    public bool Create { get; set; }
     
-    public bool Edit { get; set; } = true;
+    public bool Edit { get; set; }
     
-    public bool Delete { get; set; } = true;
+    public bool Delete { get; set; }
 }

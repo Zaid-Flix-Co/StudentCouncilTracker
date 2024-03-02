@@ -1,0 +1,45 @@
+﻿<div class="row">
+    <a href="javascript:void(0)" @onclick="Toggle" @onclick:preventDefault class="col-12 d-flex text-decoration-none align-items-center mb-2 @TitleClass"><span class="me-2">@Title</span> 
+        
+        @if (Collapsed)
+        {
+            <Icon Type="down" Theme="outline"/>
+        }
+        else
+        {
+            <Icon Type="up" Theme="outline"/>
+        }
+    
+    </a>
+    @if (!Collapsed)
+    {
+        <div class="col-12">
+            @Content
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string TitleClass { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment Title { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment Content { get; set; } = null!;
+
+    [Parameter]
+    public bool Collapsed { get; set; }
+
+    [Parameter]
+    public Action<bool> CollapsedChanged { get; set; } = null!;
+
+    async Task Toggle()
+    {
+        Collapsed = !Collapsed;
+
+        if (CollapsedChanged != null)
+            await InvokeAsync(() => { CollapsedChanged(Collapsed); });
+    }
+}

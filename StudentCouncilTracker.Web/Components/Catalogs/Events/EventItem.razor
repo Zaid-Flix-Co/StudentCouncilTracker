@@ -1,0 +1,10 @@
+﻿@page "/catalogs/event/{eventId:int}"
+
+<PageHeadTitle Title="Мероприятия"></PageHeadTitle>
+
+@EventId
+
+@code {
+    [Parameter]
+    public int EventId { get; set; }
+}

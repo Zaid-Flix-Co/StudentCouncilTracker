@@ -14,7 +14,8 @@ public class MapperEventType : Profile
     {
         AllowNullDestinationValues = false;
 
-        CreateMap<EventType, EventTypeDtoData>().AfterMap<AfterMapEventTypeToDtoData>();
+        CreateMap<EventType, EventTypeDtoData>()
+            .AfterMap<AfterMapEventTypeToDtoData>();
 
         CreateMap<EventType, EventTypeDto>()
             .ForMember(c => c.Data, opt => opt.MapFrom(f => f))

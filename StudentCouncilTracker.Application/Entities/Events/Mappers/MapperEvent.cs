@@ -21,6 +21,10 @@ public class MapperEvent : Profile
             .ForMember(c => c.Permissions, opt => opt.Ignore())
             .AfterMap<AfterMapEventToDto>();
 
+        CreateMap<Event, EventDtoJournalItem>()
+            .ForMember(d => d.Permissions, s => s.Ignore())
+            .AfterMap<AfterMapEventToJournalItem>();
+
         this.CreateMapPropertyNullableId<Event, EventDtoCard>();
         this.CreateMapDynamicPropertyValue<Event, EventDtoCard>();
 
