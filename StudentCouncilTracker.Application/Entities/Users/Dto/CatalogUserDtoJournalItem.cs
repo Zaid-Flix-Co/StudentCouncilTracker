@@ -9,5 +9,7 @@ public class CatalogUserDtoJournalItem : IHaveId
 
     public string Name { get; set; }
 
+    public string Role { get; set; }
+
     public Permission Permissions { get; set; }
 }

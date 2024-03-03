@@ -1,35 +1,39 @@
 ﻿@page "/login"
 
-@if (User != null)
-{
-    <EditForm Model="User.Data" OnSubmit="@SignIn">
-        <div class="row">
-            <div class="col-md-8">
-                <FormElement @bind-Control="User.Data.Email"/>
-                <FormElement @bind-Control="User.Data.Password"/>
-            </div>
-        </div>
+<PageHeadTitle Title="Авторизация"/>
 
-        <div class="sticky-bottom">
-            <SaveButton Text="Войти" IsLoading="IsLoading"/>
-            <NavLink href="@("/")">
-                <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
-            </NavLink>
-        </div>
-    </EditForm>
-}
+<Loading Spinning="IsLoading">
+    @if (User != null)
+    {
+        <EditForm Model="User.Data" OnSubmit="@SignIn">
+            <div class="row">
+                <div class="col-md-8">
+                    <FormElement @bind-Control="User.Data.Email" />
+                    <FormElement @bind-Control="User.Data.Password" />
+                </div>
+            </div>
+
+            <div class="sticky-bottom">
+                <SaveButton Text="Войти" IsLoading="IsLoading" />
+                <NavLink href="@("/")">
+                    <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
+                </NavLink>
+            </div>
+        </EditForm>
+    }
+</Loading>
 
 @code {
-    [Inject] 
+    [Inject]
     protected AuthService AuthService { get; set; } = null!;
 
-    [Inject] 
+    [Inject]
     protected CatalogUserService CatalogUserService { get; set; } = null!;
 
-    [Inject] 
+    [Inject]
     protected IJSRuntime JsRuntime { get; set; } = null!;
 
-    [Inject] 
+    [Inject]
     protected NavigationManager NavigationManager { get; set; } = null!;
 
     protected CatalogUserDto User { get; set; }
@@ -59,10 +63,13 @@
 
     private async Task SignIn()
     {
+        IsLoading = true;
         var result = await AuthService.LoginAsync(User);
 
-        if(result.Ok)
+        if (result.Ok)
             await JsRuntime.InvokeVoidAsync("setCookie", "AccessToken", result.Value.AccessToken, 60);
+
+        IsLoading = false;
 
         NavigationManager.NavigateTo("/", true);
     }

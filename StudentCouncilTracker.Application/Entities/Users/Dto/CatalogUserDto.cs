@@ -2,7 +2,4 @@
 
 namespace StudentCouncilTracker.Application.Entities.Users.Dto;
 
-public class CatalogUserDto : EntityDto<CatalogUserDtoData>
-{
-    
-}
+public class CatalogUserDto : EntityDto<CatalogUserDtoData>;

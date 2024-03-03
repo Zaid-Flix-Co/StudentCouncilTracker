@@ -6,6 +6,7 @@ using StudentCouncilTracker.Application.Entities.EventActionTypes.Domain;
 using StudentCouncilTracker.Application.Entities.Events.Domain;
 using StudentCouncilTracker.Application.Entities.EventTypes.Domain;
 using StudentCouncilTracker.Application.Entities.Interfaces;
+using StudentCouncilTracker.Application.Entities.UserRoles.Domain;
 using StudentCouncilTracker.Application.Entities.Users.Domain;
 using StudentCouncilTracker.Persistence.DataSeeders;
 
@@ -18,6 +19,7 @@ public class StudentCouncilTrackerDbContext(DbContextOptions<StudentCouncilTrack
     {
         DataSeederEventType.SeedData(modelBuilder);
         DataSeederEventActionStatus.SeedData(modelBuilder);
+        DataSeederUserRole.SeedData(modelBuilder);
     }
 
     public DbSet<DataProtectionKey> DataProtectionKeys => null!;
@@ -33,4 +35,6 @@ public class StudentCouncilTrackerDbContext(DbContextOptions<StudentCouncilTrack
     public DbSet<EventActionType> EventActionTypes { get; set; } = null!;
 
     public DbSet<EventActionStatus> EventActionStatuses { get; set; } = null!;
+
+    public DbSet<UserRole> UserRoles { get; set; } = null!;
 }

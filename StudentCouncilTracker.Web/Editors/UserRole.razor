@@ -1,0 +1,20 @@
+﻿@inherits SelectBase<TValue, UserRoleDtoCombobox, UserRoleService>
+@typeparam TValue
+
+<Select DataSource="List"
+        @bind-Value="CurrentValueAsInt"
+        LabelName="@nameof(UserRoleDtoCombobox.Name)"
+        ValueName="@nameof(UserRoleDtoCombobox.Id)"
+        TItem="UserRoleDtoCombobox"
+        TItemValue="int?"
+        Placeholder="@Placeholder"
+        ShowArrowIcon="true"
+        OnSearch="OnSearch"
+        OnBlur="OnBlur"
+        OnFocus="OnFocus"
+        Loading="IsLoading"
+        DefaultActiveFirstOption="false"
+        EnableSearch
+        AllowClear="true"
+        OnSelectedItemChanged="OnSelectedItemChanged">
+</Select>

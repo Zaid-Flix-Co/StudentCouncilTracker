@@ -37,6 +37,9 @@
             case DynamicFieldType.EventActionStatus:
                 <EventActionStatus @bind-Value="CurrentValue"/>
                 break;
+            case DynamicFieldType.UserRole:
+                <UserRole @bind-Value="CurrentValue"/>
+                break;
         }
     }
     else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: false })
@@ -69,6 +72,9 @@
                 break;
             case DynamicFieldType.EventActionStatus:
                 @((Control.Value as EventActionStatusDtoCombobox)?.Name)
+                break;
+            case DynamicFieldType.UserRole:
+                @((Control.Value as UserRoleDtoCombobox)?.Name)
                 break;
         }
     }

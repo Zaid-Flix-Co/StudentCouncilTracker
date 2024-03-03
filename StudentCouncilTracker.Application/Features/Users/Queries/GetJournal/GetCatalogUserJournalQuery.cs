@@ -17,6 +17,7 @@ public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository
         var operationResult = new OperationResult<CatalogUserDtoJournal>();
         var users = repository
             .GetAll()
+            .Include(u => u.Role)
             .AsNoTracking();
 
         var journalDto = new CatalogUserDtoJournal

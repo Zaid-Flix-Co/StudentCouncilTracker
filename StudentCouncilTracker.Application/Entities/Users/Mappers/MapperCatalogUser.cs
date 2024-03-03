@@ -22,6 +22,7 @@ public class MapperCatalogUser : Profile
             .AfterMap<AfterMapCatalogUserToDto>();
 
         CreateMap<CatalogUser, CatalogUserDtoJournalItem>()
+            .ForMember(d => d.Role, s => s.MapFrom(f => f.Role!.Name))
             .ForMember(d => d.Permissions, s => s.Ignore())
             .AfterMap<AfterMapCatalogUserToDtoJournalItem>();
 

@@ -9,6 +9,8 @@ using StudentCouncilTracker.Application.Entities.Events.Interfaces;
 using StudentCouncilTracker.Application.Entities.Events.Repositories;
 using StudentCouncilTracker.Application.Entities.EventTypes.Interfaces;
 using StudentCouncilTracker.Application.Entities.EventTypes.Repositories;
+using StudentCouncilTracker.Application.Entities.UserRoles.Interfaces;
+using StudentCouncilTracker.Application.Entities.UserRoles.Repositories;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.FileSavers;
@@ -35,6 +37,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IEventActionRepository, EventActionRepository>();
         services.AddScoped<IEventActionTypeRepository, EventActionTypeRepository>();
         services.AddScoped<IEventActionStatusRepository, EventActionStatusRepository>();
+        services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
         #endregion
 
