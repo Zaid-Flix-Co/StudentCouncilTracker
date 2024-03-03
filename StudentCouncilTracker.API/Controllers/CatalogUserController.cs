@@ -11,6 +11,7 @@ using StudentCouncilTracker.Application.Features.Users.Commands.Delete;
 using StudentCouncilTracker.Application.Features.Users.Commands.Update;
 using StudentCouncilTracker.Application.Features.Users.Queries.Get;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetById;
+using StudentCouncilTracker.Application.Features.Users.Queries.GetJournal;
 using StudentCouncilTracker.Application.FileSavers;
 using StudentCouncilTracker.Application.OperationResults;
 using StudentCouncilTracker.Application.Services.Hubs.Progress;
@@ -20,10 +21,18 @@ namespace StudentCouncilTracker.API.Controllers;
 public class CatalogUserController(IHubContext<HubProgress, IHubProgress> hubProgress, FileSaverService fileSaverService, IHostEnvironment env, ICatalogUserRepository catalogUserRepository) : BaseController
 {
     [AllowAnonymous]
-    [HttpPost("Get/{id:int}")]
+    [HttpGet("Get/{id:int}")]
     public async Task<BaseResponseActionResult<CatalogUserDto>> Get(int id)
     {
         return Ok(await Mediator.Send(new GetUserByIdQuery(id)));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("GetJournal")]
+    public async Task<ActionResult<BaseResponseActionResult<CatalogUserDtoJournal>>> GetJournal()
+    {
+        var result = await Mediator.Send(new GetCatalogUserJournalQuery());
+        return Ok(result);
     }
 
     [AllowAnonymous]

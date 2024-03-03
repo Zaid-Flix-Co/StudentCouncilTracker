@@ -1,0 +1,104 @@
+﻿@layout UserLayout
+
+<PageHeadTitle Title="Пользователи" Count="List?.TotalCount" Loading="IsLoading"></PageHeadTitle>
+
+@if (List is { Permissions.Create: true })
+{
+    <AntDesign.Button OnClick="CreateAsync" Loading="IsCreateLoading" Icon="plus" Type="@ButtonType.Link" Size="small">Добавить</AntDesign.Button>
+}
+
+<Loading Spinning="IsLoading">
+    @if (List != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var item in List.Items)
+                {
+                    <BoxCard>
+                        <Body>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-label">Имя</div>
+                                    <div>@item.Name</div>
+                                </div>
+                            </div>
+                        </Body>
+                        <ActionTemplate>
+                            <Space Size="@("1")">
+                                @if (item.Permissions.Edit)
+                                {
+                                    <SpaceItem>
+                                        <NavLink href="@($"catalogs/user/{item.Id}")" class="px-2">
+                                            <span class="fa fa-pencil"></span>
+                                        </NavLink>
+                                    </SpaceItem>
+                                }
+                                @if (item.Permissions.Delete)
+                                {
+                                    <SpaceItem>
+                                        <DeleteConfirm OnConfirm="async () => { await DeleteAsync(item); }" />
+                                    </SpaceItem>
+                                }
+                            </Space>
+                        </ActionTemplate>
+                    </BoxCard>
+                }
+            </div>
+        </div>
+    }
+</Loading>
+
+@code {
+    [Inject]
+    protected NavigationManager NavigationManager { get; set; } = null!;
+
+    [Inject]
+    protected CatalogUserService CatalogUserService { get; set; } = null!;
+
+    private CatalogUserDtoJournal List { get; set; } = null!;
+
+    private bool IsLoading { get; set; }
+
+    public bool IsCreateLoading { get; set; }
+
+    protected async Task GetListAsync()
+    {
+        IsLoading = true;
+        StateHasChanged();
+        var response = await CatalogUserService.GetJournalAsync();
+
+        if (response.Ok)
+            List = response.Value;
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await GetListAsync();
+    }
+
+    private async Task CreateAsync()
+    {
+        IsCreateLoading = true;
+        StateHasChanged();
+
+        var response = await CatalogUserService.CreateAsync();
+
+        if (response.Ok)
+            NavigationManager.NavigateTo($"catalogs/user/{response.Value.Data.Id}");
+
+        IsCreateLoading = false;
+    }
+
+    private async Task DeleteAsync(CatalogUserDtoJournalItem item)
+    {
+        var response = await CatalogUserService.DeleteAsync(item);
+        if (response.Ok)
+        {
+            await GetListAsync();
+        }
+    }
+}
