@@ -1,10 +1,11 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.EventActionStatuses.Dto;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Web.Services.UserProviders;
 
 namespace StudentCouncilTracker.Web.Services.Catalogs.EventActionStatuses;
 
-public class EventActionStatusService(IHttpClientFactory clientFactory) : BaseCatalogService(clientFactory)
+public class EventActionStatusService(IHttpClientFactory clientFactory, IUserProvider userProvider) : BaseCatalogService(clientFactory, userProvider)
 {
     protected override string BasePath => "EventActionStatus";
 

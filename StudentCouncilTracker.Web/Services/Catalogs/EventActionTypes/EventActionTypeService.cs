@@ -1,10 +1,11 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.EventActionTypes.Dto;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Web.Services.UserProviders;
 
 namespace StudentCouncilTracker.Web.Services.Catalogs.EventActionTypes;
 
-public class EventActionTypeService(IHttpClientFactory clientFactory) : BaseCatalogService(clientFactory)
+public class EventActionTypeService(IHttpClientFactory clientFactory, IUserProvider userProvider) : BaseCatalogService(clientFactory, userProvider)
 {
     protected override string BasePath => "EventActionType";
 

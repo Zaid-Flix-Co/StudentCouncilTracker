@@ -33,7 +33,7 @@ public class EventTypeController : BaseController
     [HttpPost("Create")]
     public async Task<ActionResult<OperationResult<EventTypeDto>>> Create()
     {
-        var result = await Mediator.Send(new CreateEventTypeCommand());
+        var result = await Mediator.Send(new CreateEventTypeCommand(UserName));
         return Ok(result);
     }
 
@@ -41,7 +41,7 @@ public class EventTypeController : BaseController
     [HttpPut("{id}")]
     public async Task<ActionResult<OperationResult<EventTypeDto>>> Put(int id, [FromBody] EventTypeDtoData data)
     {
-        var result = await Mediator.Send(new UpdateEventTypeCommand(id, data));
+        var result = await Mediator.Send(new UpdateEventTypeCommand(id, data, UserName));
         return Ok(result);
     }
 

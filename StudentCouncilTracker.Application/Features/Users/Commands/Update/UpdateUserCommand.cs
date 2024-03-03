@@ -6,7 +6,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Users.Commands.Update;
 
-public record UpdateUserCommand(int Id, CatalogUserDtoData Model) : IRequest<OperationResult<CatalogUserDto>>;
+public record UpdateUserCommand(int Id, CatalogUserDtoData Model, string UserName) : IRequest<OperationResult<CatalogUserDto>>;
 
 public class UpdateCatalogUserCommandHandler(ICatalogUserRepository repository, IMapper mapper) : IRequestHandler<UpdateUserCommand, OperationResult<CatalogUserDto>>
 {
@@ -22,7 +22,7 @@ public class UpdateCatalogUserCommandHandler(ICatalogUserRepository repository, 
             return result;
         }
 
-        var res = stored.Edit(request.Model);
+        var res = stored.Edit(request.Model, request.UserName);
         if(!res.Ok)
         {
             result.AddReasons(res.Reasons);

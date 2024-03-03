@@ -7,6 +7,7 @@ using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.Entities.Users.Domain;
 using StudentCouncilTracker.Application.OperationResults;
 using System.ComponentModel.DataAnnotations;
+using Softius_Extensions_NetStandart;
 
 namespace StudentCouncilTracker.Application.Entities.EventActions.Domain;
 
@@ -42,7 +43,7 @@ public class EventAction : UserCuBase, IHaveId
 
     public virtual Event Event { get; set; }
 
-    public OperationResult Edit(EventActionDtoData data)
+    public OperationResult Edit(EventActionDtoData data, string userName)
     {
         var operationResult = OperationResult.CreateResult();
 
@@ -58,6 +59,9 @@ public class EventAction : UserCuBase, IHaveId
         ResponsibleManagerId = data.ResponsibleManager?.Value.Id == 0 ? null : data.ResponsibleManager?.Value.Id;
         EventActionTypeId = data.EventActionType?.Value.Id == 0 ? null : data.EventActionType?.Value.Id;
         UpdatedDate = DateTime.Now;
+
+        if(userName.IsNotEmpty())
+            UpdatedUserName = userName;
 
         return operationResult;
     }

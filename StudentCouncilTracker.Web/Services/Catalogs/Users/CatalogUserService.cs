@@ -1,10 +1,11 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Web.Services.UserProviders;
 
 namespace StudentCouncilTracker.Web.Services.Catalogs.Users;
 
-public class CatalogUserService(IHttpClientFactory clientFactory) : BaseCatalogService(clientFactory)
+public class CatalogUserService(IHttpClientFactory clientFactory, IUserProvider userProvider) : BaseCatalogService(clientFactory, userProvider)
 {
     protected override string BasePath => "CatalogUser";
 

@@ -7,7 +7,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Events.Commands.Create;
 
-public record CreateEventCommand : IRequest<OperationResult<EventDto>>;
+public record CreateEventCommand(string UserName) : IRequest<OperationResult<EventDto>>;
 
 public class CreateEventCommandHandler(IEventRepository repository, IMapper mapper) : IRequestHandler<CreateEventCommand, OperationResult<EventDto>>
 {
@@ -17,6 +17,7 @@ public class CreateEventCommandHandler(IEventRepository repository, IMapper mapp
         var entity = new Event
         {
             CreatedDate = DateTime.UtcNow,
+            CreatedUserName = request.UserName,
             Name = "Новое мероприятие"
         };
         repository.Insert(entity);

@@ -7,7 +7,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.EventActionTypes.Commands.Create;
 
-public record CreateEventActionTypeCommand : IRequest<OperationResult<EventActionTypeDto>>;
+public record CreateEventActionTypeCommand(string UserName) : IRequest<OperationResult<EventActionTypeDto>>;
 
 public class CreateEventActionTypeCommandHandler(IEventActionTypeRepository repository, IMapper mapper) : IRequestHandler<CreateEventActionTypeCommand, OperationResult<EventActionTypeDto>>
 {
@@ -17,6 +17,7 @@ public class CreateEventActionTypeCommandHandler(IEventActionTypeRepository repo
         var eventActionType = new EventActionType
         {
             CreatedDate = DateTime.UtcNow,
+            CreatedUserName = request.UserName,
             Name = "Новый тип задачи"
         };
         repository.Insert(eventActionType);

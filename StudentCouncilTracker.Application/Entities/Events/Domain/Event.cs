@@ -4,6 +4,7 @@ using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.Entities.Users.Domain;
 using StudentCouncilTracker.Application.OperationResults;
 using System.ComponentModel.DataAnnotations;
+using Softius_Extensions_NetStandart;
 using StudentCouncilTracker.Application.Entities.Events.Dto;
 
 namespace StudentCouncilTracker.Application.Entities.Events.Domain;
@@ -37,7 +38,7 @@ public class Event : UserCuBase, IHaveId
     [Display(Name = "Действующий")]
     public bool IsDeactivated { get; set; }
 
-    public OperationResult Edit(EventDtoData data)
+    public OperationResult Edit(EventDtoData data, string userName)
     {
         var operationResult = OperationResult.CreateResult();
 
@@ -54,6 +55,8 @@ public class Event : UserCuBase, IHaveId
         DateEvent = data.DateEvent?.Value;
         IsDeactivated = data.IsDeactivated!.Value;
         UpdatedDate = DateTime.Now;
+        if(userName.IsNotEmpty())
+            UpdatedUserName = userName;
 
         return operationResult;
     }
