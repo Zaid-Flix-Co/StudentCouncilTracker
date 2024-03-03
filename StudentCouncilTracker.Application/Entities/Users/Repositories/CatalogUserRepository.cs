@@ -21,6 +21,16 @@ public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMap
         return _getList(filter, s => mapper.Map<CatalogUserDtoCard>(s));
     }
 
+    public async Task<CatalogUser> GetByLogin(CatalogUserDtoData user)
+    {
+        var users =
+            context.CatalogUsers
+                .AsNoTracking();
+        var card = await users.FirstOrDefaultAsync(w => w.Email == user.Email!.Value && w.Password == user.Password!.Value);
+
+        return card;
+    }
+
     public async Task<CatalogUser> GetCardByIdAsync(long id)
     {
         var users =

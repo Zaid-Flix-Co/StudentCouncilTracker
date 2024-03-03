@@ -20,6 +20,12 @@ public class CatalogUserService(IHttpClientFactory clientFactory) : BaseCatalogS
         return result;
     }
 
+    public async Task<OperationResult<CatalogUserDto>> GetEmptyAsync()
+    {
+        var result = await SendAsync<CatalogUserDto>($"GetEmpty", HttpMethod.Get);
+        return result;
+    }
+
     public async Task<OperationResult<CatalogUserDtoJournal>> GetJournalAsync()
     {
         var result = await SendAsync<CatalogUserDtoJournal>("GetJournal", HttpMethod.Get);

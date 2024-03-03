@@ -11,6 +11,7 @@ using StudentCouncilTracker.Application.Features.Users.Commands.Delete;
 using StudentCouncilTracker.Application.Features.Users.Commands.Update;
 using StudentCouncilTracker.Application.Features.Users.Queries.Get;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetById;
+using StudentCouncilTracker.Application.Features.Users.Queries.GetEmpty;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetJournal;
 using StudentCouncilTracker.Application.FileSavers;
 using StudentCouncilTracker.Application.OperationResults;
@@ -25,6 +26,13 @@ public class CatalogUserController(IHubContext<HubProgress, IHubProgress> hubPro
     public async Task<BaseResponseActionResult<CatalogUserDto>> Get(int id)
     {
         return Ok(await Mediator.Send(new GetUserByIdQuery(id)));
+    }    
+    
+    [AllowAnonymous]
+    [HttpGet("GetEmpty")]
+    public async Task<BaseResponseActionResult<CatalogUserDto>> GetEmpty()
+    {
+        return Ok(await Mediator.Send(new GetUserEmptyQuery()));
     }
 
     [AllowAnonymous]
