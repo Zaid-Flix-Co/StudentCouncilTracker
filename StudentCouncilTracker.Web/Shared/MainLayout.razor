@@ -1,17 +1,35 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.IdentityModel.Tokens
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+@inject IUserProvider UserProvider
 
 <PageTitle>Управление мероприятиями</PageTitle>
 
 <header>
     <nav>
         <ul>
+        @if (HasAccessToken)
+        {
             <li><a href="/">Главная</a></li>
             <li><a href="events">Мероприятия</a></li>
             <li><a href="users">Пользователи</a></li>
             <li><a href="#">Настройки</a></li>
+        }
         </ul>
     </nav>
-    <button class="login-button">Вход</button>
+    @if (!HasAccessToken)
+    {
+        <button @onclick="@(() => NavigationManager.NavigateTo("/login"))" class="login-button">Вход</button>
+    }
+    else
+    {
+        @if (!string.IsNullOrEmpty(UserProvider.Name))
+        {
+            <span class="user-name">Привет, @UserProvider.Name!</span>
+        }
+        <button @onclick="@(() => Logout())" class="logout-button">Выход</button>
+    }
 </header>
 
 <div class="page">
@@ -19,3 +37,32 @@
         @Body
     </main>
 </div>
+
+@code {
+    private bool HasAccessToken { get; set; }
+
+    private async Task<string> GetCookieValue(string key)
+    {
+        return await JsRuntime.InvokeAsync<string>("getCookie", key);
+    }
+
+    private async Task Logout()
+    {
+        await JsRuntime.InvokeVoidAsync("deleteCookie", "AccessToken");
+        NavigationManager.NavigateTo("", true);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var result = await GetCookieValue("AccessToken");
+
+            if (!result.IsNullOrEmpty())
+                UserProvider.ParseJwt(result);
+
+            HasAccessToken = !string.IsNullOrEmpty(result);
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,69 @@
+﻿@page "/login"
+
+@if (User != null)
+{
+    <EditForm Model="User.Data" OnSubmit="@SignIn">
+        <div class="row">
+            <div class="col-md-8">
+                <FormElement @bind-Control="User.Data.Email"/>
+                <FormElement @bind-Control="User.Data.Password"/>
+            </div>
+        </div>
+
+        <div class="sticky-bottom">
+            <SaveButton Text="Войти" IsLoading="IsLoading"/>
+            <NavLink href="@("/")">
+                <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
+            </NavLink>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Inject] 
+    protected AuthService AuthService { get; set; } = null!;
+
+    [Inject] 
+    protected CatalogUserService CatalogUserService { get; set; } = null!;
+
+    [Inject] 
+    protected IJSRuntime JsRuntime { get; set; } = null!;
+
+    [Inject] 
+    protected NavigationManager NavigationManager { get; set; } = null!;
+
+    protected CatalogUserDto User { get; set; }
+
+    private bool IsLoading { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await GetUser();
+            StateHasChanged();
+        }
+    }
+
+    private async Task GetUser()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        var result = await CatalogUserService.GetEmptyAsync();
+        if (result.Ok)
+            User = result.Value;
+
+        IsLoading = false;
+    }
+
+    private async Task SignIn()
+    {
+        var result = await AuthService.LoginAsync(User);
+
+        if(result.Ok)
+            await JsRuntime.InvokeVoidAsync("setCookie", "AccessToken", result.Value.AccessToken, 60);
+
+        NavigationManager.NavigateTo("/", true);
+    }
+}
