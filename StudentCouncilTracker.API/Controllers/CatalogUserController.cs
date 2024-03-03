@@ -54,7 +54,7 @@ public class CatalogUserController(IHubContext<HubProgress, IHubProgress> hubPro
     [HttpPost("Create")]
     public async Task<ActionResult<OperationResult<CatalogUserDto>>> Create()
     {
-        var result = await Mediator.Send(new CreateUserCommand());
+        var result = await Mediator.Send(new CreateUserCommand(UserName));
         return Ok(result);
     }
 
@@ -62,7 +62,7 @@ public class CatalogUserController(IHubContext<HubProgress, IHubProgress> hubPro
     [HttpPut("{id}")]
     public async Task<ActionResult<OperationResult<CatalogUserDto>>> Put(int id, [FromBody] CatalogUserDtoData data)
     {
-        var result = await Mediator.Send(new UpdateUserCommand(id, data));
+        var result = await Mediator.Send(new UpdateUserCommand(id, data, UserName));
         return Ok(result);
     }
 

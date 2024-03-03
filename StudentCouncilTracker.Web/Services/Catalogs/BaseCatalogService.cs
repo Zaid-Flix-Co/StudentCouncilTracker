@@ -1,9 +1,10 @@
 ﻿using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Web.Services.UserProviders;
 
 namespace StudentCouncilTracker.Web.Services.Catalogs;
 
-public abstract class BaseCatalogService(IHttpClientFactory clientFactory) : BaseService(clientFactory)
+public abstract class BaseCatalogService(IHttpClientFactory clientFactory, IUserProvider userProvider) : BaseService(clientFactory, userProvider)
 {
     public Task<OperationResult<ListDto>> GetListAsync(string query = "")
     {

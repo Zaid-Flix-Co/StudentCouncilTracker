@@ -1,10 +1,11 @@
 ﻿using StudentCouncilTracker.Application.Entities.Tokens.Dto;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Web.Services.UserProviders;
 
 namespace StudentCouncilTracker.Web.Services.Catalogs.Auth;
 
-public class AuthService(IHttpClientFactory clientFactory) : BaseCatalogService(clientFactory)
+public class AuthService(IHttpClientFactory clientFactory, IUserProvider userProvider) : BaseCatalogService(clientFactory, userProvider)
 {
     protected override string BasePath => "Auth";
 

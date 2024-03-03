@@ -1,4 +1,5 @@
-﻿using StudentCouncilTracker.Application.Entities.Base.UserCU;
+﻿using Softius_Extensions_NetStandart;
+using StudentCouncilTracker.Application.Entities.Base.UserCU;
 using StudentCouncilTracker.Application.Entities.EventActionStatuses.Dto;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.OperationResults;
@@ -11,7 +12,7 @@ public class EventActionStatus : UserCuBase, IHaveId
 
     public required string Name { get; set; }
 
-    public OperationResult Edit(EventActionStatusDtoData data)
+    public OperationResult Edit(EventActionStatusDtoData data, string userName)
     {
         var operationResult = OperationResult.CreateResult();
 
@@ -23,6 +24,9 @@ public class EventActionStatus : UserCuBase, IHaveId
 
         Name = data.Name.Value;
         UpdatedDate = DateTime.Now;
+
+        if(userName.IsNotEmpty())
+            UpdatedUserName = userName;
 
         return operationResult;
     }

@@ -6,7 +6,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Commands.Update;
 
-public record UpdateEventActionCommand(int Id, EventActionDtoData Model) : IRequest<OperationResult<EventActionDto>>;
+public record UpdateEventActionCommand(int Id, EventActionDtoData Model, string UserName) : IRequest<OperationResult<EventActionDto>>;
 
 public class UpdateEventActionCommandHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<UpdateEventActionCommand, OperationResult<EventActionDto>>
 {
@@ -22,7 +22,7 @@ public class UpdateEventActionCommandHandler(IEventActionRepository repository, 
             return result;
         }
 
-        var res = stored.Edit(request.Model);
+        var res = stored.Edit(request.Model, request.UserName);
         if(!res.Ok)
         {
             result.AddReasons(res.Reasons);

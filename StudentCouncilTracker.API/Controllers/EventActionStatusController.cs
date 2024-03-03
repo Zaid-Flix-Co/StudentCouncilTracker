@@ -33,7 +33,7 @@ public class EventActionStatusController : BaseController
     [HttpPost("Create")]
     public async Task<ActionResult<OperationResult<EventActionStatusDto>>> Create()
     {
-        var result = await Mediator.Send(new CreateEventActionStatusCommand());
+        var result = await Mediator.Send(new CreateEventActionStatusCommand(UserName));
         return Ok(result);
     }
 
@@ -41,7 +41,7 @@ public class EventActionStatusController : BaseController
     [HttpPut("{id}")]
     public async Task<ActionResult<OperationResult<EventActionStatusDto>>> Put(int id, [FromBody] EventActionStatusDtoData data)
     {
-        var result = await Mediator.Send(new UpdateEventActionStatusCommand(id, data));
+        var result = await Mediator.Send(new UpdateEventActionStatusCommand(id, data, UserName));
         return Ok(result);
     }
 

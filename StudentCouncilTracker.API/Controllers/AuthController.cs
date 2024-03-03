@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using StudentCouncilTracker.Application.Entities.Users.Dto;
-using System.Text;
-using StudentCouncilTracker.Application.Features.Users.Queries.GetByLogin;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using StudentCouncilTracker.Application.Entities.Tokens.Dto;
+using StudentCouncilTracker.Application.Entities.Users.Dto;
+using StudentCouncilTracker.Application.Features.Users.Queries.GetByLogin;
+using StudentCouncilTracker.Application.OperationResults;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using StudentCouncilTracker.Application.Entities.Tokens.Dto;
-using StudentCouncilTracker.Application.OperationResults;
+using System.Text;
 
 namespace StudentCouncilTracker.API.Controllers;
 

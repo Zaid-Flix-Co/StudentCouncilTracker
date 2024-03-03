@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Softius_Extensions_NetStandart;
 using StudentCouncilTracker.Application.Entities.Base.UserCU;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
@@ -25,7 +26,7 @@ public class CatalogUser : UserCuBase, IHaveId
     [Display(Name = "Действующий")]
     public bool IsDeactivated { get; set; }
 
-    public OperationResult Edit(CatalogUserDtoData data)
+    public OperationResult Edit(CatalogUserDtoData data, string userName)
     {
         var operationResult = OperationResult.CreateResult();
 
@@ -40,6 +41,9 @@ public class CatalogUser : UserCuBase, IHaveId
         PhoneNumber = data.PhoneNumber?.Value;
         Email = data.Email?.Value;
         IsDeactivated = data.IsDeactivated.Value;
+
+        if (userName.IsNotEmpty())
+            UpdatedUserName = userName;
 
         return operationResult;
     }
