@@ -1,0 +1,70 @@
+﻿@page "/catalogs/user/{UserId:int}"
+
+<PageHeadTitle Title="Пользователи"></PageHeadTitle>
+
+@if (User != null)
+{
+    <EditForm Model="User.Data" OnSubmit="@SaveUser">
+        <div class="row">
+            <div class="col-md-8">
+                <FormElement @bind-Control="User.Data.Name" />
+                <FormElement @bind-Control="User.Data.Password" />
+                <FormElement @bind-Control="User.Data.Email" />
+                <FormElement @bind-Control="User.Data.PhoneNumber" />
+                <FormElement @bind-Control="User.Data.IsDeactivated" />
+            </div>
+        </div>
+
+        <div class="sticky-bottom">
+            <SaveButton IsLoading="IsLoading" />
+            <NavLink href="@("users")">
+                <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
+            </NavLink>
+        </div>
+    </EditForm>
+
+    <br />
+}
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    [Inject]
+    protected CatalogUserService CatalogUserService { get; set; } = null!;
+
+    protected CatalogUserDto User { get; set; } = null!;
+
+    private bool IsLoading { get; set; }
+
+    protected async Task GetUser()
+    {
+        var result = await CatalogUserService.GetCardAsync(UserId);
+        if (result.Ok)
+            User = result.Value;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await GetUser();
+            StateHasChanged();
+        }
+    }
+
+    protected async Task SaveUser()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        var result = await CatalogUserService.PutCardAsync(User);
+        if (result.Ok)
+        {
+            await GetUser();
+            StateHasChanged();
+        }
+
+        IsLoading = false;
+    }
+}

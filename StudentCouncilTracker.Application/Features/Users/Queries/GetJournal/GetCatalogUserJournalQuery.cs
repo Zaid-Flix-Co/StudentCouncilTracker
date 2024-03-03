@@ -15,13 +15,13 @@ public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository
     public async Task<OperationResult<CatalogUserDtoJournal>> Handle(GetCatalogUserJournalQuery request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult<CatalogUserDtoJournal>();
-        var catalogUsers = repository
+        var users = repository
             .GetAll()
             .AsNoTracking();
 
         var journalDto = new CatalogUserDtoJournal
         {
-            Items = await catalogUsers.Select(s => mapper.Map<CatalogUserDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
+            Items = await users.Select(s => mapper.Map<CatalogUserDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
             Permissions = new JournalPermission
             {
                 Create = true,
@@ -29,7 +29,7 @@ public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository
                 CanChangePrintSetting = true
             },
             QueryString = string.Empty,
-            TotalCount = await catalogUsers.CountAsync(cancellationToken: cancellationToken)
+            TotalCount = await users.CountAsync(cancellationToken: cancellationToken)
         };
 
         operationResult.SetValue(journalDto);
