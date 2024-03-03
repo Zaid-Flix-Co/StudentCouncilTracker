@@ -67,6 +67,9 @@
     [Inject]
     protected EventService EventService { get; set; } = null!;
 
+    [Inject]
+    protected IUserProvider UserProvider { get; set; } = null!;
+
     private EventDtoJournal List { get; set; } = null!;
 
     private bool IsLoading { get; set; }
@@ -77,7 +80,7 @@
     {
         IsLoading = true;
         StateHasChanged();
-        var response = await EventService.GetJournalAsync();
+        var response = await EventService.GetJournalAsync(UserProvider.UserId);
 
         if (response.Ok)
             List = response.Value;

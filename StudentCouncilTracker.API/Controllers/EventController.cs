@@ -24,10 +24,10 @@ public class EventController : BaseController
     }
     
     [AllowAnonymous]
-    [HttpGet("GetJournal")]
-    public async Task<ActionResult<BaseResponseActionResult<EventDtoJournal>>> GetJournal()
+    [HttpGet("GetJournal/{userId:int}")]
+    public async Task<ActionResult<BaseResponseActionResult<EventDtoJournal>>> GetJournal(int userId)
     {
-        var result = await Mediator.Send(new GetEventJournalQuery());
+        var result = await Mediator.Send(new GetEventJournalQuery(userId));
         return Ok(result);
     }
 

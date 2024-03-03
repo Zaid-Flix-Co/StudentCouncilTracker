@@ -29,6 +29,7 @@ public class AuthController : BaseController
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Value.Data.Name?.Value!),
+                new Claim("UserId", user.Value.Data.Id.ToString())
             };
             
             var tokenOptions = new JwtSecurityToken(

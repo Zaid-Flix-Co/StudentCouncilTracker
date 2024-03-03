@@ -5,6 +5,8 @@ namespace StudentCouncilTracker.Web.Services.UserProviders;
 
 public class UserProvider : IUserProvider
 {
+    public string UserId { get; set; }
+
     public string Name { get; set; }
 
     public void ParseJwt(string token)
@@ -19,6 +21,11 @@ public class UserProvider : IUserProvider
 
             if (nameClaim != null)
                 Name = nameClaim.Value;
+
+            var userIdClaim = claims.FirstOrDefault(c => c.Type == "UserId");
+
+            if (userIdClaim != null)
+                UserId = userIdClaim.Value;
         }
     }
 }
