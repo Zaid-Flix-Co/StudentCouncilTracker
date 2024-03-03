@@ -2,6 +2,7 @@
 using Softius_Extensions_NetStandart;
 using StudentCouncilTracker.Application.Entities.Base.UserCU;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
+using StudentCouncilTracker.Application.Entities.UserRoles.Domain;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.OperationResults;
 
@@ -26,6 +27,11 @@ public class CatalogUser : UserCuBase, IHaveId
     [Display(Name = "Действующий")]
     public bool IsDeactivated { get; set; }
 
+    public int? RoleId { get; set; }
+
+    [Display(Name = "Роль")]
+    public virtual UserRole? Role { get; set; }
+
     public OperationResult Edit(CatalogUserDtoData data, string userName)
     {
         var operationResult = OperationResult.CreateResult();
@@ -41,6 +47,7 @@ public class CatalogUser : UserCuBase, IHaveId
         PhoneNumber = data.PhoneNumber?.Value;
         Email = data.Email?.Value;
         IsDeactivated = data.IsDeactivated.Value;
+        RoleId = data.Role is { Value.Id: 0 } ? null : data.Role?.Value.Id;
 
         if (userName.IsNotEmpty())
             UpdatedUserName = userName;

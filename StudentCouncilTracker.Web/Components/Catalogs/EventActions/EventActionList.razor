@@ -112,9 +112,8 @@
     private async Task DeleteAsync(EventActionDtoJournalItem item)
     {
         var response = await EventActionService.DeleteAsync(item);
+
         if (response.Ok)
-        {
             await GetListAsync();
-        }
     }
 }

@@ -3,6 +3,7 @@ using StudentCouncilTracker.Application.DynamicFields.Attributes;
 using StudentCouncilTracker.Application.DynamicFields.Enums;
 using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
+using StudentCouncilTracker.Application.Entities.UserRoles.Dto.Combobox;
 
 namespace StudentCouncilTracker.Application.Entities.Users.Dto;
 
@@ -24,4 +25,7 @@ public class CatalogUserDtoData : EntityDtoData, IHaveId
 
     [DynamicField(DynamicFieldType.CheckBox)]
     public DynamicFieldValue<bool> IsDeactivated { get; set; }
+
+    [DynamicField(DynamicFieldType.UserRole)]
+    public DynamicFieldValue<UserRoleDtoCombobox>? Role { get; set; }
 }

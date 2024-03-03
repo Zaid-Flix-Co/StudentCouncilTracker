@@ -86,11 +86,6 @@ public enum DynamicFieldType
     Posts,
 
     /// <summary>
-    /// The user role
-    /// </summary>
-    UserRole,
-
-    /// <summary>
     /// The division
     /// </summary>
     Division,
@@ -167,4 +162,6 @@ public enum DynamicFieldType
     EventActionType,
 
     EventActionStatus,
+
+    UserRole,
 }

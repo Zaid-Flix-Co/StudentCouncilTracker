@@ -21,6 +21,10 @@
                                     <div class="text-label">Имя</div>
                                     <div>@item.Name</div>
                                 </div>
+                                <div class="col">
+                                    <div class="text-label">Должность</div>
+                                    <div>@item.Role</div>
+                                </div>
                             </div>
                         </Body>
                         <ActionTemplate>
@@ -96,9 +100,8 @@
     private async Task DeleteAsync(CatalogUserDtoJournalItem item)
     {
         var response = await CatalogUserService.DeleteAsync(item);
+
         if (response.Ok)
-        {
             await GetListAsync();
-        }
     }
 }

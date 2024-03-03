@@ -25,6 +25,7 @@ public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMap
     {
         var users =
             context.CatalogUsers
+                .Include(u => u.Role)
                 .AsNoTracking();
         var card = await users.FirstOrDefaultAsync(w => w.Email == user.Email!.Value && w.Password == user.Password!.Value);
 
