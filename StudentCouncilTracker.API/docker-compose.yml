@@ -17,7 +17,7 @@ services:
     container_name: api-student-council-tracker
     build: 
       context: ../
-      dockerfile: ./StudentCouncilTracker.WebApi/Dockerfile
+      dockerfile: ./StudentCouncilTracker.API/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     networks:
