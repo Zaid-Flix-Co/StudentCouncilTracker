@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StudentCouncilTracker.API.Helpers;
 using StudentCouncilTracker.Application.DependencyInjection;
 using StudentCouncilTracker.Persistence.DependencyInjection;
 
