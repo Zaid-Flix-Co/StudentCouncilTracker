@@ -24,6 +24,8 @@ public class EventActionRepository(IStudentCouncilTrackerDbContext context, IMap
     public async Task<EventAction> GetCardByIdAsync(long id)
     {
         var eventActions = context.EventActions
+            .Include(e => e.Event)
+            .Include(e => e.Status)
             .Include(e => e.ResponsibleManager)
             .Include(e => e.EventActionType)
             .AsNoTracking();
