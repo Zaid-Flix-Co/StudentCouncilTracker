@@ -12,7 +12,12 @@ public static class PersistenceServiceCollectionExtensions
     {
         bool.TryParse(configuration["Logging:Console:Enabled"], out var consoleEnabled);
 
+        #if (DEBUG)
         var connectionString = configuration["ConnectionStrings:StudentCouncilTracker"];
+        #elif (RELEASE)
+        var connectionString = configuration["ConnectionStrings:ReleaseConnection"];
+        #endif
+        
         services.AddDbContext<StudentCouncilTrackerDbContext>(options =>
         {
             if (consoleEnabled)
