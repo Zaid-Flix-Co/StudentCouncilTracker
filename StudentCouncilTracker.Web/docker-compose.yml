@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  web:
+    container_name: student-council-tracker-client
+    build: 
+      context: ../
+      dockerfile: ./StudentCouncilTracker.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8596:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
