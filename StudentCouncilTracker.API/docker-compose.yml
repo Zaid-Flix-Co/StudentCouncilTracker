@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+  db-student-council-tracker:
+    container_name: db-student-council-tracker
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: StudentCouncilTracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123qweASD!@#
+    ports: 
+      - "5538:5432" 
+    networks:
+      - student-council-tracker-dev
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  api-student-council-tracker:
+    container_name: api-student-council-tracker
+    build: 
+      context: ../
+      dockerfile: ./StudentCouncilTracker.WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - student-council-tracker-dev
+    ports:
+      - "8584:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - db-student-council-tracker
+volumes:
+  postgres-data:
+networks:
+  student-council-tracker-dev:
+    driver: bridge

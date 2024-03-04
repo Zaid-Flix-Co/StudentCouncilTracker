@@ -20,6 +20,9 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(opt =>
         {
+            #if RELEASE
+            opt.DocumentFilter<PrefixDocumentFilter>();
+            #endif
             opt.SwaggerDoc("v1", new OpenApiInfo { Title = "StudentCouncilTracker.API", Version = "v1" });
             opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
