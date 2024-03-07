@@ -92,7 +92,7 @@
         var response = await CatalogUserService.CreateAsync();
 
         if (response.Ok)
-            NavigationManager.NavigateTo($"catalogs/user/{response.Value.Data.Id}");
+            NavigationManager.NavigateToPage($"catalogs/user/{response.Value.Data.Id}");
 
         IsCreateLoading = false;
     }

@@ -100,7 +100,7 @@
         var response = await EventService.CreateAsync();
 
         if (response.Ok)
-            NavigationManager.NavigateTo($"catalogs/event/{response.Value.Data.Id}");
+            NavigationManager.NavigateToPage($"catalogs/event/{response.Value.Data.Id}");
 
         IsCreateLoading = false;
     }
