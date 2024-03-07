@@ -11,7 +11,7 @@ public static class NavigationManagerExtension
         #if DEBUG
         navigationManager.NavigateTo(url, forceLoad);
         #elif RELEASE
-        navigationManager.NavigateTo($"{SubDomain}/{skt}", forceLoad);
+        navigationManager.NavigateTo($"{SubDomain}/{url}", forceLoad);
         #endif
     }
 }
