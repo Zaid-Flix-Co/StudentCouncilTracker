@@ -3,12 +3,27 @@
 @namespace StudentCouncilTracker.Web.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+@{
+#if (DEBUG)
+    var pathBase = string.Empty;
+#elif (RELEASE)
+    var pathBase = "skt";
+#endif
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="~/skt" />
+    @if (string.IsNullOrWhiteSpace(pathBase))
+    {
+        <base href="/" />
+    }
+    else
+    {
+        <base href="@($"/{pathBase}/")" />
+    }
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="StudentCouncilTracker.Web.styles.css" rel="stylesheet" />
@@ -33,5 +48,9 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    <link href="_content/AntDesign/css/ant-design-blazor.css" rel="stylesheet">
+    <script src="_content/AntDesign/js/ant-design-blazor.js"></script>
+    <script antblazor-js></script>
+    <link antblazor-css />
 </body>
 </html>
