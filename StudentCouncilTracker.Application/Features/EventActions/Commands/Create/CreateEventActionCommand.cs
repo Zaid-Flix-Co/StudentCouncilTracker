@@ -2,6 +2,7 @@
 using MediatR;
 using StudentCouncilTracker.Application.Entities.EventActions.Domain;
 using StudentCouncilTracker.Application.Entities.EventActions.Dto;
+using StudentCouncilTracker.Application.Entities.EventActions.Enums;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
@@ -19,7 +20,8 @@ public class CreateEventActionCommandHandler(IEventActionRepository repository, 
             CreatedDate = DateTime.UtcNow,
             CreatedUserName = request.UserName,
             Name = "Новое задание",
-            EventId = request.EventId
+            EventId = request.EventId,
+            StatusId = (int)ActionStatus.AwaitingExecution
         };
         repository.Insert(eventAction);
         await repository.SaveChangesAsync();
