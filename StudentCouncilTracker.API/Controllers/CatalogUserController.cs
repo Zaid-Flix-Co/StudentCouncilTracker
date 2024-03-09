@@ -4,7 +4,6 @@ using StudentCouncilTracker.API.Models.ActionResults;
 using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Base.Filters;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
-using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.Features.Users.Commands.Create;
 using StudentCouncilTracker.Application.Features.Users.Commands.Delete;
 using StudentCouncilTracker.Application.Features.Users.Commands.Update;
