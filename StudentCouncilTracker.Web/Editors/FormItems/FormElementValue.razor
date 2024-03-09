@@ -40,6 +40,9 @@
             case DynamicFieldType.UserRole:
                 <UserRole @bind-Value="CurrentValue"/>
                 break;
+            case DynamicFieldType.Password:
+                <AntDesign.InputPassword Placeholder="" Type="Password" @bind-Value="CurrentValueAsString" AllowClear="true" OnBlur="OnBlur" DebounceMilliseconds="3000" />
+                break;
         }
     }
     else if (Control is { IsEditable: false, IsVisible: true, IsValueHidden: false })
