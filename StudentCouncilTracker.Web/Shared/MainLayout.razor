@@ -20,7 +20,7 @@
     </nav>
     @if (!HasAccessToken)
     {
-        <button @onclick="@(() => NavigationManager.NavigateToPage("/login"))" class="login-button">Вход</button>
+        <button @onclick="@(() => NavigationManager.NavigateToPage("login"))" class="login-button">Вход</button>
     }
     else
     {
