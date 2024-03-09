@@ -2,13 +2,14 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.Base.Dto.Permissions;
+using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Users.Queries.GetJournal;
 
-public record GetCatalogUserJournalQuery : IRequest<OperationResult<CatalogUserDtoJournal>>;
+public record GetCatalogUserJournalQuery(Role Role) : IRequest<OperationResult<CatalogUserDtoJournal>>;
 
 public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository, IMapper mapper) : IRequestHandler<GetCatalogUserJournalQuery, OperationResult<CatalogUserDtoJournal>>
 {
@@ -25,7 +26,7 @@ public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository
             Items = await users.Select(s => mapper.Map<CatalogUserDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
             Permissions = new JournalPermission
             {
-                Create = true,
+                Create = request.Role == Role.Chairman,
                 CanPrint = true,
                 CanChangePrintSetting = true
             },

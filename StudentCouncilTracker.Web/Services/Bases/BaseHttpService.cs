@@ -11,12 +11,12 @@ public abstract class BaseHttpService
 {
     private readonly HttpClient _client;
 
-    private readonly IUserProvider UserProvider;
+    private readonly IUserProvider _userProvider;
 
     protected BaseHttpService(HttpClient httpClient, IUserProvider userProvider)
     {
         _client = httpClient;
-        UserProvider = userProvider;
+        _userProvider = userProvider;
         _client.Timeout = TimeSpan.FromMinutes(5);
     }
 
@@ -53,11 +53,13 @@ public abstract class BaseHttpService
             var uri = $"api/{BasePath}/{action}";
             var message = CreateMessage(uri, method, model);
 
-            if (!string.IsNullOrEmpty(UserProvider.Name))
+            if (!string.IsNullOrEmpty(_userProvider.Name))
             {
-                var userNameAscii = Convert.ToBase64String(Encoding.UTF8.GetBytes(UserProvider.Name));
+                var userNameAscii = Convert.ToBase64String(Encoding.UTF8.GetBytes(_userProvider.Name));
                 message.Headers.Add("UserName", userNameAscii);
             }
+
+            message.Headers.Add("Role", ((int)_userProvider.Role).ToString());
 
             var response = await _client.SendAsync(message);
             switch (response.StatusCode)

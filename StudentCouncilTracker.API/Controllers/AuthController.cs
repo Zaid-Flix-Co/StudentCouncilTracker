@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using StudentCouncilTracker.Application.Entities.Tokens.Dto;
+using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetByLogin;
 using StudentCouncilTracker.Application.OperationResults;
@@ -29,6 +30,7 @@ public class AuthController : BaseController
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Value.Data.Name?.Value!),
+                new Claim("Role", user.Value.Data.Role?.Value.Id.ToString() ?? Role.Member.ToString())
             };
             
             var tokenOptions = new JwtSecurityToken(
