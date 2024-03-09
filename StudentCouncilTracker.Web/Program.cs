@@ -27,7 +27,11 @@ builder.Services.AddScoped<IUserProvider, UserProvider>();
 
 builder.Services.AddHttpClient("StudentCouncilTrackerWebApi", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["APP_API"]!);
+    #if(DEBUG)
+    client.BaseAddress = new Uri(builder.Configuration["APP_API_DEBUG"]!);
+    #elif (RELEASE)
+    client.BaseAddress = new Uri(builder.Configuration["APP_API_RELEASE"]!);
+    #endif
     client.Timeout = TimeSpan.FromMinutes(15);
 });
 

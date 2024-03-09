@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using StudentCouncilTracker.Web.Services.UserProviders;
-using Microsoft.IdentityModel.Tokens;
 
 namespace StudentCouncilTracker.Web.Services.Bases;
 
