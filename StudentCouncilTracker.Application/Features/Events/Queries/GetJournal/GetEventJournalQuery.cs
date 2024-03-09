@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.Base.Dto.Permissions;
 using StudentCouncilTracker.Application.Entities.Events.Dto;
 using StudentCouncilTracker.Application.Entities.Events.Interfaces;
+using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Events.Queries.GetJournal;
 
-public record GetEventJournalQuery : IRequest<OperationResult<EventDtoJournal>>;
+public record GetEventJournalQuery(Role Role) : IRequest<OperationResult<EventDtoJournal>>;
 
 public class GetEventJournalQueryHandler(IEventRepository repository, IMapper mapper) : IRequestHandler<GetEventJournalQuery, OperationResult<EventDtoJournal>>
 {
@@ -27,7 +28,7 @@ public class GetEventJournalQueryHandler(IEventRepository repository, IMapper ma
             Items = await events.Select(s => mapper.Map<EventDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
             Permissions = new JournalPermission
             {
-                Create = true,
+                Create = request.Role == Role.Chairman,
                 CanPrint = true,
                 CanChangePrintSetting = true
             },

@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace StudentCouncilTracker.Web.Services.UserProviders;
@@ -6,6 +7,8 @@ namespace StudentCouncilTracker.Web.Services.UserProviders;
 public class UserProvider : IUserProvider
 {
     public string Name { get; set; }
+
+    public Role Role { get; set; }
 
     public void ParseJwt(string token)
     {
@@ -19,6 +22,14 @@ public class UserProvider : IUserProvider
 
             if (nameClaim != null)
                 Name = nameClaim.Value;
+
+            var roleClaim = claims.FirstOrDefault(c => c.Type == "Role");
+
+            if (roleClaim != null)
+                if (Enum.TryParse(typeof(Role), roleClaim.Value, out var enumValue))
+                {
+                    Role = (Role)enumValue;
+                }
         }
     }
 }

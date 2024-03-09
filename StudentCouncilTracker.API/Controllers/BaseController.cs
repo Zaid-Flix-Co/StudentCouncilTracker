@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using System.Text;
 
 namespace StudentCouncilTracker.API.Controllers;
@@ -19,8 +20,22 @@ public abstract class BaseController : ControllerBase
         get
         {
             var userNameHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "UserName").Value;
-            var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue));
+            var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue!));
+
             return decodedUserName;
+        }
+    }
+
+    protected Role Role
+    {
+        get
+        {
+            var roleHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "Role").Value;
+
+            if (Enum.TryParse(typeof(Role), roleHeaderValue.ToString(), out var enumValue))
+                return (Role)enumValue;
+
+            return Role.None;
         }
     }
 }
