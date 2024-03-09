@@ -2,11 +2,12 @@
 using MediatR;
 using StudentCouncilTracker.Application.Entities.Events.Dto;
 using StudentCouncilTracker.Application.Entities.Events.Interfaces;
+using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Events.Queries.GetById;
 
-public record GetEventByIdQuery(int Id) : IRequest<OperationResult<EventDto>>;
+public record GetEventByIdQuery(int Id, string UserName, Role Role) : IRequest<OperationResult<EventDto>>;
 
 public class GetEventByIdQueryHandler(IEventRepository repository, IMapper mapper) : IRequestHandler<GetEventByIdQuery, OperationResult<EventDto>>
 {

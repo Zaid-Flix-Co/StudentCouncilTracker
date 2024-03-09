@@ -1,10 +1,7 @@
-﻿namespace StudentCouncilTracker.Application.DynamicFields.Mappers;
+﻿using StudentCouncilTracker.Application.Services.UserProviders;
 
-/// <summary>
-/// Class AfterMapEntityToEntityDtoData.
-/// Implements the <see cref="GameLoyaltySystem.Application.DynamicFields.Mappers.AfterMapEntityToEntityDtoDataBase{System.Object, System.Object}" />
-/// </summary>
-/// <seealso cref="GameLoyaltySystem.Application.DynamicFields.Mappers.AfterMapEntityToEntityDtoDataBase{System.Object, System.Object}" />
-public class AfterMapEntityToEntityDtoData : AfterMapEntityToEntityDtoDataBase<object, object>
+namespace StudentCouncilTracker.Application.DynamicFields.Mappers;
+
+public class AfterMapEntityToEntityDtoData(IUserProvider userProvider) : AfterMapEntityToEntityDtoDataBase<object, object>(userProvider)
 {
 }

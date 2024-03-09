@@ -65,10 +65,10 @@ public static class DynamicFieldHelper
         {
             label = dynProp.Label ?? label;
             labelHint = dynProp.LabelHint ?? labelHint;
-            isVisible = dynProp.IsVisible ?? isVisible;
-            isEditable = dynProp.IsEditable ?? isEditable;
-            isValueHidden = dynProp.IsValueHidden ?? isValueHidden;
-            validators = dynProp.Validators ?? validators;
+            isVisible = dynProp.IsVisible;
+            isEditable = dynProp.IsEditable;
+            isValueHidden = dynProp.IsValueHidden;
+            validators = dynProp.Validators;
         }
 
         return new DynamicFieldInfo
