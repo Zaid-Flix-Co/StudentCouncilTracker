@@ -25,8 +25,6 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserRoleService>();
 builder.Services.AddScoped<IUserProvider, UserProvider>();
 
-builder.Services.AddSignalR();
-
 builder.Services.AddHttpClient("StudentCouncilTrackerWebApi", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["APP_API"]!);
