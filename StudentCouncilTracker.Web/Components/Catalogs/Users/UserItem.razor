@@ -18,7 +18,7 @@
 
         <div class="sticky-bottom">
             <SaveButton IsLoading="IsLoading" />
-            <NavLink href="@("users")">
+            <NavLink href="@($"{NavigateLink}/users")">
                 <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
             </NavLink>
         </div>
@@ -38,6 +38,8 @@
 
     private bool IsLoading { get; set; }
 
+    private string NavigateLink { get; set; } = string.Empty;
+
     protected async Task GetUser()
     {
         var result = await CatalogUserService.GetCardAsync(UserId);
@@ -49,6 +51,10 @@
     {
         if (firstRender)
         {
+            #if (RELEASE)
+            NavigateLink = "/skt";
+            #endif
+        
             await GetUser();
             StateHasChanged();
         }

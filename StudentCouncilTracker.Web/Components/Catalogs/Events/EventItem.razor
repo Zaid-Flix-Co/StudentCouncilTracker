@@ -18,7 +18,7 @@
 
         <div class="sticky-bottom">
             <SaveButton IsLoading="IsLoading" />
-            <NavLink href="@("events")">
+            <NavLink href="@($"{NavigateLink}/events")">
                 <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
             </NavLink>
         </div>
@@ -39,6 +39,8 @@
 
     private bool IsLoading { get; set; }
 
+    private string NavigateLink { get; set; } = string.Empty;
+
     protected async Task GetEvent()
     {
         var result = await EventService.GetCardAsync(EventId);
@@ -50,6 +52,10 @@
     {
         if (firstRender)
         {
+            #if (RELEASE)
+            NavigateLink = "/skt";
+            #endif
+
             await GetEvent();
             StateHasChanged();
         }
