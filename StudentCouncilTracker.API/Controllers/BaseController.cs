@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.Services.UserProviders;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StudentCouncilTracker.API.Controllers;
 
@@ -21,10 +22,15 @@ public abstract class BaseController(IUserProvider userProvider) : ControllerBas
         get
         {
             var userNameHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "UserName").Value;
-            var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue!));
+            if(!userNameHeaderValue.IsNullOrEmpty())
+            {
+                var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue!));
 
-            userProvider.Name = decodedUserName;
-            return decodedUserName;
+                userProvider.Name = decodedUserName;
+                return decodedUserName;
+            }
+
+            return string.Empty;
         }
     }
 

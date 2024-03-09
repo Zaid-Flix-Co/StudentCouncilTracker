@@ -21,7 +21,7 @@ public class EventController(IUserProvider userProvider) : BaseController(userPr
     [HttpGet("Get/{id:int}")]
     public async Task<BaseResponseActionResult<EventDto>> Get(int id)
     {
-        return Ok(await Mediator.Send(new GetEventByIdQuery(id)));
+        return Ok(await Mediator.Send(new GetEventByIdQuery(id, UserName, Role)));
     }
     
     [AllowAnonymous]

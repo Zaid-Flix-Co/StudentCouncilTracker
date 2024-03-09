@@ -7,11 +7,11 @@ public class DynamicFieldInfo
 {
     private string? _fieldName;
 
-    public bool? IsEditable { get; set; }
+    public bool IsEditable { get; set; }
 
-    public bool? IsVisible { get; set; }
+    public bool IsVisible { get; set; }
 
-    public bool? IsValueHidden { get; set; }
+    public bool IsValueHidden { get; set; }
 
     public string? Label { get; set; }
 
