@@ -14,7 +14,7 @@ public class CatalogUserDtoData : EntityDtoData, IHaveId
     [DynamicField(DynamicFieldType.Textbox)]
     public DynamicFieldValue<string>? Name { get; set; }
 
-    [DynamicField(DynamicFieldType.Textbox)]
+    [DynamicField(DynamicFieldType.Password)]
     public DynamicFieldValue<string>? Password { get; set; }
 
     [DynamicField(DynamicFieldType.Textbox)]

@@ -130,31 +130,6 @@ public enum DynamicFieldType
     /// </summary>
     Year,
 
-    /// <summary>
-    /// The catalog organization
-    /// </summary>
-    CatalogOrganization,
-
-    /// <summary>
-    /// The catalog stock
-    /// </summary>
-    CatalogStock,
-
-    /// <summary>
-    /// The catalog bonus
-    /// </summary>
-    CatalogBonus,
-
-    /// <summary>
-    /// The catalog sticker
-    /// </summary>
-    CatalogSticker,
-
-    /// <summary>
-    /// The catalog combination
-    /// </summary>
-    CatalogCombination,
-
     EventType,
 
     CatalogUser,
@@ -164,4 +139,6 @@ public enum DynamicFieldType
     EventActionStatus,
 
     UserRole,
+
+    Password
 }
