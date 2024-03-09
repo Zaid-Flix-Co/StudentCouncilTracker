@@ -10,10 +10,11 @@ using StudentCouncilTracker.Application.Features.UserRoles.Commands.Update;
 using StudentCouncilTracker.Application.Features.UserRoles.Queries.Get;
 using StudentCouncilTracker.Application.Features.UserRoles.Queries.GetById;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.UserProviders;
 
 namespace StudentCouncilTracker.API.Controllers;
 
-public class UserRoleController : BaseController
+public class UserRoleController(IUserProvider userProvider) : BaseController(userProvider)
 {
     [AllowAnonymous]
     [HttpGet("Get/{id:int}")]

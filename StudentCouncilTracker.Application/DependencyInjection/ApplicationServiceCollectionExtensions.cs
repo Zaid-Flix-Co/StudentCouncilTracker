@@ -14,6 +14,7 @@ using StudentCouncilTracker.Application.Entities.UserRoles.Repositories;
 using StudentCouncilTracker.Application.Entities.Users.Interfaces;
 using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.FileSavers;
+using StudentCouncilTracker.Application.Services.UserProviders;
 using System.Reflection;
 
 namespace StudentCouncilTracker.Application.DependencyInjection;
@@ -41,6 +42,7 @@ public static class ApplicationServiceCollectionExtensions
 
         #endregion
 
+        services.AddScoped<IUserProvider, UserProvider>();
         services.AddScoped<FileSaverService>();
 
         services.AddHttpContextAccessor();
