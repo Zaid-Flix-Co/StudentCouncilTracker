@@ -15,7 +15,7 @@
 
             <div class="sticky-bottom">
                 <SaveButton Text="Войти" IsLoading="IsLoading" />
-                <NavLink href="@("/")">
+                <NavLink href="@("")">
                     <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
                 </NavLink>
             </div>
@@ -45,7 +45,7 @@
     [Inject]
     protected NavigationManager NavigationManager { get; set; } = null!;
 
-    protected CatalogUserDto User { get; set; }
+    protected CatalogUserDto User { get; set; } = null!;
 
     private bool IsLoading { get; set; }
 
