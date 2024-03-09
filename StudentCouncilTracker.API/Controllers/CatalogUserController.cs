@@ -4,6 +4,7 @@ using StudentCouncilTracker.API.Models.ActionResults;
 using StudentCouncilTracker.Application.Entities.Base.Dto;
 using StudentCouncilTracker.Application.Entities.Base.Filters;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
+using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.Features.Users.Commands.Create;
 using StudentCouncilTracker.Application.Features.Users.Commands.Delete;
 using StudentCouncilTracker.Application.Features.Users.Commands.Update;
@@ -36,7 +37,7 @@ public class CatalogUserController(IUserProvider userProvider) : BaseController(
     [HttpGet("GetJournal")]
     public async Task<ActionResult<BaseResponseActionResult<CatalogUserDtoJournal>>> GetJournal()
     {
-        var result = await Mediator.Send(new GetCatalogUserJournalQuery(Role));
+        var result = await Mediator.Send(new GetCatalogUserJournalQuery(UserName, Role));
         return Ok(result);
     }
 
@@ -56,7 +57,7 @@ public class CatalogUserController(IUserProvider userProvider) : BaseController(
     }
 
     [AllowAnonymous]
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult<OperationResult<CatalogUserDto>>> Put(int id, [FromBody] CatalogUserDtoData data)
     {
         var result = await Mediator.Send(new UpdateUserCommand(id, data, UserName));
@@ -64,7 +65,7 @@ public class CatalogUserController(IUserProvider userProvider) : BaseController(
     }
 
     [AllowAnonymous]
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<ActionResult<OperationResult>> Delete(int id)
     {
         var result = await Mediator.Send(new DeleteUserCommand(id));

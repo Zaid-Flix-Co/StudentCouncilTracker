@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.Base.Dto.Permissions;
 using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
+using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Queries.GetJournal;
 
-public record GetEventActionJournalQuery(int EventId) : IRequest<OperationResult<EventActionDtoJournal>>;
+public record GetEventActionJournalQuery(int EventId, string UserName, Role Role) : IRequest<OperationResult<EventActionDtoJournal>>;
 
 public class GetEventActionJournalQueryHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<GetEventActionJournalQuery, OperationResult<EventActionDtoJournal>>
 {
@@ -17,11 +18,13 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
         var operationResult = new OperationResult<EventActionDtoJournal>();
         var eventActions = repository
             .GetAll()
-            .Where(e => e.EventId == request.EventId)
-            .Include(e => e.EventActionType)
-            .Include(e => e.Status)
-            .Include(e => e.ResponsibleManager)
-            .OrderByDescending(e => e.CreatedDate)
+            .Where(e => e!.EventId == request.EventId)
+            .Include(e => e!.EventActionType)
+            .Include(e => e!.Status)
+            .Include(e => e!.ResponsibleManager)
+            .Include(e => e!.Event)
+                .ThenInclude(e => e.ResponsibleUser)
+            .OrderByDescending(e => e!.CreatedDate)
             .AsNoTracking();
 
         var journalDto = new EventActionDtoJournal
