@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
+using StudentCouncilTracker.Application.Services.UserProviders;
 using System.Text;
 
 namespace StudentCouncilTracker.API.Controllers;
@@ -9,7 +10,7 @@ namespace StudentCouncilTracker.API.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/[controller]")]
-public abstract class BaseController : ControllerBase
+public abstract class BaseController(IUserProvider userProvider) : ControllerBase
 {
     private IMediator _mediator = null!;
 
@@ -22,6 +23,7 @@ public abstract class BaseController : ControllerBase
             var userNameHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "UserName").Value;
             var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue!));
 
+            userProvider.Name = decodedUserName;
             return decodedUserName;
         }
     }
@@ -33,8 +35,12 @@ public abstract class BaseController : ControllerBase
             var roleHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "Role").Value;
 
             if (Enum.TryParse(typeof(Role), roleHeaderValue.ToString(), out var enumValue))
+            {
+                userProvider.Role = (Role)enumValue;
                 return (Role)enumValue;
+            }
 
+            userProvider.Role = Role.None;
             return Role.None;
         }
     }

@@ -12,10 +12,11 @@ using StudentCouncilTracker.Application.Features.Users.Queries.GetById;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetEmpty;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetJournal;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.UserProviders;
 
 namespace StudentCouncilTracker.API.Controllers;
 
-public class CatalogUserController : BaseController
+public class CatalogUserController(IUserProvider userProvider) : BaseController(userProvider)
 {
     [AllowAnonymous]
     [HttpGet("Get/{id:int}")]

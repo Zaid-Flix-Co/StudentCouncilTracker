@@ -6,6 +6,7 @@ using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
 using StudentCouncilTracker.Application.Features.Users.Queries.GetByLogin;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.UserProviders;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,7 +14,7 @@ using System.Text;
 namespace StudentCouncilTracker.API.Controllers;
 
 [Route("api/[controller]/[action]")]
-public class AuthController : BaseController
+public class AuthController(IUserProvider userProvider) : BaseController(userProvider)
 {
     [HttpPost]
     [AllowAnonymous]

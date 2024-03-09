@@ -10,10 +10,11 @@ using StudentCouncilTracker.Application.Features.EventActionStatuses.Commands.Up
 using StudentCouncilTracker.Application.Features.EventActionStatuses.Queries.Get;
 using StudentCouncilTracker.Application.Features.EventActionStatuses.Queries.GetById;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.UserProviders;
 
 namespace StudentCouncilTracker.API.Controllers;
 
-public class EventActionStatusController : BaseController
+public class EventActionStatusController(IUserProvider userProvider) : BaseController(userProvider)
 {
     [AllowAnonymous]
     [HttpGet("Get/{id:int}")]
