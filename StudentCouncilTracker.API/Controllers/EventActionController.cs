@@ -28,7 +28,7 @@ public class EventActionController(IUserProvider userProvider) : BaseController(
     [HttpGet("GetJournal/{eventId:int}")]
     public async Task<ActionResult<BaseResponseActionResult<EventActionDtoJournal>>> GetJournal(int eventId)
     {
-        var result = await Mediator.Send(new GetEventActionJournalQuery(eventId));
+        var result = await Mediator.Send(new GetEventActionJournalQuery(eventId, UserName, Role));
         return Ok(result);
     }
 

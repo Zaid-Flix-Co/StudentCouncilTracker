@@ -9,7 +9,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Events.Queries.GetJournal;
 
-public record GetEventJournalQuery(Role Role) : IRequest<OperationResult<EventDtoJournal>>;
+public record GetEventJournalQuery(string UserName, Role Role) : IRequest<OperationResult<EventDtoJournal>>;
 
 public class GetEventJournalQueryHandler(IEventRepository repository, IMapper mapper) : IRequestHandler<GetEventJournalQuery, OperationResult<EventDtoJournal>>
 {
@@ -18,9 +18,9 @@ public class GetEventJournalQueryHandler(IEventRepository repository, IMapper ma
         var operationResult = new OperationResult<EventDtoJournal>();
         var events = repository
             .GetAll()
-            .Include(e => e.EventType)
-            .Include(e => e.ResponsibleUser)
-            .OrderByDescending(e => e.CreatedDate)
+            .Include(e => e!.EventType)
+            .Include(e => e!.ResponsibleUser)
+            .OrderByDescending(e => e!.CreatedDate)
             .AsNoTracking();
 
         var journalDto = new EventDtoJournal

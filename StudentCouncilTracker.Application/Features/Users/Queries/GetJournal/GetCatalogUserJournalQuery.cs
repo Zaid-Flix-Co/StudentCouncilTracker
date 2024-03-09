@@ -9,7 +9,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Users.Queries.GetJournal;
 
-public record GetCatalogUserJournalQuery(Role Role) : IRequest<OperationResult<CatalogUserDtoJournal>>;
+public record GetCatalogUserJournalQuery(string UserName, Role Role) : IRequest<OperationResult<CatalogUserDtoJournal>>;
 
 public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository, IMapper mapper) : IRequestHandler<GetCatalogUserJournalQuery, OperationResult<CatalogUserDtoJournal>>
 {
@@ -18,7 +18,7 @@ public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository
         var operationResult = new OperationResult<CatalogUserDtoJournal>();
         var users = repository
             .GetAll()
-            .Include(u => u.Role)
+            .Include(u => u!.Role)
             .AsNoTracking();
 
         var journalDto = new CatalogUserDtoJournal
