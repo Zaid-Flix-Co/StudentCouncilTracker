@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using StudentCouncilTracker.Web.Services.Catalogs.Auth;
 using StudentCouncilTracker.Web.Services.Catalogs.EventActions;
 using StudentCouncilTracker.Web.Services.Catalogs.EventActionStatuses;
@@ -32,6 +33,11 @@ builder.Services.AddHttpClient("StudentCouncilTrackerWebApi", client =>
 
 var app = builder.Build();
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -42,6 +48,8 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
