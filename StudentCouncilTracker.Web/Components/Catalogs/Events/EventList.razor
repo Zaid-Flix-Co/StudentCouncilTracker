@@ -1,11 +1,24 @@
 ﻿@layout EventLayout
 
-<PageHeadTitle Title="Мероприятия" Count="List?.TotalCount" Loading="IsLoading"></PageHeadTitle>
+<PageHeadTitle Title="Мероприятия" Count="List?.TotalCount" Loading="IsLoading" />
 
 @if (List is { Permissions.Create: true })
 {
     <AntDesign.Button OnClick="CreateAsync" Loading="IsCreateLoading" Icon="plus" Type="@ButtonType.Link" Size="small">Добавить</AntDesign.Button>
 }
+
+<div>
+    <Switch @bind-Checked="IsActive" OnClick="@GetFilteredList">
+        <CheckedChildrenTemplate>
+            <Icon Type="check" />
+        </CheckedChildrenTemplate>
+        <UnCheckedChildrenTemplate>
+            <Icon Type="close" />
+        </UnCheckedChildrenTemplate>
+    </Switch>
+</div>
+
+<br />
 
 <Loading Spinning="IsLoading">
     @if (List != null)
@@ -70,11 +83,13 @@
 
     public bool IsCreateLoading { get; set; }
 
+    private bool IsActive { get; set; }
+
     protected async Task GetListAsync()
     {
         IsLoading = true;
         StateHasChanged();
-        var response = await EventService.GetJournalAsync();
+        var response = await EventService.GetJournalAsync(IsActive);
 
         if (response.Ok)
             List = response.Value;
@@ -106,8 +121,11 @@
     {
         var response = await EventService.DeleteAsync(item);
         if (response.Ok)
-        {
             await GetListAsync();
-        }
+    }
+
+    private async Task GetFilteredList()
+    {
+        await GetListAsync();
     }
 }

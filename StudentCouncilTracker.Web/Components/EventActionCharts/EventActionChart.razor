@@ -20,7 +20,7 @@
     {
         if(firstRender)
         {
-            var result = await EventService.GetJournalAsync();
+            var result = await EventService.GetJournalAsync(false);
 
             if (result.Ok)
                 EventDtoJournal = result.Value;
