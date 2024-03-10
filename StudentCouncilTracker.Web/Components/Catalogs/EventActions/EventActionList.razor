@@ -4,7 +4,10 @@
 
 @if (List.Items != null)
 {
-    <AntDesign.Button OnClick="CreateAsync" Loading="IsCreateLoading" Icon="plus" Type="@ButtonType.Link" Size="small">Добавить</AntDesign.Button>
+    @if (List.Permissions.Create)
+    {
+        <AntDesign.Button OnClick="CreateAsync" Loading="IsCreateLoading" Icon="plus" Type="@ButtonType.Link" Size="small">Добавить</AntDesign.Button>
+    }
 
     <Loading Spinning="IsLoading">
         <div class="row">

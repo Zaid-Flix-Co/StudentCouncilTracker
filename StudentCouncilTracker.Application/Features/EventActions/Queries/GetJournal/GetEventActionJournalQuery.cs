@@ -6,18 +6,22 @@ using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.UserProviders;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Queries.GetJournal;
 
 public record GetEventActionJournalQuery(bool Flag, int Id, string UserName, Role Role) : IRequest<OperationResult<EventActionDtoJournal>>;
 
-public class GetEventActionJournalQueryHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<GetEventActionJournalQuery, OperationResult<EventActionDtoJournal>>
+public class GetEventActionJournalQueryHandler(IEventActionRepository repository, IMapper mapper, IUserProvider userProvider) : IRequestHandler<GetEventActionJournalQuery, OperationResult<EventActionDtoJournal>>
 {
     public async Task<OperationResult<EventActionDtoJournal>> Handle(GetEventActionJournalQuery request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult<EventActionDtoJournal>();
         var eventActions = repository
             .GetAll();
+
+        var isChairman = request.Role == Role.Chairman;
+        var isResponsibleUser = request.UserName == userProvider.Name;
 
         if (request.Flag)
         {
@@ -30,6 +34,9 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
                 .ThenInclude(e => e.ResponsibleUser)
                 .OrderByDescending(e => e!.CreatedDate)
                 .AsNoTracking();
+
+            isResponsibleUser = (await eventActions.FirstOrDefaultAsync(cancellationToken: cancellationToken))?.Event.ResponsibleUser?.Name ==
+                                request.UserName;
         }
         else
         {
@@ -42,6 +49,8 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
                 .ThenInclude(e => e.ResponsibleUser)
                 .OrderByDescending(e => e!.CreatedDate)
                 .AsNoTracking();
+
+            isResponsibleUser = false;
         }
 
         var journalDto = new EventActionDtoJournal
@@ -49,7 +58,7 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
             Items = await eventActions.Select(s => mapper.Map<EventActionDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
             Permissions = new JournalPermission
             {
-                Create = true,
+                Create = isChairman || isResponsibleUser,
                 CanPrint = true,
                 CanChangePrintSetting = true
             },
