@@ -1,0 +1,31 @@
+﻿@using Title = AntDesign.Charts.Title
+
+@if (EventDtoJournal != null)
+{
+    <Tabs>
+        @foreach (var item in EventDtoJournal.Items)
+        {
+            <EventActionChartTabPane Event="item"/>
+        }
+    </Tabs>
+}
+
+@code {
+    [Inject]
+    protected EventService EventService { get; set; } = null!;
+
+    private EventDtoJournal EventDtoJournal { get; set; } = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var result = await EventService.GetJournalAsync();
+
+            if (result.Ok)
+                EventDtoJournal = result.Value;
+
+            StateHasChanged();
+        }
+    }
+}

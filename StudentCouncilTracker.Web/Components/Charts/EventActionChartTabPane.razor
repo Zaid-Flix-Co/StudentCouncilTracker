@@ -1,0 +1,83 @@
+﻿@if(_data != null)
+{
+    <TabPane Key="@Event.Id.ToString()">
+        <TabTemplate>@Event.Name</TabTemplate>
+        <ChildContent>
+            <Pie Data="_data" Config="_config"/>
+        </ChildContent>
+    </TabPane>
+}
+
+@code
+{
+    [Parameter]
+    public EventDtoJournalItem Event { get; set; }
+
+    [Inject]
+    protected EventActionService EventActionService { get; set; } = null!;
+
+    private static List<EventActionDtoJournalItem> EventActionDtoJournal { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var result = await EventActionService.GetJournalByEventIdAsync(Event.Id);
+
+            if (result.Ok)
+                EventActionDtoJournal = result.Value.Items;
+
+            _data =
+            [
+                new
+                {
+                    type = "Ожидает выполнения",
+                    value = EventActionDtoJournal.Count(e => e.Status == "Ожидает выполнения")
+                },
+                new
+                {
+                    type = "В работе",
+                    value = EventActionDtoJournal.Count(e => e.Status == "В работе")
+                },
+                new
+                {
+                    type = "На проверке",
+                    value = EventActionDtoJournal.Count(e => e.Status == "На проверке")
+                },
+                new
+                {
+                    type = "Завершена",
+                    value = EventActionDtoJournal.Count(e => e.Status == "Завершена")
+                }
+            ];
+
+            StateHasChanged();
+        }
+    }
+
+    private object[] _data = null!;
+
+    private readonly PieConfig _config = new()
+    {
+        ForceFit = true,
+        Title = new AntDesign.Charts.Title
+        {
+            Visible = true,
+            Text = "Pie Chart-Graphic Tab Spider Layout"
+        },
+        Description = new Description
+        {
+            Visible = true,
+            Text = "When the type of the pie chart label is set to spider, the labels are divided into two groups, and they are displayed in alignment by pulling lines on both sides of the chart. Generally speaking, the labels of the spider layout are less likely to block each other."
+        },
+        Radius = 0.8,
+        AngleField = "value",
+        ColorField = "type",
+        Label = new PieLabelConfig
+        {
+            Visible = true,
+            Type = "spider"
+        }
+    };
+
+}
