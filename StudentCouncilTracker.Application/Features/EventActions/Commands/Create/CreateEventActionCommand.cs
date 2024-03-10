@@ -5,6 +5,7 @@ using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Enums;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.Email;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Commands.Create;
 

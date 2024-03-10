@@ -16,6 +16,7 @@ using StudentCouncilTracker.Application.Entities.Users.Repositories;
 using StudentCouncilTracker.Application.FileSavers;
 using StudentCouncilTracker.Application.Services.UserProviders;
 using System.Reflection;
+using StudentCouncilTracker.Application.Services.Email;
 
 namespace StudentCouncilTracker.Application.DependencyInjection;
 
@@ -43,6 +44,7 @@ public static class ApplicationServiceCollectionExtensions
         #endregion
 
         services.AddScoped<IUserProvider, UserProvider>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<FileSaverService>();
 
         services.AddHttpContextAccessor();
