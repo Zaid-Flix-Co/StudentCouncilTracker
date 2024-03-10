@@ -2,6 +2,7 @@
 using StudentCouncilTracker.Application.Entities.EventActions.Domain;
 using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Dto.Combobox;
+using StudentCouncilTracker.Application.Entities.EventActions.Enums;
 using StudentCouncilTracker.Application.Extensions;
 
 namespace StudentCouncilTracker.Application.Entities.EventActions.Mappers;
@@ -27,6 +28,7 @@ public class MapperEventAction : Profile
             .ForMember(d => d.Event, s => s.MapFrom(f => $"{f.Event!.Name} [Дата проведения: {f.Event.DateEvent!.Value:d}]"))
             .ForMember(d => d.EventActionType, s => s.MapFrom(f => f.EventActionType!.Name))
             .ForMember(d => d.Status, s => s.MapFrom(f => f.Status!.Name))
+            .ForMember(d => d.IsCompleted, s => s.MapFrom(f => f.Status!.Id == (int)ActionStatus.Completed))
             .ForMember(d => d.DeadlineCompletion, s => s.MapFrom(f => f.DeadlineCompletion))
             .ForMember(d => d.Permissions, s => s.Ignore())
             .AfterMap<AfterMapEventActionToDtoJournalItem>();

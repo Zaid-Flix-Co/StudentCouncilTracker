@@ -1,4 +1,5 @@
 ﻿@page "/catalogs/user/{UserId:int}"
+@using StudentCouncilTracker.Application.Entities.UserRoles.Enums
 
 <PageHeadTitle Title="Пользователи"></PageHeadTitle>
 
@@ -11,8 +12,18 @@
                 <FormElement @bind-Control="User.Data.Password" />
                 <FormElement @bind-Control="User.Data.Email" />
                 <FormElement @bind-Control="User.Data.PhoneNumber" />
-                <FormElement @bind-Control="User.Data.Role" />
-                <FormElement @bind-Control="User.Data.IsDeactivated" />
+                @if (UserProvider.Role == Role.Chairman)
+                {
+                    <FormElement @bind-Control="User.Data.Role"/>
+                    <FormElement @bind-Control="User.Data.IsDeactivated" />
+                }
+                else
+                {
+                    User.Data.Role!.IsEditable = false;
+                    <FormElement @bind-Control="User.Data.Role" />
+                    User.Data.IsDeactivated.IsEditable = false;
+                    <FormElement @bind-Control="User.Data.IsDeactivated" />
+                }
             </div>
         </div>
 
@@ -33,6 +44,9 @@
 
     [Inject]
     protected CatalogUserService CatalogUserService { get; set; } = null!;
+
+    [Inject]
+    protected IUserProvider UserProvider { get; set; } = null!;
 
     protected CatalogUserDto User { get; set; } = null!;
 

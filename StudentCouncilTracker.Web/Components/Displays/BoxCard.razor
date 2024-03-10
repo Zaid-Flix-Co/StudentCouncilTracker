@@ -1,4 +1,4 @@
-﻿<div class="box-card @ShadowClass mb-2">
+﻿<div class="box-card @BackgroundClass @ShadowClass mb-2">
     <div class="box-card__body">
         <div class="row">
             <div class="col">
@@ -23,6 +23,15 @@
 @code {
     private string ShadowClass => $"is-{Shadow.ToString().ToLower()}-shadow";
 
+    private string BackgroundClass
+    {
+        get
+        {
+            var body = IsDeactivated ? "success" : "warning";
+            return $"is-{body}-background";
+        }
+    }
+
     [Parameter]
     public RenderFragment ChildContent { get; set; } = null!;
 
@@ -34,4 +43,7 @@
 
     [Parameter]
     public BoxCardShadow Shadow { get; set; } = BoxCardShadow.Hover;
+
+    [Parameter]
+    public bool IsDeactivated { get; set; }
 }

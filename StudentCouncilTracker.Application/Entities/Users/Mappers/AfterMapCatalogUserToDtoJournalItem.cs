@@ -11,11 +11,13 @@ public class AfterMapCatalogUserToDtoJournalItem(IUserProvider userProvider) : I
 {
     public void Process(CatalogUser source, CatalogUserDtoJournalItem destination, ResolutionContext context)
     {
+        var isChairman = userProvider.Role == Role.Chairman;
+
         destination.Permissions = new Permission
         {
-            Create = userProvider.Role == Role.Chairman,
-            Edit = userProvider.Role == Role.Chairman,
-            Delete = userProvider.Role == Role.Chairman
+            Create = isChairman,
+            Edit = isChairman,
+            Delete = isChairman
         };
     }
 }

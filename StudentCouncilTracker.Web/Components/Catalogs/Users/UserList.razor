@@ -14,7 +14,7 @@
             <div class="col-md-12">
                 @foreach (var item in List.Items)
                 {
-                    <BoxCard>
+                    <BoxCard IsDeactivated="@item.IsDeactivated">
                         <Body>
                             <div class="row">
                                 <div class="col">
@@ -29,7 +29,7 @@
                         </Body>
                         <ActionTemplate>
                             <Space Size="@("1")">
-                                @if (item.Permissions.Edit)
+                                @if (item.Permissions.Edit || item.Name == UserProvider.Name)
                                 {
                                     <SpaceItem>
                                         <NavLink href="@($"catalogs/user/{item.Id}")" class="px-2">
@@ -58,6 +58,9 @@
 
     [Inject]
     protected CatalogUserService CatalogUserService { get; set; } = null!;
+
+    [Inject] 
+    protected IUserProvider UserProvider { get; set; } = null!;
 
     private CatalogUserDtoJournal List { get; set; } = null!;
 
