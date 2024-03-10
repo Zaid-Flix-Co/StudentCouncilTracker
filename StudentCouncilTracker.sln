@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentCouncilTracker.Persi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentCouncilTracker.Web", "StudentCouncilTracker.Web\StudentCouncilTracker.Web.csproj", "{86F7C0CD-4485-49A7-A17D-77CD9ADFF32C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentCouncilTracker.Desktop.Admin", "StudentCouncilTracker.Desktop.Admin\StudentCouncilTracker.Desktop.Admin.csproj", "{E43B6F9C-FD83-490F-88FF-8C0AF2DB8743}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{86F7C0CD-4485-49A7-A17D-77CD9ADFF32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F7C0CD-4485-49A7-A17D-77CD9ADFF32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F7C0CD-4485-49A7-A17D-77CD9ADFF32C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E43B6F9C-FD83-490F-88FF-8C0AF2DB8743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E43B6F9C-FD83-490F-88FF-8C0AF2DB8743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E43B6F9C-FD83-490F-88FF-8C0AF2DB8743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E43B6F9C-FD83-490F-88FF-8C0AF2DB8743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
