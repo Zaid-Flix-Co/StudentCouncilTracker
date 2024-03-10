@@ -16,6 +16,9 @@ public class EventActionDtoData : EntityDtoData, IHaveId
     [DynamicField(DynamicFieldType.Textbox)]
     public DynamicFieldValue<string> Name { get; set; } = null!;
 
+    [DynamicField(DynamicFieldType.TextArea)]
+    public DynamicFieldValue<string> Description { get; set; } = null!;
+
     [DynamicField(DynamicFieldType.CatalogUser)]
     public DynamicFieldValue<CatalogUserDtoCombobox>? ResponsibleManager { get; set; }
 
