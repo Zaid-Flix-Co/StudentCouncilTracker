@@ -11,7 +11,7 @@ using X.PagedList;
 
 namespace StudentCouncilTracker.Application.Entities.UserRoles.Repositories;
 
-public class UserRoleRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<UserRole>((DbContext)context, mapper),
+public class UserRoleRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<UserRole>((DbContext)context),
         IUserRoleRepository
 {
     #region GETLIST

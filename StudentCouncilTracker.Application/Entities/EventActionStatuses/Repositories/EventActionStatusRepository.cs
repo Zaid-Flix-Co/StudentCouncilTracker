@@ -11,14 +11,16 @@ using X.PagedList;
 
 namespace StudentCouncilTracker.Application.Entities.EventActionStatuses.Repositories;
 
-public class EventActionStatusRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<EventActionStatus>((DbContext)context, mapper),
+public class EventActionStatusRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<EventActionStatus>((DbContext)context),
         IEventActionStatusRepository
 {
+    private readonly IMapper _mapper = mapper;
+
     #region GETLIST
 
     public Task<ListDto> GetList(ListFilter filter)
     {
-        return _getList(filter, s => mapper.Map<EventActionStatusDtoCard>(s));
+        return _getList(filter, s => _mapper.Map<EventActionStatusDtoCard>(s));
     }
 
     public async Task<EventActionStatus> GetCardByIdAsync(long id)

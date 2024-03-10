@@ -94,7 +94,7 @@
     public EventCallback OnBlur { get; set; }
 
     [Parameter]
-    public DynamicFieldValue<T> Control { get; set; }
+    public DynamicFieldValue<T> Control { get; set; } = null!;
 
     bool _currentValueAsBool;
 

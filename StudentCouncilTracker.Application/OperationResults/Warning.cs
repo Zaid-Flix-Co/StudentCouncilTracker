@@ -6,7 +6,7 @@ public class Warning : IWarning
 {
     protected Warning()
     {
-        Metadata = new Dictionary<string, object>();
+        Metadata = [];
     }
 
     public Warning(string message) : this()
@@ -14,7 +14,7 @@ public class Warning : IWarning
         Message = message;
     }
 
-    public string Message { get; }
+    public string Message { get; } = null!;
 
     public Dictionary<string, object> Metadata { get; }
 

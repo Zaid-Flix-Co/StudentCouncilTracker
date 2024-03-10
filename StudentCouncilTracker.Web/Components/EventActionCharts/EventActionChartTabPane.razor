@@ -16,7 +16,7 @@
     [Inject]
     protected EventActionService EventActionService { get; set; } = null!;
 
-    private static List<EventActionDtoJournalItem> EventActionDtoJournal { get; set; }
+    private static List<EventActionDtoJournalItem> EventActionDtoJournal { get; set; } = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -63,12 +63,12 @@
         Title = new AntDesign.Charts.Title
         {
             Visible = true,
-            Text = "Pie Chart-Graphic Tab Spider Layout"
+            Text = string.Empty
         },
         Description = new Description
         {
             Visible = true,
-            Text = "When the type of the pie chart label is set to spider, the labels are divided into two groups, and they are displayed in alignment by pulling lines on both sides of the chart. Generally speaking, the labels of the spider layout are less likely to block each other."
+            Text = string.Empty
         },
         Radius = 0.8,
         AngleField = "value",

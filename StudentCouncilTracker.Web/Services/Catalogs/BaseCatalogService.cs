@@ -16,7 +16,7 @@ public abstract class BaseCatalogService(IHttpClientFactory clientFactory, IUser
         return Task.FromResult(new OperationResult<ListDto>());
     }
 
-    public Dictionary<string, string> GetParameters(string query, Dictionary<string, string> parameters = null)
+    public Dictionary<string, string> GetParameters(string query, Dictionary<string, string> parameters = null!)
     {
         parameters ??= new Dictionary<string, string>();
 

@@ -45,7 +45,7 @@ public abstract class BaseHttpService
         return message;
     }
 
-    protected async Task<OperationResult<T>> SendAsync<T>(string action, HttpMethod method, object model = null)
+    protected async Task<OperationResult<T>> SendAsync<T>(string action, HttpMethod method, object model = null!)
         where T : class, new()
     {
         try

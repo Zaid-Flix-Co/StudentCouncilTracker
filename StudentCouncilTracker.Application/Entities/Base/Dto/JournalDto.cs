@@ -18,23 +18,23 @@ public interface IJournalDto<TItem, TPermission> : IHaveJournalPermissions<TPerm
 public abstract class JournalDto<TItem, TPermission> : IJournalDto<TItem, TPermission>
     where TItem : class
 {
-    public TPermission Permissions { get; set; }
+    public TPermission Permissions { get; set; } = default!;
 
-    public List<TItem> Items { get; set; }
+    public List<TItem> Items { get; set; } = null!;
 
     public int TotalCount { get; set; }
 
-    public string QueryString { get; set; }
+    public string QueryString { get; set; } = null!;
 }
 
 public abstract class JournalDto<TItem> : IJournalDto<TItem, JournalPermission>
     where TItem : class
 {
-    public JournalPermission Permissions { get; set; }
+    public JournalPermission Permissions { get; set; } = null!;
 
-    public List<TItem> Items { get; set; }
+    public List<TItem> Items { get; set; } = null!;
 
     public int TotalCount { get; set; }
 
-    public string QueryString { get; set; }
+    public string QueryString { get; set; } = null!;
 }
