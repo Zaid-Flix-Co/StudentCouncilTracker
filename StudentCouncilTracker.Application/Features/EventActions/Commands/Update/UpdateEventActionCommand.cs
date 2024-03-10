@@ -3,12 +3,13 @@ using MediatR;
 using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.OperationResults;
+using StudentCouncilTracker.Application.Services.Email;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Commands.Update;
 
 public record UpdateEventActionCommand(int Id, EventActionDtoData Model, string UserName) : IRequest<OperationResult<EventActionDto>>;
 
-public class UpdateEventActionCommandHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<UpdateEventActionCommand, OperationResult<EventActionDto>>
+public class UpdateEventActionCommandHandler(IEventActionRepository repository, IMapper mapper, IEmailService emailService) : IRequestHandler<UpdateEventActionCommand, OperationResult<EventActionDto>>
 {
     public async Task<OperationResult<EventActionDto>> Handle(UpdateEventActionCommand request, CancellationToken cancellationToken)
     {
@@ -27,6 +28,15 @@ public class UpdateEventActionCommandHandler(IEventActionRepository repository, 
         {
             result.AddReasons(res.Reasons);
             return result;
+        }
+
+        if (stored.ResponsibleManager?.Email != null)
+        {
+            if (stored.DeadlineCompletion != null)
+            {
+                var messageBody = $"Мероприятие: {stored.Event.Name}, Описание задачи: {stored.Description!}, Крайний срок выполнения: {stored.DeadlineCompletion.Value:D}";
+                emailService.SendEmail(stored.ResponsibleManager.Email, messageBody);
+            }
         }
 
         repository.Update(stored);
