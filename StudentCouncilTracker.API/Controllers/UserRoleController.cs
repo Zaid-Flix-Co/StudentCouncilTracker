@@ -39,7 +39,7 @@ public class UserRoleController(IUserProvider userProvider) : BaseController(use
     }
 
     [AllowAnonymous]
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult<OperationResult<UserRoleDto>>> Put(int id, [FromBody] UserRoleDtoData data)
     {
         var result = await Mediator.Send(new UpdateUserRoleCommand(id, data, UserName));
@@ -47,7 +47,7 @@ public class UserRoleController(IUserProvider userProvider) : BaseController(use
     }
 
     [AllowAnonymous]
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<ActionResult<OperationResult>> Delete(int id)
     {
         var result = await Mediator.Send(new DeleteUserRoleCommand(id));

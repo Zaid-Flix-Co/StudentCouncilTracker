@@ -48,7 +48,7 @@ public class EventController(IUserProvider userProvider) : BaseController(userPr
     }
 
     [AllowAnonymous]
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult<OperationResult<EventDto>>> Put(int id, [FromBody] EventDtoData data)
     {
         var result = await Mediator.Send(new UpdateEventCommand(id, data, UserName));
@@ -56,7 +56,7 @@ public class EventController(IUserProvider userProvider) : BaseController(userPr
     }
 
     [AllowAnonymous]
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<ActionResult<OperationResult>> Delete(int id)
     {
         var result = await Mediator.Send(new DeleteEventCommand(id));

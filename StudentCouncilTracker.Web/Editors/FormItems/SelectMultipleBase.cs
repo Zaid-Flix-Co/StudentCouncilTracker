@@ -165,18 +165,18 @@ public class SelectMultipleBase<TValue, TItem, TItemValue, TService> : Component
 
             _debounceTimer?.Dispose();
             if (_debounceTimer != null)
-                _debounceTimer = null;
+                _debounceTimer = null!;
         }
 
         Search = value;
 
         var list = await GetDataAsync(value);
             
-        List.RemoveAll(r => !CurrentValue.Any(a => a?.Equals(((IHaveId<TItemValue>)r).Id) ?? false) &&
-                            !list.Any(a => ((IHaveId<TItemValue>)a).Id?.Equals(((IHaveId<TItemValue>)r).Id) ?? false));
+        List.RemoveAll(r => !CurrentValue.Any(a => a?.Equals(((IHaveId<TItemValue>)r!)!.Id) ?? false) &&
+                            !list.Any(a => ((IHaveId<TItemValue>)a!)!.Id?.Equals(((IHaveId<TItemValue>)r!)!.Id) ?? false));
 
-        var toAdd = list.Where(r => !CurrentValue.Any(a => a?.Equals(((IHaveId<TItemValue>)r).Id) ?? false) &&
-                                    !List.Any(a => ((IHaveId<TItemValue>)a).Id?.Equals(((IHaveId<TItemValue>)r).Id) ?? false));
+        var toAdd = list.Where(r => !CurrentValue.Any(a => a?.Equals(((IHaveId<TItemValue>)r!)!.Id) ?? false) &&
+                                    !List.Any(a => ((IHaveId<TItemValue>)a!)!.Id?.Equals(((IHaveId<TItemValue>)r!)!.Id) ?? false));
             
         List.AddRange(toAdd);
 

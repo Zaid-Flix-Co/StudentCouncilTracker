@@ -14,7 +14,7 @@ public class Success : ISuccess
         Message = message;
     }
 
-    public string Message { get; protected set; }
+    public string Message { get; protected set; } = null!;
 
     public Dictionary<string, object> Metadata { get; }
         

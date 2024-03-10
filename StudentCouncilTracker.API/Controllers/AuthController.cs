@@ -16,6 +16,8 @@ namespace StudentCouncilTracker.API.Controllers;
 [Route("api/[controller]/[action]")]
 public class AuthController(IUserProvider userProvider) : BaseController(userProvider)
 {
+    private const char Separator = ',';
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<OperationResult<TokenDto>> Login([FromBody] CatalogUserDtoData data)
@@ -45,20 +47,12 @@ public class AuthController(IUserProvider userProvider) : BaseController(userPro
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            operationResult.SetValue(new TokenDto { AccessToken = tokenString });
-
-            Response.Cookies.Append("AccessToken", tokenString, new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict
-            });
-
+            operationResult.SetValue(new TokenDto(tokenString));
             return operationResult;
         }
         else
         {
-            operationResult.AddError("Неверно введен логин или пароль");
+            operationResult.AddError(string.Join(Separator, user.Reasons.Select(reason => reason.Message)));
             return operationResult;
         }
     }

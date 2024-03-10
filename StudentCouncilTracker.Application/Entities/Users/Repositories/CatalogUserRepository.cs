@@ -11,14 +11,14 @@ using X.PagedList;
 
 namespace StudentCouncilTracker.Application.Entities.Users.Repositories;
 
-public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<CatalogUser>((DbContext)context, mapper),
+public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<CatalogUser>((DbContext)context),
         ICatalogUserRepository
 {
     #region GETLIST
 
     public Task<ListDto> GetList(ListFilter filter)
     {
-        return _getList(filter, s => mapper.Map<CatalogUserDtoCard>(s));
+        return _getList(filter, mapper.Map<CatalogUserDtoCard>);
     }
 
     public async Task<CatalogUser> GetByLogin(CatalogUserDtoData user)
@@ -29,7 +29,7 @@ public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMap
                 .AsNoTracking();
         var card = await users.FirstOrDefaultAsync(w => w.Email == user.Email!.Value && w.Password == user.Password!.Value);
 
-        return card;
+        return card!;
     }
 
     public async Task<CatalogUser> GetCardByIdAsync(long id)
@@ -40,7 +40,7 @@ public class CatalogUserRepository(IStudentCouncilTrackerDbContext context, IMap
                 .AsNoTracking();
         var card = await users.FirstOrDefaultAsync(w => w.Id == id);
 
-        return card;
+        return card!;
     }
 
     private async Task<ListDto> _getList(ListFilter filter, Func<CatalogUser, object> selector)

@@ -22,7 +22,7 @@ public class DataAnnotationsValidator : ComponentBase
         EditContext.OnValidationRequested += (sender, eventArgs) =>
         {
             _validationMessageStore.Clear();
-            ValidateObject(EditContext.Model, new HashSet<object>());
+            ValidateObject(EditContext.Model, []);
             EditContext.NotifyValidationStateChanged();
         };
 
@@ -57,19 +57,19 @@ public class DataAnnotationsValidator : ComponentBase
         {
             if (!validationResult.MemberNames.Any())
             {
-                _validationMessageStore.Add(new FieldIdentifier(value, string.Empty), validationResult.ErrorMessage);
+                _validationMessageStore.Add(new FieldIdentifier(value, string.Empty), validationResult.ErrorMessage!);
                 continue;
             }
 
             foreach (var memberName in validationResult.MemberNames)
             {
                 var fieldIdentifier = new FieldIdentifier(value, memberName);
-                _validationMessageStore.Add(fieldIdentifier, validationResult.ErrorMessage);
+                _validationMessageStore.Add(fieldIdentifier, validationResult.ErrorMessage!);
             }
         }
     }
 
-    private void ValidateObject(object value, HashSet<object> visited, List<ValidationResult> validationResults)
+    private void ValidateObject(object value, HashSet<object> visited, ICollection<ValidationResult> validationResults)
     {
         var validationContext = new ValidationContext(value);
         validationContext.Items.Add(ValidationContextValidatorKey, this);
@@ -81,7 +81,7 @@ public class DataAnnotationsValidator : ComponentBase
     {
         if (validationContext.Items.TryGetValue(ValidationContextValidatorKey, out var result) && result is DataAnnotationsValidator validator)
         {
-            var visited = (HashSet<object>)validationContext.Items[ValidatedObjectsKey];
+            var visited = (HashSet<object>)validationContext.Items[ValidatedObjectsKey]!;
             validator.ValidateObject(value, visited);
 
             return true;
@@ -104,7 +104,7 @@ public class DataAnnotationsValidator : ComponentBase
 
             Validator.TryValidateProperty(propertyValue, validationContext, results);
             messages.Clear(fieldIdentifier);
-            messages.Add(fieldIdentifier, results.Select(result => result.ErrorMessage));
+            messages.Add(fieldIdentifier, results.Select(result => result.ErrorMessage)!);
 
             editContext.NotifyValidationStateChanged();
         }

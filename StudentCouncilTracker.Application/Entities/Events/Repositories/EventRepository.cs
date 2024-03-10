@@ -11,7 +11,7 @@ using X.PagedList;
 
 namespace StudentCouncilTracker.Application.Entities.Events.Repositories;
 
-public class EventRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<Event>((DbContext)context, mapper),
+public class EventRepository(IStudentCouncilTrackerDbContext context, IMapper mapper) : EfRepository<Event>((DbContext)context),
         IEventRepository
 {
     #region GETLIST

@@ -36,7 +36,7 @@ public class OperationResult : OperationResultBase<OperationResult>
 [Serializable]
 public class OperationResult<TValue> : OperationResultBase<OperationResult<TValue>>, IOperationResult<TValue>
 {
-    private TValue _value;
+    private TValue _value = default!;
 
     public TValue Value
     {
@@ -61,6 +61,6 @@ public class OperationResult<TValue> : OperationResultBase<OperationResult<TValu
     public void Deconstruct(out bool ok, out TValue value)
     {
         ok = Ok;
-        value = Ok ? Value : default;
+        value = (Ok ? Value : default)!;
     }
 }

@@ -1,10 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.Services.UserProviders;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
 
 namespace StudentCouncilTracker.API.Controllers;
 
@@ -17,20 +17,24 @@ public abstract class BaseController(IUserProvider userProvider) : ControllerBas
 
     protected IMediator Mediator => (_mediator ??= HttpContext.RequestServices.GetService<IMediator>()!)!;
 
+    private const string UserNameClaim = "UserName";
+
+    private const string RoleClaim = "Role";
+
     protected string UserName
     {
         get
         {
-            var userNameHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "UserName").Value;
-            if(!userNameHeaderValue.IsNullOrEmpty())
-            {
-                var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue!));
+            var userNameHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == UserNameClaim).Value;
 
-                userProvider.Name = decodedUserName;
-                return decodedUserName;
-            }
+            if (userNameHeaderValue.IsNullOrEmpty()) 
+                return string.Empty;
 
-            return string.Empty;
+            var decodedUserName = Encoding.UTF8.GetString(Convert.FromBase64String(userNameHeaderValue!));
+
+            userProvider.Name = decodedUserName;
+            return decodedUserName;
+
         }
     }
 
@@ -38,7 +42,7 @@ public abstract class BaseController(IUserProvider userProvider) : ControllerBas
     {
         get
         {
-            var roleHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == "Role").Value;
+            var roleHeaderValue = HttpContext.Request.Headers.FirstOrDefault(h => h.Key == RoleClaim).Value;
 
             if (Enum.TryParse(typeof(Role), roleHeaderValue.ToString(), out var enumValue))
             {

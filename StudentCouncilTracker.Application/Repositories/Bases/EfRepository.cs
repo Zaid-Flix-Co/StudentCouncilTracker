@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.Base;
 using StudentCouncilTracker.Application.Entities.Base.Interfaces;
 using StudentCouncilTracker.Application.Entities.Base.UserCU;
@@ -7,7 +6,7 @@ using StudentCouncilTracker.Application.Entities.Interfaces.Haves;
 
 namespace StudentCouncilTracker.Application.Repositories.Bases;
 
-public class EfRepository<TEntity>(DbContext dbContext, IMapper mapper) : IRepository<TEntity> where TEntity : class
+public class EfRepository<TEntity>(DbContext dbContext) : IRepository<TEntity> where TEntity : class
 {
     private readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
 

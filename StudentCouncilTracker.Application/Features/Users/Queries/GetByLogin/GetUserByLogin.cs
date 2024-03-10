@@ -21,6 +21,12 @@ public class GetUserByLoginHandler(ICatalogUserRepository catalogUserRepository,
             return operationResult;
         }
 
+        if (!user.IsDeactivated)
+        {
+            operationResult.AddError("Пользователь заблокирован");
+            return operationResult;
+        }
+
         var ret = mapper.Map<CatalogUserDto>(user);
         operationResult.SetValue(ret);
         return operationResult;
