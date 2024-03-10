@@ -14,7 +14,7 @@
             </div>
 
             <div class="sticky-bottom">
-                <SaveButton Text="Войти" IsLoading="IsLoading" />
+                <SaveButton Text="Войти" TextSuccess="Вход успешен" IsLoading="IsLoading" />
                 <NavLink href="@("")">
                     <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
                 </NavLink>
@@ -73,12 +73,15 @@
     private async Task SignIn()
     {
         IsLoading = true;
+        StateHasChanged();
+
         var result = await AuthService.LoginAsync(User);
 
         if (result.Ok)
             await JsRuntime.InvokeVoidAsync("setCookie", "AccessToken", result.Value.AccessToken, 60);
 
         IsLoading = false;
+        StateHasChanged();
 
         NavigationManager.NavigateToPage("", true);
     }

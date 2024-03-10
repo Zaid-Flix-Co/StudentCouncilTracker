@@ -17,10 +17,10 @@
                 }
                 break;
             case DynamicFieldType.Date:
-                <AntDesign.DatePicker TValue="T" Picker="@DatePickerType.Date" Format="dd.MM.yyyy" @bind-Value="CurrentValue" Placeholder="new OneOf<string, string[]>()" ShowToday="true" />
+                <AntDesign.DatePicker TValue="T" Picker="@DatePickerType.Date" Format="dd.MM.yyyy" @bind-Value="CurrentValue" Placeholder="new OneOf<string, string[]>()" ShowToday="true" DisabledDate="date => date < DateTime.Today" />
                 break;
             case DynamicFieldType.TextArea:
-                <AntDesign.TextArea Placeholder="" @bind-Value="CurrentValueAsString" MinRows="2" AutoSize="true" AllowClear="true" DebounceMilliseconds="3000" />
+                <AntDesign.TextArea Placeholder="" @bind-Value="CurrentValueAsString" MinRows="4" AutoSize="true" AllowClear="true" DebounceMilliseconds="3000" />
                 break;
             case DynamicFieldType.CheckBox:
                 <AntDesign.Checkbox @bind-Value="CurrentValueAsBool">@Control.Label.Label</AntDesign.Checkbox>
