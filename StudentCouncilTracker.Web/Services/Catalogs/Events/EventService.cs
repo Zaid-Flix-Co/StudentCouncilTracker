@@ -21,9 +21,9 @@ public class EventService(IHttpClientFactory clientFactory, IUserProvider userPr
         return result;
     }
 
-    public async Task<OperationResult<EventDtoJournal>> GetJournalAsync()
+    public async Task<OperationResult<EventDtoJournal>> GetJournalAsync(bool isActive)
     {
-        var result = await SendAsync<EventDtoJournal>("GetJournal", HttpMethod.Get);
+        var result = await SendAsync<EventDtoJournal>("GetJournal", HttpMethod.Post, isActive);
         return result;
     }
 

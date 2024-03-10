@@ -9,7 +9,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.Events.Queries.GetJournal;
 
-public record GetEventJournalQuery(string UserName, Role Role) : IRequest<OperationResult<EventDtoJournal>>;
+public record GetEventJournalQuery(string UserName, Role Role, bool IsChecked) : IRequest<OperationResult<EventDtoJournal>>;
 
 public class GetEventJournalQueryHandler(IEventRepository repository, IMapper mapper) : IRequestHandler<GetEventJournalQuery, OperationResult<EventDtoJournal>>
 {
@@ -18,13 +18,29 @@ public class GetEventJournalQueryHandler(IEventRepository repository, IMapper ma
         var isChairman = request.Role == Role.Chairman;
         var operationResult = new OperationResult<EventDtoJournal>();
         var events = repository
-            .GetAll()
-            #pragma warning disable CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
-            .Include(e => e!.EventType)
-            .Include(e => e!.ResponsibleUser)
-            #pragma warning restore CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
-            .OrderByDescending(e => e!.CreatedDate)
-            .AsNoTracking();
+            .GetAll();
+
+        if (!request.IsChecked)
+        {
+            events = events
+                #pragma warning disable CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
+                .Include(e => e!.EventType)
+                .Include(e => e!.ResponsibleUser)
+                .OrderByDescending(e => e!.CreatedDate)
+                .AsNoTracking();
+                #pragma warning restore CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
+        }
+        else
+        {
+            events = events
+                .Where(e => e!.IsDeactivated)
+                #pragma warning disable CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
+                .Include(e => e!.EventType)
+                .Include(e => e!.ResponsibleUser)
+                .OrderByDescending(e => e!.CreatedDate)
+                .AsNoTracking();
+                #pragma warning restore CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
+        }
 
         var journalDto = new EventDtoJournal
         {
@@ -38,7 +54,6 @@ public class GetEventJournalQueryHandler(IEventRepository repository, IMapper ma
         };
 
         operationResult.SetValue(journalDto);
-
         return operationResult;
     }
 }

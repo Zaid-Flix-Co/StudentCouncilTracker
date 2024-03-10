@@ -27,9 +27,9 @@ public class CatalogUserService(IHttpClientFactory clientFactory, IUserProvider 
         return result;
     }
 
-    public async Task<OperationResult<CatalogUserDtoJournal>> GetJournalAsync()
+    public async Task<OperationResult<CatalogUserDtoJournal>> GetJournalAsync(bool isActive)
     {
-        var result = await SendAsync<CatalogUserDtoJournal>("GetJournal", HttpMethod.Get);
+        var result = await SendAsync<CatalogUserDtoJournal>("GetJournal", HttpMethod.Post, isActive);
         return result;
     }
 

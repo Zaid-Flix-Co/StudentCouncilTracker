@@ -25,10 +25,10 @@ public class EventController(IUserProvider userProvider) : BaseController(userPr
     }
     
     [AllowAnonymous]
-    [HttpGet("GetJournal")]
-    public async Task<ActionResult<BaseResponseActionResult<EventDtoJournal>>> GetJournal()
+    [HttpPost("GetJournal")]
+    public async Task<ActionResult<BaseResponseActionResult<EventDtoJournal>>> GetJournal([FromBody] bool isChecked)
     {
-        var result = await Mediator.Send(new GetEventJournalQuery(UserName, Role));
+        var result = await Mediator.Send(new GetEventJournalQuery(UserName, Role, isChecked));
         return Ok(result);
     }
 

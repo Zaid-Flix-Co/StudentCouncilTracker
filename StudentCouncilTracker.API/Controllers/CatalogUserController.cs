@@ -33,10 +33,10 @@ public class CatalogUserController(IUserProvider userProvider) : BaseController(
     }
 
     [AllowAnonymous]
-    [HttpGet("GetJournal")]
-    public async Task<ActionResult<BaseResponseActionResult<CatalogUserDtoJournal>>> GetJournal()
+    [HttpPost("GetJournal")]
+    public async Task<ActionResult<BaseResponseActionResult<CatalogUserDtoJournal>>> GetJournal([FromBody] bool isActive)
     {
-        var result = await Mediator.Send(new GetCatalogUserJournalQuery(UserName, Role));
+        var result = await Mediator.Send(new GetCatalogUserJournalQuery(UserName, Role, isActive));
         return Ok(result);
     }
 
