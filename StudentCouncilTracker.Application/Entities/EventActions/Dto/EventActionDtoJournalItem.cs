@@ -11,6 +11,8 @@ public class EventActionDtoJournalItem : IHaveId
 
     public string? ResponsibleManager { get; set; }
 
+    public string? ResponsibleUser { get; set; }
+
     public DateTime DeadlineCompletion { get; set; }
 
     public string Event { get; set; }

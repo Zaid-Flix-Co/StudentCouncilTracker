@@ -26,9 +26,7 @@ public class GetCatalogUserJournalQueryHandler(ICatalogUserRepository repository
             Items = await users.Select(s => mapper.Map<CatalogUserDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
             Permissions = new JournalPermission
             {
-                Create = request.Role == Role.Chairman,
-                CanPrint = true,
-                CanChangePrintSetting = true
+                Create = request.Role == Role.Chairman
             },
             QueryString = string.Empty,
             TotalCount = await users.CountAsync(cancellationToken: cancellationToken)
