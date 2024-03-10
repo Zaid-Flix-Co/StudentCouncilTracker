@@ -1,8 +1,51 @@
 ﻿@page "/"
+@inject IJSRuntime JsRuntime
+@inject IUserProvider UserProvider
 
 <PageTitle>Главная страница</PageTitle>
 
+@if(HasAccessToken)
+{
+    <EventActionChart/>
+}
+
+<script>
+    window.getCookie = function (key) {
+        var value = "";
+        document.cookie.split(';').forEach(function (cookie) {
+            var parts = cookie.split('=');
+            if (parts.length === 2 && parts[0].trim() === key) {
+                value = parts[1].trim();
+            }
+        });
+        return value;
+    };
+
+    window.deleteCookie = function (key) {
+        document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    };
+</script>
+
 @code
 {
+    private bool HasAccessToken { get; set; }
 
+    private async Task<string> GetCookieValue(string key)
+    {
+        return await JsRuntime.InvokeAsync<string>("getCookie", key);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var result = await GetCookieValue("AccessToken");
+
+            if (!result.IsNullOrEmpty())
+                UserProvider.ParseJwt(result);
+
+            HasAccessToken = !string.IsNullOrEmpty(result);
+            StateHasChanged();
+        }
+    }
 }

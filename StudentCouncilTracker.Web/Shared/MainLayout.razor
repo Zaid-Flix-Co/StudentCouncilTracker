@@ -8,14 +8,14 @@
 <header>
     <nav>
         <ul>
-        @if (HasAccessToken)
-        {
-            <li><a href="">Главная</a></li>
-            <li><a href="events">Мероприятия</a></li>
-            <li><a href="users">Пользователи</a></li>
-            <li><a href="my-events-actions">Мои задачи</a></li>
-            <li><a href="#">Настройки</a></li>
-        }
+            @if (HasAccessToken)
+            {
+                <li><a href="">Главная</a></li>
+                <li><a href="events">Мероприятия</a></li>
+                <li><a href="users">Пользователи</a></li>
+                <li><a href="my-events-actions">Мои задачи</a></li>
+                <li><a href="#">Настройки</a></li>
+            }
         </ul>
     </nav>
     @if (!HasAccessToken)
