@@ -21,6 +21,9 @@ public class EventAction : UserCuBase, IHaveId
     [Display(Name = "Наименование задачи")]
     public required string Name { get; set; }
 
+    [Display(Name = "Описание задачи")]
+    public string? Description { get; set; }
+
     [Display(Name = "Крайний срок выполнения задачи")]
     public DateTime? DeadlineCompletion { get; set; }
 
@@ -54,6 +57,7 @@ public class EventAction : UserCuBase, IHaveId
             return operationResult;
 
         Name = data.Name.Value;
+        Description = data.Description.Value;
         DeadlineCompletion = data.DeadlineCompletion?.Value;
         StatusId = data.Status?.Value.Id == 0 ? null : data.Status?.Value.Id;
         ResponsibleManagerId = data.ResponsibleManager?.Value.Id == 0 ? null : data.ResponsibleManager?.Value.Id;
