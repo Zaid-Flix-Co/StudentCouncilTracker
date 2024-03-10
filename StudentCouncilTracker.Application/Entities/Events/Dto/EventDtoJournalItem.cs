@@ -15,5 +15,7 @@ public class EventDtoJournalItem : IHaveId
 
     public string ResponsibleUser { get; set; }
 
+    public bool IsDeactivated { get; set; }
+
     public Permission Permissions { get; set; }
 }

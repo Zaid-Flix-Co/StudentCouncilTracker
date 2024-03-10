@@ -11,5 +11,7 @@ public class CatalogUserDtoJournalItem : IHaveId
 
     public string Role { get; set; }
 
+    public bool IsDeactivated { get; set; }
+
     public Permission Permissions { get; set; }
 }

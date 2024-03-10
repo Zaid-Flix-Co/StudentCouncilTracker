@@ -24,6 +24,7 @@ public class MapperEvent : Profile
         CreateMap<Event, EventDtoJournalItem>()
             .ForMember(d => d.EventType, s => s.MapFrom(f => f.EventType!.Name))
             .ForMember(d => d.ResponsibleUser, s => s.MapFrom(f => f.ResponsibleUser!.Name))
+            .ForMember(d => d.IsDeactivated, s => s.MapFrom(f => f.IsDeactivated))
             .ForMember(d => d.Permissions, s => s.Ignore())
             .AfterMap<AfterMapEventToDtoJournalItem>();
 

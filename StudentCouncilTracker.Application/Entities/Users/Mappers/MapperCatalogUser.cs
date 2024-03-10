@@ -23,6 +23,7 @@ public class MapperCatalogUser : Profile
 
         CreateMap<CatalogUser, CatalogUserDtoJournalItem>()
             .ForMember(d => d.Role, s => s.MapFrom(f => f.Role!.Name))
+            .ForMember(d => d.IsDeactivated, s => s.MapFrom(f => f.IsDeactivated))
             .ForMember(d => d.Permissions, s => s.Ignore())
             .AfterMap<AfterMapCatalogUserToDtoJournalItem>();
 
