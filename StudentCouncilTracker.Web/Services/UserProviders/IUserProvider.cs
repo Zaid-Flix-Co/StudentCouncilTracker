@@ -8,5 +8,7 @@ public interface IUserProvider
 
     Role Role { get; set; }
 
+    int UserId { get; set; }
+
     void ParseJwt(string token);
 }

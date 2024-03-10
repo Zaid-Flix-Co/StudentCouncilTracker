@@ -25,10 +25,18 @@ public class EventActionController(IUserProvider userProvider) : BaseController(
     }
     
     [AllowAnonymous]
-    [HttpGet("GetJournal/{eventId:int}")]
-    public async Task<ActionResult<BaseResponseActionResult<EventActionDtoJournal>>> GetJournal(int eventId)
+    [HttpGet("GetJournalByEventId/{eventId:int}")]
+    public async Task<ActionResult<BaseResponseActionResult<EventActionDtoJournal>>> GetJournalByEventId(int eventId)
     {
-        var result = await Mediator.Send(new GetEventActionJournalQuery(eventId, UserName, Role));
+        var result = await Mediator.Send(new GetEventActionJournalQuery(true, eventId, UserName, Role));
+        return Ok(result);
+    }
+    
+    [AllowAnonymous]
+    [HttpGet("GetJournalByUserId/{userId:int}")]
+    public async Task<ActionResult<BaseResponseActionResult<EventActionDtoJournal>>> GetJournalByUserId(int userId)
+    {
+        var result = await Mediator.Send(new GetEventActionJournalQuery(false, userId, UserName, Role));
         return Ok(result);
     }
 

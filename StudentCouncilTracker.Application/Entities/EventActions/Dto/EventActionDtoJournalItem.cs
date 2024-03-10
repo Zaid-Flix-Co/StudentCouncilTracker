@@ -13,6 +13,8 @@ public class EventActionDtoJournalItem : IHaveId
 
     public DateTime DeadlineCompletion { get; set; }
 
+    public string Event { get; set; }
+
     public string EventActionType { get; set; }
 
     public string? Status { get; set; }

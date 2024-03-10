@@ -16,39 +16,36 @@
                 {
                     <BoxCard>
                         <Body>
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-label">Наименование</div>
-                                <div>@item.Name</div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-label">Наименование</div>
+                                    <div>@item.Name</div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-label">Дата проведения</div>
+                                    <div>@item.DateEvent.ToString("D")</div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-label">Тип события</div>
+                                    <div>@item.EventType</div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-label">Ответственный</div>
+                                    <div>@item.ResponsibleUser</div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <div class="text-label">Дата проведения</div>
-                                <div>@item.DateEvent.ToString("D")</div>
-                            </div>
-                            <div class="col">
-                                <div class="text-label">Тип события</div>
-                                <div>@item.EventType</div>
-                            </div>
-                            <div class="col">
-                                <div class="text-label">Ответственный</div>
-                                <div>@item.ResponsibleUser</div>
-                            </div>
-                        </div>
                         </Body>
                         <ActionTemplate>
                             <Space Size="@("1")">
-                                @if (item.Permissions.Edit)
-                                {
-                                    <SpaceItem>
-                                        <NavLink href="@($"catalogs/event/{item.Id}")" class="px-2">
-                                            <span class="fa fa-pencil"></span>
-                                        </NavLink>
-                                    </SpaceItem>
-                                }
+                                <SpaceItem>
+                                    <NavLink href="@($"catalogs/event/{item.Id}")" class="px-2">
+                                        <span class="fa fa-pencil"></span>
+                                    </NavLink>
+                                </SpaceItem>
                                 @if (item.Permissions.Delete)
                                 {
                                     <SpaceItem>
-                                        <DeleteConfirm OnConfirm="async () => { await DeleteAsync(item); }"/>
+                                        <DeleteConfirm OnConfirm="async () => { await DeleteAsync(item); }" />
                                     </SpaceItem>
                                 }
                             </Space>

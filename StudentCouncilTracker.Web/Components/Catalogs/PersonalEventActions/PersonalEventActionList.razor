@@ -1,11 +1,9 @@
 ﻿@layout EventActionLayout
 
-<PageHeadTitle Title="Задачи" Count="List.TotalCount" Loading="IsLoading"></PageHeadTitle>
+<PageHeadTitle Title="Мои задачи" Count="List.TotalCount" Loading="IsLoading"></PageHeadTitle>
 
 @if (List.Items != null)
 {
-    <AntDesign.Button OnClick="CreateAsync" Loading="IsCreateLoading" Icon="plus" Type="@ButtonType.Link" Size="small">Добавить</AntDesign.Button>
-
     <Loading Spinning="IsLoading">
         <div class="row">
             <div class="col-md-12">
@@ -19,8 +17,8 @@
                                 <div>@item.Name</div>
                             </div>
                             <div class="col">
-                                <div class="text-label">Ответственный</div>
-                                <div>@item.ResponsibleManager</div>
+                                <div class="text-label">Мероприятие</div>
+                                <div>@item.Event</div>
                             </div>
                             <div class="col">
                                 <div class="text-label">Тип задачи</div>
@@ -41,7 +39,7 @@
                                 @if (item.Permissions.Edit)
                                 {
                                     <SpaceItem>
-                                        <NavLink href="@($"catalogs/event/{EventId}/action/{item.Id}")" class="px-2">
+                                        <NavLink href="@($"catalogs/user/{UserProvider.UserId}/action/{item.Id}")" class="px-2">
                                             <span class="fa fa-pencil"></span>
                                         </NavLink>
                                     </SpaceItem>
@@ -62,14 +60,14 @@
 }
 
 @code {
-    [Parameter]
-    public int EventId { get; set; }
-
     [Inject]
     protected NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
     protected EventActionService EventActionService { get; set; } = null!;
+
+    [Inject] 
+    protected IUserProvider UserProvider { get; set; } = null!;
 
     private EventActionDtoJournal List { get; set; } = new();
 
@@ -81,7 +79,7 @@
     {
         IsLoading = true;
         StateHasChanged();
-        var response = await EventActionService.GetJournalByEventIdAsync(EventId);
+        var response = await EventActionService.GetJournalByUserIdAsync(UserProvider.UserId);
 
         if (response.Ok)
             List = response.Value;
@@ -94,19 +92,6 @@
     {
         if (firstRender)
             await GetListAsync();
-    }
-
-    private async Task CreateAsync()
-    {
-        IsCreateLoading = true;
-        StateHasChanged();
-
-        var response = await EventActionService.CreateAsync(EventId);
-
-        if (response.Ok)
-            NavigationManager.NavigateToPage($"catalogs/event/{EventId}/action/{response.Value.Data.Id}");
-
-        IsCreateLoading = false;
     }
 
     private async Task DeleteAsync(EventActionDtoJournalItem item)
