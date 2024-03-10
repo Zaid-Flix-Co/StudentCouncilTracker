@@ -31,7 +31,8 @@ public class AuthController(IUserProvider userProvider) : BaseController(userPro
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Value.Data.Name?.Value!),
-                new Claim("Role", user.Value.Data.Role?.Value.Id.ToString() ?? Role.Member.ToString())
+                new Claim("Role", user.Value.Data.Role?.Value.Id.ToString() ?? Role.Member.ToString()),
+                new Claim("UserId", user.Value.Data.Id.ToString())
             };
             
             var tokenOptions = new JwtSecurityToken(

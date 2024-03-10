@@ -21,9 +21,15 @@ public class EventActionService(IHttpClientFactory clientFactory, IUserProvider 
         return result;
     }
 
-    public async Task<OperationResult<EventActionDtoJournal>> GetJournalAsync(int eventId)
+    public async Task<OperationResult<EventActionDtoJournal>> GetJournalByEventIdAsync(int eventId)
     {
-        var result = await SendAsync<EventActionDtoJournal>($"GetJournal/{eventId}", HttpMethod.Get);
+        var result = await SendAsync<EventActionDtoJournal>($"GetJournalByEventId/{eventId}", HttpMethod.Get);
+        return result;
+    }
+
+    public async Task<OperationResult<EventActionDtoJournal>> GetJournalByUserIdAsync(int userId)
+    {
+        var result = await SendAsync<EventActionDtoJournal>($"GetJournalByUserId/{userId}", HttpMethod.Get);
         return result;
     }
 

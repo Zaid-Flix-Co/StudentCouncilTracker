@@ -6,9 +6,11 @@ namespace StudentCouncilTracker.Web.Services.UserProviders;
 
 public class UserProvider : IUserProvider
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     public Role Role { get; set; }
+
+    public required int UserId { get; set; }
 
     public void ParseJwt(string token)
     {
@@ -30,6 +32,11 @@ public class UserProvider : IUserProvider
                 {
                     Role = (Role)enumValue;
                 }
+
+            var userIdClaim = claims.FirstOrDefault(c => c.Type == "UserId");
+
+            if (userIdClaim != null)
+                UserId = Convert.ToInt32(userIdClaim.Value);
         }
     }
 }

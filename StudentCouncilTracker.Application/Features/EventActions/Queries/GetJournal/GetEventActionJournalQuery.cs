@@ -9,7 +9,7 @@ using StudentCouncilTracker.Application.OperationResults;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Queries.GetJournal;
 
-public record GetEventActionJournalQuery(int EventId, string UserName, Role Role) : IRequest<OperationResult<EventActionDtoJournal>>;
+public record GetEventActionJournalQuery(bool Flag, int Id, string UserName, Role Role) : IRequest<OperationResult<EventActionDtoJournal>>;
 
 public class GetEventActionJournalQueryHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<GetEventActionJournalQuery, OperationResult<EventActionDtoJournal>>
 {
@@ -17,15 +17,32 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
     {
         var operationResult = new OperationResult<EventActionDtoJournal>();
         var eventActions = repository
-            .GetAll()
-            .Where(e => e!.EventId == request.EventId)
-            .Include(e => e!.EventActionType)
-            .Include(e => e!.Status)
-            .Include(e => e!.ResponsibleManager)
-            .Include(e => e!.Event)
+            .GetAll();
+
+        if (request.Flag)
+        {
+            eventActions = eventActions
+                .Where(e => e!.EventId == request.Id)
+                .Include(e => e!.EventActionType)
+                .Include(e => e!.Status)
+                .Include(e => e!.ResponsibleManager)
+                .Include(e => e!.Event)
                 .ThenInclude(e => e.ResponsibleUser)
-            .OrderByDescending(e => e!.CreatedDate)
-            .AsNoTracking();
+                .OrderByDescending(e => e!.CreatedDate)
+                .AsNoTracking();
+        }
+        else
+        {
+            eventActions = eventActions
+                .Where(e => e!.ResponsibleManagerId == request.Id)
+                .Include(e => e!.EventActionType)
+                .Include(e => e!.Status)
+                .Include(e => e!.ResponsibleManager)
+                .Include(e => e!.Event)
+                .ThenInclude(e => e.ResponsibleUser)
+                .OrderByDescending(e => e!.CreatedDate)
+                .AsNoTracking();
+        }
 
         var journalDto = new EventActionDtoJournal
         {

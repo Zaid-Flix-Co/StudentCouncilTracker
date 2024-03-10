@@ -1,0 +1,77 @@
+﻿@page "/catalogs/user/{UserId:int}/action/{EventActionId:int}"
+
+<PageHeadTitle Title="Новая задача"></PageHeadTitle>
+
+@if (EventAction != null)
+{
+    <EditForm Model="EventAction.Data" OnSubmit="@SaveEventAction">
+        <div class="row">
+            <div class="col-md-8">
+                <FormElement @bind-Control="EventAction.Data.Name" />
+                <FormElement @bind-Control="EventAction.Data.ResponsibleManager" />
+                <FormElement @bind-Control="EventAction.Data.DeadlineCompletion" />
+                <FormElement @bind-Control="EventAction.Data.EventActionType" />
+                <FormElement @bind-Control="EventAction.Data.Status" />
+            </div>
+        </div>
+
+        <div class="sticky-bottom">
+            <SaveButton IsLoading="IsLoading" />
+            <NavLink href="@($"{NavigateLink}/my-events-actions")">
+                <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
+            </NavLink>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    [Parameter]
+    public int EventActionId { get; set; }
+
+    [Inject]
+    protected EventActionService EventActionService { get; set; } = null!;
+
+    protected EventActionDto EventAction { get; set; } = null!;
+
+    private bool IsLoading { get; set; }
+
+    private string NavigateLink { get; set; } = string.Empty;
+
+    protected async Task GetEventAction()
+    {
+        var result = await EventActionService.GetCardAsync(EventActionId);
+        if (result.Ok)
+            EventAction = result.Value;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            #if (RELEASE)
+            NavigateLink = "/skt";
+            #endif
+
+            await GetEventAction();
+            StateHasChanged();
+        }
+    }
+
+    protected async Task SaveEventAction()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        var result = await EventActionService.PutCardAsync(EventAction);
+        if (result.Ok)
+        {
+            await GetEventAction();
+            StateHasChanged();
+        }
+
+        IsLoading = false;
+    }
+}
