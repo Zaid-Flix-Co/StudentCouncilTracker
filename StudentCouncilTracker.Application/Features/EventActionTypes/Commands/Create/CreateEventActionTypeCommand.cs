@@ -11,6 +11,8 @@ public record CreateEventActionTypeCommand(string UserName) : IRequest<Operation
 
 public class CreateEventActionTypeCommandHandler(IEventActionTypeRepository repository, IMapper mapper) : IRequestHandler<CreateEventActionTypeCommand, OperationResult<EventActionTypeDto>>
 {
+    private const string DefaultEventActionTypeName = "Новый тип задачи";
+
     public async Task<OperationResult<EventActionTypeDto>> Handle(CreateEventActionTypeCommand request, CancellationToken cancellationToken)
     {
         var result = OperationResult.CreateResult(new EventActionTypeDto());
@@ -18,7 +20,7 @@ public class CreateEventActionTypeCommandHandler(IEventActionTypeRepository repo
         {
             CreatedDate = DateTime.UtcNow,
             CreatedUserName = request.UserName,
-            Name = "Новый тип задачи"
+            Name = DefaultEventActionTypeName
         };
         repository.Insert(eventActionType);
         await repository.SaveChangesAsync();

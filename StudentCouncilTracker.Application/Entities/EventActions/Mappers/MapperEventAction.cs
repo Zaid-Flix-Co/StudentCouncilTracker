@@ -23,6 +23,7 @@ public class MapperEventAction : Profile
         
         CreateMap<EventAction, EventActionDtoJournalItem>()
             .ForMember(d => d.ResponsibleManager, s => s.MapFrom(f => f.ResponsibleManager!.Name))
+            .ForMember(d => d.ResponsibleUser, s => s.MapFrom(f => f.Event.ResponsibleUser!.Name))
             .ForMember(d => d.Event, s => s.MapFrom(f => $"{f.Event!.Name} [Дата проведения: {f.Event.DateEvent!.Value:d}]"))
             .ForMember(d => d.EventActionType, s => s.MapFrom(f => f.EventActionType!.Name))
             .ForMember(d => d.Status, s => s.MapFrom(f => f.Status!.Name))

@@ -14,6 +14,13 @@ public class GetEventActionStatusByIdQueryHandler(IEventActionStatusRepository r
     {
         var operationResult = new OperationResult<EventActionStatusDto>();
         var source = await repository.GetByIdAsync(request.Id);
+
+        if (source == null)
+        {
+            operationResult.AddError($"Объект с ID {request.Id} не найден");
+            return operationResult;
+        }
+
         var ret = mapper.Map<EventActionStatusDto>(source);
         operationResult.SetValue(ret);
         return ret;

@@ -6,13 +6,12 @@ using StudentCouncilTracker.Application.Entities.EventActions.Dto;
 using StudentCouncilTracker.Application.Entities.EventActions.Interfaces;
 using StudentCouncilTracker.Application.Entities.UserRoles.Enums;
 using StudentCouncilTracker.Application.OperationResults;
-using StudentCouncilTracker.Application.Services.UserProviders;
 
 namespace StudentCouncilTracker.Application.Features.EventActions.Queries.GetJournal;
 
 public record GetEventActionJournalQuery(bool Flag, int Id, string UserName, Role Role) : IRequest<OperationResult<EventActionDtoJournal>>;
 
-public class GetEventActionJournalQueryHandler(IEventActionRepository repository, IMapper mapper, IUserProvider userProvider) : IRequestHandler<GetEventActionJournalQuery, OperationResult<EventActionDtoJournal>>
+public class GetEventActionJournalQueryHandler(IEventActionRepository repository, IMapper mapper) : IRequestHandler<GetEventActionJournalQuery, OperationResult<EventActionDtoJournal>>
 {
     public async Task<OperationResult<EventActionDtoJournal>> Handle(GetEventActionJournalQuery request, CancellationToken cancellationToken)
     {
@@ -21,17 +20,19 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
             .GetAll();
 
         var isChairman = request.Role == Role.Chairman;
-        var isResponsibleUser = request.UserName == userProvider.Name;
+        bool isResponsibleUser;
 
         if (request.Flag)
         {
             eventActions = eventActions
                 .Where(e => e!.EventId == request.Id)
+                #pragma warning disable CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
                 .Include(e => e!.EventActionType)
                 .Include(e => e!.Status)
                 .Include(e => e!.ResponsibleManager)
                 .Include(e => e!.Event)
-                .ThenInclude(e => e.ResponsibleUser)
+                    .ThenInclude(e => e.ResponsibleUser)
+                #pragma warning restore CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
                 .OrderByDescending(e => e!.CreatedDate)
                 .AsNoTracking();
 
@@ -42,11 +43,13 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
         {
             eventActions = eventActions
                 .Where(e => e!.ResponsibleManagerId == request.Id)
+                #pragma warning disable CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
                 .Include(e => e!.EventActionType)
                 .Include(e => e!.Status)
                 .Include(e => e!.ResponsibleManager)
                 .Include(e => e!.Event)
-                .ThenInclude(e => e.ResponsibleUser)
+                    .ThenInclude(e => e.ResponsibleUser)
+                #pragma warning restore CS8634 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
                 .OrderByDescending(e => e!.CreatedDate)
                 .AsNoTracking();
 
@@ -58,9 +61,7 @@ public class GetEventActionJournalQueryHandler(IEventActionRepository repository
             Items = await eventActions.Select(s => mapper.Map<EventActionDtoJournalItem>(s)).ToListAsync(cancellationToken: cancellationToken),
             Permissions = new JournalPermission
             {
-                Create = isChairman || isResponsibleUser,
-                CanPrint = true,
-                CanChangePrintSetting = true
+                Create = isChairman || isResponsibleUser
             },
             QueryString = string.Empty,
             TotalCount = await eventActions.CountAsync(cancellationToken: cancellationToken)
