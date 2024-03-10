@@ -45,6 +45,9 @@
     [Inject]
     protected NavigationManager NavigationManager { get; set; } = null!;
 
+    [Inject]
+    protected MessageService MessageService { get; set; } = null!;
+
     protected CatalogUserDto User { get; set; } = null!;
 
     private bool IsLoading { get; set; }
@@ -79,6 +82,8 @@
 
         if (result.Ok)
             await JsRuntime.InvokeVoidAsync("setCookie", "AccessToken", result.Value.AccessToken, 60);
+        else
+            await MessageService.Error("Логин или пароль введены неверно"); //TODO: ВОЗВРАЩАТЬ ОШИБКУ ИЗ СЕРВЕРА
 
         IsLoading = false;
         StateHasChanged();
