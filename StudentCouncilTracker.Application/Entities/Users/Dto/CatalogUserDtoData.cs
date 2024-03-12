@@ -24,7 +24,7 @@ public class CatalogUserDtoData : EntityDtoData, IHaveId
     public DynamicFieldValue<string>? Email { get; set; }
 
     [DynamicField(DynamicFieldType.CheckBox)]
-    public DynamicFieldValue<bool> IsDeactivated { get; set; }
+    public DynamicFieldValue<bool>? IsDeactivated { get; set; }
 
     [DynamicField(DynamicFieldType.UserRole)]
     public DynamicFieldValue<UserRoleDtoCombobox>? Role { get; set; }
