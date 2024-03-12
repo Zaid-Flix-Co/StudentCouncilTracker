@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StudentCouncilTracker.Desktop.Admin.DependencyInjection;
 using System.Windows;
+using StudentCouncilTracker.Desktop.Admin.Windows;
 
 namespace StudentCouncilTracker.Desktop.Admin;
 
@@ -30,6 +31,7 @@ public partial class App : System.Windows.Application
         });
 
         services.AddSingleton<MainWindow>();
+        services.AddSingleton<MenuWindow>();
     }
 
     private void OnStartup(object sender, StartupEventArgs e)

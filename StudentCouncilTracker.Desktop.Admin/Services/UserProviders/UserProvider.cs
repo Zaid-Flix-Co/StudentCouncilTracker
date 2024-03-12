@@ -39,4 +39,11 @@ public class UserProvider : IUserProvider
                 UserId = Convert.ToInt32(userIdClaim.Value);
         }
     }
+
+    public void Reset()
+    {
+        Role = 0;
+        Name = null!;
+        UserId = 0;
+    }
 }

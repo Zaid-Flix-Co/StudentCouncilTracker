@@ -11,4 +11,6 @@ public interface IUserProvider
     int UserId { get; set; }
 
     void ParseJwt(string token);
+
+    void Reset();
 }
