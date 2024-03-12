@@ -1,0 +1,35 @@
+﻿<Window x:Class="StudentCouncilTracker.Desktop.Admin.Windows.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentCouncilTracker.Desktop.Admin.Windows"
+        mc:Ignorable="d"
+        Title="Меню" MinHeight="300" MinWidth="400">
+    <Grid>
+        <!-- Header -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            <TextBlock Text="Меню" VerticalAlignment="Center" Margin="10"/>
+            <Button x:Name="SignOutButton" Click="SignOutButton_OnClick" Content="Выход" Margin="10"/>
+        </StackPanel>
+
+        <!-- Menu Items -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="RolesButton" Click="RolesButton_OnClick" Content="Роли" Margin="0,5" Grid.Row="0" HorizontalAlignment="Stretch"/>
+            <Button x:Name="EventTypesButton" Click="EventTypesButton_OnClick" Content="Типы событий" Margin="0,5" Grid.Row="1" HorizontalAlignment="Stretch"/>
+            <Button x:Name="TaskTypesButton" Click="TaskTypesButton_OnClick" Content="Типы задач" Margin="0,5" Grid.Row="2" HorizontalAlignment="Stretch"/>
+            <Button x:Name="UsersButton" Click="UsersButton_OnClick" Content="Пользователи" Margin="0,5" Grid.Row="3" HorizontalAlignment="Stretch"/>
+        </Grid>
+
+    </Grid>
+</Window>
