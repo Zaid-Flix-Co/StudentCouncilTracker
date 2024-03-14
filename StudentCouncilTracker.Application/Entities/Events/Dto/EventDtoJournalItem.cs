@@ -11,6 +11,8 @@ public class EventDtoJournalItem : IHaveId
 
     public DateTime DateEvent { get; set; }
 
+    public DateTime CreateDateTime { get; set; }
+
     public string EventType { get; set; }
 
     public string ResponsibleUser { get; set; }
