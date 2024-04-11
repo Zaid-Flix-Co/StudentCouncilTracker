@@ -32,6 +32,10 @@ public partial class App : System.Windows.Application
 
         services.AddSingleton<MainWindow>();
         services.AddSingleton<MenuWindow>();
+        services.AddSingleton<EventTypeWindow>();
+        services.AddSingleton<RoleWindow>();
+        services.AddSingleton<TaskTypeWindow>();
+        services.AddSingleton<UserWindow>();
     }
 
     private void OnStartup(object sender, StartupEventArgs e)
