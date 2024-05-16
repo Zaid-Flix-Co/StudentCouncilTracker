@@ -1,7 +1,10 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using StudentCouncilTracker.Application.Entities.EventTypes.Domain;
 using StudentCouncilTracker.Application.Entities.EventTypes.Dto;
-using StudentCouncilTracker.Desktop.Admin.Services.Catalogs.EventTypes;
+using StudentCouncilTracker.Application.Entities.Interfaces;
 
 namespace StudentCouncilTracker.Desktop.Admin.Windows;
 
@@ -10,23 +13,34 @@ namespace StudentCouncilTracker.Desktop.Admin.Windows;
 /// </summary>
 public partial class EventTypeWindow : Window
 {
-    private readonly EventTypeService _eventTypeService;
+    private IStudentCouncilTrackerDbContext _context = null!;
 
-    public EventTypeWindow(EventTypeService eventTypeService)
+    private List<EventType> EventTypes { get; set; } = null!;
+
+    public EventTypeWindow(IStudentCouncilTrackerDbContext context)
     {
-        _eventTypeService = eventTypeService;
-
+        LoadDbContext(context);
         InitializeComponent();
     }
-    
+
+    private void LoadDbContext(IStudentCouncilTrackerDbContext context)
+    {
+        _context = context;
+        EventTypes = [.. _context.EventTypes];
+    }
+
     private void EditButton_Click(object sender, RoutedEventArgs e)
     {
 
     }
 
-    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    private async void DeleteButton_Click(object sender, RoutedEventArgs e)
     {
+        if (((Button)sender).DataContext is not EventType deletedEventType) 
+            return;
 
+        _context.EventTypes.Remove(deletedEventType);
+        await ((DbContext)_context).SaveChangesAsync();
     }
 
     private void AddNewButton_Click(object sender, RoutedEventArgs e)
@@ -36,9 +50,6 @@ public partial class EventTypeWindow : Window
 
     private async void EventTypeDataGrid_Loaded(object sender, RoutedEventArgs e)
     {
-        var result = (await _eventTypeService.GetListAsync()).Value.Items;
-        var eventTypes = JsonConvert.DeserializeObject<IEnumerable<EventTypeDtoDataAdmin>>(result.ToString()!);
-
-        EventTypeDataGrid.ItemsSource = eventTypes;
+        EventTypeDataGrid.ItemsSource = EventTypes;
     }
 }

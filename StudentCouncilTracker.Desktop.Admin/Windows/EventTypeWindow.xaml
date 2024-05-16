@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentCouncilTracker.Desktop.Admin.Windows"
         mc:Ignorable="d"
-        Title="EventTypeWindow" Height="450" Width="800">
+        Title="Типы событий" Height="450" Width="800">
     <Window.Resources>
         <Style x:Key="EditButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#4CAF50" />
@@ -80,11 +80,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="EventTypeDataGrid" Grid.Row="0" AutoGenerateColumns="False" Loaded="EventTypeDataGrid_Loaded">
+        <DataGrid x:Name="EventTypeDataGrid" Grid.Row="0" AutoGenerateColumns="False" Loaded="EventTypeDataGrid_Loaded" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTemplateColumn Header="Actions">
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" />
+                <DataGridTemplateColumn Header="Действия">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

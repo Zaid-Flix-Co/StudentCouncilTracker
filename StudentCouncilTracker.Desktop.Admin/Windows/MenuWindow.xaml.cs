@@ -1,12 +1,9 @@
 ﻿using System.Windows;
-using StudentCouncilTracker.Desktop.Admin.Services.UserProviders;
 
 namespace StudentCouncilTracker.Desktop.Admin.Windows;
 
 public partial class MenuWindow : Window
 {
-    private readonly IUserProvider _userProvider;
-
     private readonly RoleWindow _roleWindow;
 
     private readonly EventTypeWindow _eventTypeWindow;
@@ -19,14 +16,12 @@ public partial class MenuWindow : Window
 
     public static MainWindow MainWindow { get; set; } = null!;
 
-    public MenuWindow(IUserProvider userProvider, RoleWindow roleWindow, UserWindow userWindow, EventTypeWindow eventTypeWindow, TaskTypeWindow taskTypeWindow)
+    public MenuWindow(RoleWindow roleWindow, UserWindow userWindow, EventTypeWindow eventTypeWindow, TaskTypeWindow taskTypeWindow)
     {
-        _userProvider = userProvider;
         _roleWindow = roleWindow;
         _userWindow = userWindow;
         _eventTypeWindow = eventTypeWindow;
         _taskTypeWindow = taskTypeWindow;
-        UserName = _userProvider.Name;
 
         InitializeComponent();
     }
@@ -61,7 +56,6 @@ public partial class MenuWindow : Window
 
     private void SignOutButton_OnClick(object sender, RoutedEventArgs e)
     {
-        _userProvider.Reset();
         MainWindow.Show();
         Hide();
     }

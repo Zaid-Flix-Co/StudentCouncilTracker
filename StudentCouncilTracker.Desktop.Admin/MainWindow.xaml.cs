@@ -1,54 +1,35 @@
 ﻿using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using StudentCouncilTracker.Application.Entities.Interfaces;
 using StudentCouncilTracker.Application.Entities.Users.Dto;
-using StudentCouncilTracker.Desktop.Admin.Services.Catalogs.Auth;
-using StudentCouncilTracker.Desktop.Admin.Services.Catalogs.Users;
-using StudentCouncilTracker.Desktop.Admin.Services.UserProviders;
 using StudentCouncilTracker.Desktop.Admin.Windows;
 
 namespace StudentCouncilTracker.Desktop.Admin;
 
 public partial class MainWindow : Window
 {
-    private readonly AuthService _authService;
-
-    private readonly CatalogUserService _userService;
-
-    private readonly IUserProvider _userProvider;
-
     private readonly MenuWindow _menuWindow;
 
-    private CatalogUserDto UserDto { get; set; } = null!;
+    private readonly IStudentCouncilTrackerDbContext _context;
 
-    public MainWindow(AuthService authService, CatalogUserService userService, IUserProvider userProvider, MenuWindow menuWindow)
+    public MainWindow(MenuWindow menuWindow, IStudentCouncilTrackerDbContext context)
     {
-        _authService = authService;
-        _userService = userService;
-        _userProvider = userProvider;
         _menuWindow = menuWindow;
+        _context = context;
 
         InitializeComponent();
     }
 
     private async void Login_Click(object sender, RoutedEventArgs e)
     {
-        UserDto = (await _userService.GetEmptyAsync()).Value;
-
-        UserDto.Data.Email!.Value = txtUsername.Text;
-        UserDto.Data.Password!.Value = txtPassword.Password;
-
-        var token = await _authService.LoginAsync(UserDto);
-
-        if(token.Value.AccessToken.IsNullOrEmpty())
+        if (_context.CatalogUsers.Any(user => user.Name == TxtUsername.Text && user.Name == TxtPassword.Password))
         {
-            MessageBox.Show("Ошибка входа");
-            return;
+            MenuWindow.MainWindow = this;
+            _menuWindow.Show();
+            Hide();
         }
-
-        _userProvider.ParseJwt(token.Value.AccessToken);
-
-        MenuWindow.MainWindow = this;
-        _menuWindow.Show();
-        Hide();
+        else
+            MessageBox.Show("Вы ввели неправильный логин или пароль, либо ваша учетная запись неактивна. Проверьте корректность введенных данных.");
     }
 }
