@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StudentCouncilTracker.Desktop.Admin.DependencyInjection;
 using System.Windows;
+using Microsoft.Extensions.Configuration;
 using StudentCouncilTracker.Desktop.Admin.Windows;
 
 namespace StudentCouncilTracker.Desktop.Admin;
@@ -12,13 +13,16 @@ public partial class App : System.Windows.Application
     public App()
     {
         var services = new ServiceCollection();
-        ConfigureServices(services);
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .Build();
+        ConfigureServices(services, configuration);
         _serviceProvider = services.BuildServiceProvider();
     }
 
-    private void ConfigureServices(IServiceCollection services)
+    private void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDesktop();
+        services.AddDesktop(configuration);
 
         services.AddHttpClient("StudentCouncilTrackerWebApi", client =>
         {

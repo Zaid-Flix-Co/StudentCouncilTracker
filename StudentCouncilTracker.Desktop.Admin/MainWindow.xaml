@@ -18,10 +18,10 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Логин:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtUsername" Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="TxtUsername" Grid.Row="0" Grid.Column="1" Margin="5"/>
 
         <Label Content="Пароль:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-        <PasswordBox x:Name="txtPassword" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <PasswordBox x:Name="TxtPassword" Grid.Row="1" Grid.Column="1" Margin="5"/>
 
         <Button Content="Войти" Grid.Row="2" Grid.Column="1" Margin="5" Click="Login_Click"/>
     </Grid>
