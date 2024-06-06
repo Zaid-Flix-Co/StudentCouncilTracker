@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentCouncilTracker.Desktop.Admin"
         mc:Ignorable="d"
-        Title="Главная страница" Height="200" Width="300" MinHeight="200" MinWidth="300">
+        Title="Главная страница" Height="200" Width="300" MinHeight="200" MinWidth="300" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

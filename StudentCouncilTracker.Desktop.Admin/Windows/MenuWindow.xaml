@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentCouncilTracker.Desktop.Admin.Windows"
         mc:Ignorable="d"
-        Title="Меню" Height="300" Width="400" MinHeight="300" MinWidth="400">
+        Title="Меню" Height="300" Width="400" MinHeight="300" MinWidth="400" Closed="Window_Closed">
     <Grid>
         <!-- Header -->
         <Grid.RowDefinitions>

@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using StudentCouncilTracker.Application.Entities.EventTypes.Domain;
 using StudentCouncilTracker.Application.Entities.EventTypes.Dto;
 using StudentCouncilTracker.Application.Entities.Interfaces;
+using StudentCouncilTracker.Desktop.Admin.Windows.Roles;
+using StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
 
 namespace StudentCouncilTracker.Desktop.Admin.Windows;
 
@@ -85,7 +87,7 @@ public partial class EventTypeWindow : Window
             return;
         }
 
-        var window = new MenuWindow(new RoleWindow(_context), new UserWindow(), new EventTypeWindow(_context), new TaskTypeWindow());
+        var window = new MenuWindow(new RoleWindow(_context), new UserWindow(), new EventTypeWindow(_context), new TaskTypeWindow(_context));
         window.Show();
         this.Close();
     }

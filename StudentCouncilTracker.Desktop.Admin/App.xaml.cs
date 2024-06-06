@@ -3,6 +3,8 @@ using StudentCouncilTracker.Desktop.Admin.DependencyInjection;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using StudentCouncilTracker.Desktop.Admin.Windows;
+using StudentCouncilTracker.Desktop.Admin.Windows.Roles;
+using StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
 
 namespace StudentCouncilTracker.Desktop.Admin;
 
