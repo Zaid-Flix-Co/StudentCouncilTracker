@@ -4,6 +4,7 @@ using StudentCouncilTracker.Application.Entities.Interfaces;
 using StudentCouncilTracker.Desktop.Admin.Windows.Roles;
 using System.Windows;
 using System.Windows.Controls;
+using StudentCouncilTracker.Desktop.Admin.Windows.Users;
 
 namespace StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
 
@@ -34,7 +35,7 @@ public partial class TaskTypeWindow : Window
             return;
         }
 
-        var window = new MenuWindow(new RoleWindow(_context), new UserWindow(), new EventTypeWindow(_context), new TaskTypeWindow(_context));
+        var window = new MenuWindow(new RoleWindow(_context), new UserWindow(_context), new EventTypeWindow(_context), new TaskTypeWindow(_context));
         window.Show();
         this.Close();
     }
