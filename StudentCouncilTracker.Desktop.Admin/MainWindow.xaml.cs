@@ -23,11 +23,11 @@ public partial class MainWindow : Window
 
     private async void Login_Click(object sender, RoutedEventArgs e)
     {
-        if (_context.CatalogUsers.Any(user => user.Name == TxtUsername.Text && user.Name == TxtPassword.Password))
+        if (_context.CatalogUsers.Any(user => user.Email == TxtUsername.Text && user.Password == TxtPassword.Password))
         {
             MenuWindow.MainWindow = this;
             _menuWindow.Show();
-            Hide();
+            Close();
         }
         else
             MessageBox.Show("Вы ввели неправильный логин или пароль, либо ваша учетная запись неактивна. Проверьте корректность введенных данных.");
