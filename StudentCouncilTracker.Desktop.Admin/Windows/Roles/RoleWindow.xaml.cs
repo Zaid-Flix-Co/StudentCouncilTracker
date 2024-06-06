@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentCouncilTracker.Application.Entities.Interfaces;
 using StudentCouncilTracker.Application.Entities.UserRoles.Domain;
 using StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
+using StudentCouncilTracker.Desktop.Admin.Windows.Users;
 
 namespace StudentCouncilTracker.Desktop.Admin.Windows.Roles;
 
@@ -34,7 +35,7 @@ public partial class RoleWindow : Window
             return;
         }
 
-        var window = new MenuWindow(new RoleWindow(_context), new UserWindow(), new EventTypeWindow(_context), new TaskTypeWindow(_context));
+        var window = new MenuWindow(new RoleWindow(_context), new UserWindow(_context), new EventTypeWindow(_context), new TaskTypeWindow(_context));
         window.Show();
         this.Close();
     }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using StudentCouncilTracker.Desktop.Admin.Windows;
 using StudentCouncilTracker.Desktop.Admin.Windows.Roles;
 using StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
+using StudentCouncilTracker.Desktop.Admin.Windows.Users;
 
 namespace StudentCouncilTracker.Desktop.Admin;
 
@@ -14,6 +15,8 @@ public partial class App : System.Windows.Application
 
     public App()
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         var services = new ServiceCollection();
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)

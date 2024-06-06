@@ -65,7 +65,7 @@ public partial class EditTaskTypeWindow : Window
         }
         catch
         {
-            Console.WriteLine("Ошибка обновления, проверьте корректность введенных данных");
+            MessageBox.Show("Ошибка обновления, проверьте корректность введенных данных");
         }
     }
 
