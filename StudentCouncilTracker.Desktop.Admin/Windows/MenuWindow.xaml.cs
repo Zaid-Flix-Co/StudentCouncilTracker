@@ -12,7 +12,7 @@ public partial class MenuWindow : Window
 
     private readonly UserWindow _userWindow;
 
-    private string UserName { get; set; }
+    private string UserName { get; set; } = null!;
 
     public static MainWindow MainWindow { get; set; } = null!;
 
@@ -29,28 +29,24 @@ public partial class MenuWindow : Window
     private void RolesButton_OnClick(object sender, RoutedEventArgs e)
     {
         _roleWindow.Show();
-
         Hide();
     }
 
     private void EventTypesButton_OnClick(object sender, RoutedEventArgs e)
     {
         _eventTypeWindow.Show();
-
         Hide();
     }
 
     private void TaskTypesButton_OnClick(object sender, RoutedEventArgs e)
     {
         _taskTypeWindow.Show();
-
         Hide();
     }
 
     private void UsersButton_OnClick(object sender, RoutedEventArgs e)
     {
         _userWindow.Show();
-
         Hide();
     }
 
