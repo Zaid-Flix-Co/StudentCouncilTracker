@@ -27,9 +27,18 @@ public partial class MainWindow : Window
         {
             MenuWindow.MainWindow = this;
             _menuWindow.Show();
-            Close();
+            Hide();
+
+            TxtUsername.Text = string.Empty;
+            TxtPassword.Password = string.Empty;
         }
         else
             MessageBox.Show("Вы ввели неправильный логин или пароль, либо ваша учетная запись неактивна. Проверьте корректность введенных данных.");
+    }
+
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        Close();
+        Environment.Exit(-1);
     }
 }

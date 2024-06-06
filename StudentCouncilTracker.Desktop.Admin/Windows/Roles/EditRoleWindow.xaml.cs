@@ -1,22 +1,10 @@
-﻿using StudentCouncilTracker.Application.Entities.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using StudentCouncilTracker.Application.Entities.UserRoles.Domain;
+﻿using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using StudentCouncilTracker.Application.Entities.Interfaces;
+using StudentCouncilTracker.Application.Entities.UserRoles.Domain;
 
-namespace StudentCouncilTracker.Desktop.Admin.Windows;
+namespace StudentCouncilTracker.Desktop.Admin.Windows.Roles;
 
 /// <summary>
 /// Interaction logic for EditRoleWindow.xaml

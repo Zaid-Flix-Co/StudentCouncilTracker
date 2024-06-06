@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using StudentCouncilTracker.Desktop.Admin.Windows.Roles;
+using StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
 
 namespace StudentCouncilTracker.Desktop.Admin.Windows;
 
@@ -52,7 +54,17 @@ public partial class MenuWindow : Window
 
     private void SignOutButton_OnClick(object sender, RoutedEventArgs e)
     {
-        MainWindow.Show();
+        if (MainWindow != null)
+            MainWindow.Show();
+
+        Hide();
+    }
+
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        if(MainWindow != null)
+            MainWindow.Show();
+
         Hide();
     }
 }
