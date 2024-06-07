@@ -1,20 +1,6 @@
 ﻿using StudentCouncilTracker.Application.Entities.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using StudentCouncilTracker.Application.Entities.EventActionTypes.Domain;
 using StudentCouncilTracker.Application.Entities.Users.Domain;
-using StudentCouncilTracker.Desktop.Admin.Windows.TaskTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -40,6 +26,7 @@ public partial class EditUserWindow : Window
         EmailTextBox.Text = CatalogUser.Email ?? string.Empty;
         PhoneNumberTextBox.Text = CatalogUser.PhoneNumber ?? string.Empty;
         PasswordTextBox.Text = CatalogUser.Password ?? string.Empty;
+        IsActiveCheckBox.IsChecked = CatalogUser.IsDeactivated;
     }
 
     private void Window_Closed(object? sender, EventArgs e)
@@ -79,6 +66,7 @@ public partial class EditUserWindow : Window
                 CatalogUser.Email = EmailTextBox.Text;
                 CatalogUser.PhoneNumber = PhoneNumberTextBox.Text;
                 CatalogUser.Password = PasswordTextBox.Text;
+                CatalogUser.IsDeactivated = (bool)IsActiveCheckBox.IsChecked;
 
                 _context.CatalogUsers.Update(CatalogUser);
                 ((DbContext)_context).SaveChanges();
