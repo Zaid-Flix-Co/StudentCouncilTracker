@@ -18,7 +18,8 @@ public class CreateEventCommandHandler(IEventRepository repository, IMapper mapp
         {
             CreatedDate = DateTime.UtcNow,
             CreatedUserName = request.UserName,
-            Name = "Новое мероприятие"
+            Name = "Новое мероприятие",
+            DateEvent = DateTime.UtcNow
         };
         repository.Insert(entity);
         await repository.SaveChangesAsync();

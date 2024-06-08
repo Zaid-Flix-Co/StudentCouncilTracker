@@ -1,0 +1,139 @@
+﻿@page "/contact"
+
+
+<PageHeadTitle Title="Контакты"/>
+
+<div class="contact-page">
+    <h1>Свяжитесь с нами</h1>
+    <p>Если у вас есть вопросы или предложения, пожалуйста, заполните форму ниже, и мы свяжемся с вами как можно скорее.</p>
+
+    <EditForm Model="@_contactModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Имя</label>
+            <InputText id="name" class="form-control" @bind-Value="@_contactModel.Name" />
+            <ValidationMessage For="@(() => _contactModel.Name)" />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <InputText id="email" class="form-control" @bind-Value="@_contactModel.Email" />
+            <ValidationMessage For="@(() => _contactModel.Email)" />
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Тема</label>
+            <InputText id="subject" class="form-control" @bind-Value="@_contactModel.Subject" />
+            <ValidationMessage For="@(() => _contactModel.Subject)" />
+        </div>
+
+        <div class="form-group">
+            <label for="message">Сообщение</label>
+            <InputTextArea id="message" class="form-control" @bind-Value="@_contactModel.Message" />
+            <ValidationMessage For="@(() => _contactModel.Message)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </EditForm>
+</div>
+
+@code {
+    [Inject]
+    private IEmailService EmailService { get; set; } = null!;
+
+    [Inject]
+    private IMessageService MessageService { get; set; } = null!;
+
+    private readonly ContactModel _contactModel = new ContactModel();
+
+    private void HandleValidSubmit()
+    {
+        var emailBody = $@"
+            <div style='font-family: Arial, sans-serif; color: #333; padding: 20px;'>
+                <h2 style='color: #007bff;'>Новое сообщение от контактной формы</h2>
+                <p style='font-size: 16px;'><strong>Имя:</strong> {_contactModel.Name}</p>
+                <p style='font-size: 16px;'><strong>Email:</strong> {_contactModel.Email}</p>
+                <p style='font-size: 16px;'><strong>Тема:</strong> {_contactModel.Subject}</p>
+                <p style='font-size: 16px;'><strong>Сообщение:</strong></p>
+                <p style='font-size: 16px; background-color: #f9f9f9; padding: 10px; border-radius: 5px;'>{_contactModel.Message}</p>
+            </div>
+        ";
+
+        EmailService.SendEmail("studencheskiy.sovet.kit@mail.ru", emailBody);
+
+        MessageService.Success("Сообщение в службу поддержки отправлено!");
+    }
+
+    public class ContactModel
+    {
+        [Required(ErrorMessage = "Введите ваше имя")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Введите ваш email")]
+        [EmailAddress(ErrorMessage = "Неверный формат email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Введите тему")]
+        public string Subject { get; set; }
+
+        [Required(ErrorMessage = "Введите сообщение")]
+        public string Message { get; set; }
+    }
+}
+
+<style>
+    .contact-page {
+        max-width: 600px;
+        margin: auto;
+        padding: 2rem;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .contact-page h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>

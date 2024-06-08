@@ -24,7 +24,8 @@ public class CreateEventActionCommandHandler(IEventActionRepository repository, 
             CreatedUserName = request.UserName,
             Name = DefaultEventActionName,
             EventId = request.EventId,
-            StatusId = (int)ActionStatus.AwaitingExecution
+            StatusId = (int)ActionStatus.AwaitingExecution,
+            DeadlineCompletion = DateTime.UtcNow
         };
         repository.Insert(eventAction);
         await repository.SaveChangesAsync();

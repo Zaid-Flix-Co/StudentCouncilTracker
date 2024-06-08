@@ -77,6 +77,18 @@ public partial class UserWindow : Window
         if (((Button)sender).DataContext is not CatalogUser deletedCatalogUser)
             return;
 
+        var eventActions = _context.EventActions.Where(eventAction => eventAction.ResponsibleManagerId == deletedCatalogUser.Id).ToList();
+        var events = _context.Events.Where(eventAction => eventAction.ResponsibleUserId == deletedCatalogUser.Id).ToList();
+
+        foreach (var eventAction in eventActions)
+        {
+            eventAction.ResponsibleManagerId = null;
+        }
+        foreach (var ev in events)
+        {
+            ev.ResponsibleUserId = null;
+        }
+
         _context.CatalogUsers.Remove(deletedCatalogUser);
         await((DbContext)_context).SaveChangesAsync();
 

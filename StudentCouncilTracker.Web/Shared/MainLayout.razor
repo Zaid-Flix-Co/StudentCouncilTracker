@@ -38,6 +38,104 @@
     </main>
 </div>
 
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2024 KIT++. Все права защищены.</p>
+        <nav>
+            <ul>
+                <li><a href="privacy">Политика конфиденциальности</a></li>
+                <li><a href="terms">Условия использования</a></li>
+                <li><a href="contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>
+
+<style>
+    header {
+        background-color: #333;
+        padding: 1rem;
+        color: white;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        gap: 1rem;
+    }
+
+        nav ul li {
+            display: inline;
+        }
+
+            nav ul li a {
+                color: white;
+                text-decoration: none;
+            }
+
+    .login-button, .logout-button {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        .login-button:hover, .logout-button:hover {
+            background-color: #0056b3;
+        }
+
+    .user-name {
+        margin-right: 1rem;
+    }
+
+    .page {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 1rem;
+    }
+
+    .footer {
+        background-color: #333;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .footer nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+        .footer nav ul li {
+            display: inline;
+        }
+
+            .footer nav ul li a {
+                color: white;
+                text-decoration: none;
+            }
+
+                .footer nav ul li a:hover {
+                    text-decoration: underline;
+                }
+</style>
+
 <script>
     window.getCookie = function (key) {
         var value = "";
