@@ -35,11 +35,26 @@
     [Inject]
     protected EventActionService EventActionService { get; set; } = null!;
 
+    [Inject] 
+    private ModalService ModalService { get; set; } = null!;
+
     protected EventActionDto EventAction { get; set; } = null!;
 
     private bool IsLoading { get; set; }
 
     private string NavigateLink { get; set; } = string.Empty;
+
+    private void HandleInfo()
+    {
+        RenderFragment content = @<div>
+            <p>Поле <b>Наименование задачи</b> обязательно для заполнения</p>
+        </div>;
+        ModalService.Info(new ConfirmOptions()
+        {
+            Title = "Предупреждение",
+            Content = content
+        });
+    }
 
     protected async Task GetEventAction()
     {
@@ -66,11 +81,18 @@
         IsLoading = true;
         StateHasChanged();
 
-        var result = await EventActionService.PutCardAsync(EventAction);
-        if (result.Ok)
+        if (EventAction.Data.Name.Value.IsNullOrEmpty())
         {
-            await GetEventAction();
-            StateHasChanged();
+            HandleInfo();
+        }
+        else
+        {
+            var result = await EventActionService.PutCardAsync(EventAction);
+            if (result.Ok)
+            {
+                await GetEventAction();
+                StateHasChanged();
+            }
         }
 
         IsLoading = false;

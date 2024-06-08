@@ -1,4 +1,6 @@
-﻿@page "/catalogs/event/{eventId:int}"
+﻿@inject ModalService ModalService
+
+@page "/catalogs/event/{eventId:int}"
 
 <PageHeadTitle Title="Мероприятия"></PageHeadTitle>
 
@@ -35,6 +37,11 @@
     [Inject]
     protected EventService EventService { get; set; } = null!;
 
+    [Inject]
+    private IMessageService MessageService { get; set; } = null!;
+
+    private bool _visible;
+
     protected EventDto Event { get; set; } = null!;
 
     private bool IsLoading { get; set; }
@@ -52,13 +59,25 @@
     {
         if (firstRender)
         {
-            #if (RELEASE)
-            NavigateLink = "/skt";
-            #endif
+#if (RELEASE)
+        NavigateLink = "/skt";
+#endif
 
             await GetEvent();
             StateHasChanged();
         }
+    }
+
+    private void HandleInfo()
+    {
+        RenderFragment content =@<div>
+        <p>Поле <b>Наименование мероприятия</b> обязательно для заполнения</p>
+    </div>;
+        ModalService.Info(new ConfirmOptions()
+            {
+                Title = "Предупреждение",
+                Content = content
+            });
     }
 
     protected async Task SaveEvent()
@@ -66,11 +85,18 @@
         IsLoading = true;
         StateHasChanged();
 
-        var result = await EventService.PutCardAsync(Event);
-        if (result.Ok)
+        if (Event.Data.Name.Value.IsNullOrEmpty())
         {
-            await GetEvent();
-            StateHasChanged();
+            HandleInfo();
+        }
+        else
+        {
+            var result = await EventService.PutCardAsync(Event);
+            if (result.Ok)
+            {
+                await GetEvent();
+                StateHasChanged();
+            }
         }
 
         IsLoading = false;
