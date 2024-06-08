@@ -14,7 +14,7 @@
                 <FormElement @bind-Control="User.Data.PhoneNumber" />
                 @if (UserProvider.Role == Role.Chairman)
                 {
-                    <FormElement @bind-Control="User.Data.Role"/>
+                    <FormElement @bind-Control="User.Data.Role" />
                     <FormElement @bind-Control="User.Data.IsDeactivated" />
                 }
                 else
@@ -37,6 +37,14 @@
 
     <br />
 }
+
+<style>
+    /* Target input and textarea inside form-element */
+    .form-element input,
+    .form-element textarea {
+        background-color: #cce5ff; /* light blue color */
+    }
+</style>
 
 @code {
     [Parameter]
@@ -65,10 +73,10 @@
     {
         if (firstRender)
         {
-            #if (RELEASE)
-            NavigateLink = "/skt";
-            #endif
-        
+#if (RELEASE)
+        NavigateLink = "/skt";
+#endif
+
             await GetUser();
             StateHasChanged();
         }

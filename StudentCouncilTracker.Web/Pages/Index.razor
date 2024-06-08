@@ -4,59 +4,58 @@
 
 <PageTitle>Главная страница</PageTitle>
 
-@if(HasAccessToken)
+@if (HasAccessToken)
 {
-    <EventActionChart/>
+    <EventActionChart />
 }
 else
 {
-    <div class="container">
-        <div class="divwithphoto">
+    <div class="main-container">
+        <img class="imgMeeting" src="images/китт.png" alt="KIT" />
+        <div class="content">
             <h1 class="hMeeting">@GreetingMessage</h1>
-            <img class="imgMeeting" src="images/ssphoto.jpg" alt="Фото совета" />
-            <p class="pMeeting">фцвфцвцввввввввцвввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввв</p>
+            <p class="pMeeting"><b>SovetTracker</b> - система управления проектами <br />студенческого совета KIT++</p>
         </div>
     </div>
 }
 
 <style>
-    .container {
+    .main-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh; 
-    }
-
-    .pMeeting{
-        font-family: Montserrat Light;
-        color: black;
-        margin-top: 10px;
-    }
-
-    .divwithphoto {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: lightgray;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 100vh;
         padding: 20px;
-        max-width: 90%;
-        text-align: center;
-    }
-
-    .hMeeting {
-        font-family: Montserrat Medium;
-        font-size: 2em;
-        color: black;
-        margin: 0 0 20px 0;
+        box-sizing: border-box;
     }
 
     .imgMeeting {
-        width: 80%;
-        height: 50%; 
+        width: 40%;
+        height: auto;
         border-radius: 5px;
+        margin-right: 20px;
+    }
+
+    .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .hMeeting {
+        font-family: 'Montserrat Medium', sans-serif;
+        font-size: 2.5em;
+        color: black;
+        margin: 0 0 10px 0; /* Adjusted margin */
+    }
+
+    .pMeeting {
+        font-family: 'Montserrat Light', sans-serif;
+        font-size: 1.5em;
+        color: black;
+        margin-top: 10px;
+        max-width: 90%;
     }
 </style>
 
@@ -88,16 +87,16 @@ else
 
     private void UpdateGreetingMessage()
     {
-        var CurrentTime = DateTime.Now.TimeOfDay;
-        if(CurrentTime < TimeSpan.FromHours(12))
+        var currentTime = DateTime.Now.TimeOfDay;
+        if (currentTime < TimeSpan.FromHours(12))
         {
             GreetingMessage = "Доброе Утро!";
         }
-        else if(CurrentTime < TimeSpan.FromHours(18))
+        else if (currentTime < TimeSpan.FromHours(18))
         {
             GreetingMessage = "Добрый день!";
         }
-        else if(CurrentTime < TimeSpan.FromHours(22))
+        else if (currentTime < TimeSpan.FromHours(22))
         {
             GreetingMessage = "Добрый вечер";
         }
