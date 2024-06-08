@@ -1,4 +1,5 @@
-﻿using StudentCouncilTracker.Web.Services.Catalogs.Auth;
+﻿using StudentCouncilTracker.Application.Services.Email;
+using StudentCouncilTracker.Web.Services.Catalogs.Auth;
 using StudentCouncilTracker.Web.Services.Catalogs.EventActions;
 using StudentCouncilTracker.Web.Services.Catalogs.EventActionStatuses;
 using StudentCouncilTracker.Web.Services.Catalogs.EventActionTypes;
@@ -23,6 +24,7 @@ public static class WebServiceCollectionExtensions
         services.AddScoped<AuthService>();
         services.AddScoped<UserRoleService>();
         services.AddScoped<IUserProvider, UserProvider>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }
