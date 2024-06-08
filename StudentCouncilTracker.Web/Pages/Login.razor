@@ -1,166 +1,166 @@
 ﻿    @page "/login"
 
-    <h1 class="Authh">Авторизация</h1>
+<h1 class="Authh">Авторизация</h1>
 
-    <Loading Spinning="IsLoading">
-        @if (User != null)
-        {
-            <EditForm Model="User.Data" OnSubmit="@SignIn" class="login-form">
-                <div class="row">
-                    <div class="col-md-8">
-                        <FormElement @bind-Control="User.Data.Email" Layout="@FormElementLayout.Inline" />
-                        <FormElement @bind-Control="User.Data.Password" Layout="@FormElementLayout.Inline" />
-                    </div>
+<Loading Spinning="IsLoading">
+    @if (User != null)
+    {
+        <EditForm Model="User.Data" OnSubmit="@SignIn" class="login-form">
+            <div class="row">
+                <div class="col-md-8">
+                    <FormElement @bind-Control="User.Data.Email" Layout="@FormElementLayout.Inline" />
+                    <FormElement @bind-Control="User.Data.Password" Layout="@FormElementLayout.Inline" />
                 </div>
+            </div>
 
-                <div class="sticky-bottom button-container">
-                    <SaveButton Text="Войти" TextSuccess="Вход успешен" IsLoading="IsLoading" />
-                    <NavLink href="@("")">
-                        <AntDesign.Button Type="@ButtonType.Link" Class="btn btn-secondary">Закрыть</AntDesign.Button>
-                    </NavLink>
-                </div>
-            </EditForm>
-        }
-    </Loading>
+            <div class="sticky-bottom button-container">
+                <SaveButton Text="Войти" TextSuccess="Вход успешен" IsLoading="IsLoading" />
+                <NavLink href="@("")">
+                    <AntDesign.Button Type="@ButtonType.Link" Class="btn btn-secondary">Закрыть</AntDesign.Button>
+                </NavLink>
+            </div>
+        </EditForm>
+    }
+</Loading>
 
-    <style>
-        .Authh{
-            text-align: center;
-            font-family: Montserrat Black;
-        }
+<style>
+    .Authh {
+        text-align: center;
+        font-family: Montserrat Black;
+    }
 
-        .vvod{
-            border-radius: 5px;
-            text-align: center;
-            width: 70%;
-        }
+    .vvod {
+        border-radius: 5px;
+        text-align: center;
+        width: 70%;
+    }
 
-        .login-form {
-            max-width: 400px;
-            margin: auto;
-            padding: 2rem;
-            align-items: center;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: lightgray;
-        }
+    .login-form {
+        max-width: 400px;
+        margin: auto;
+        padding: 2rem;
+        align-items: center;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background-color: lightgray;
+    }
 
-            .login-form .form-control {
-                margin-bottom: 1rem;
-                padding: 0.75rem;
-                border-radius: 4px;
-                border: 1px solid #ced4da;
-                font-size: 1rem;
-            }
-
-                .login-form .form-control:focus {
-                    border-color: #80bdff;
-                    outline: 0;
-                    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-                }
-
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
+        .login-form .form-control {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
             border-radius: 4px;
+            border: 1px solid #ced4da;
             font-size: 1rem;
         }
 
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            color: white;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-                border-color: #0056b3;
+            .login-form .form-control:focus {
+                border-color: #80bdff;
+                outline: 0;
+                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             }
 
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-            color: white;
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
 
-            .btn-secondary:hover {
-                background-color: #5a6268;
-                border-color: #545b62;
-            }
-    </style>
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+    }
 
-    <script>
-        window.setCookie = (name, value, minutes) => {
-            const date = new Date();
-            date.setTime(date.getTime() + (minutes * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
         }
-    </script>
+</style>
 
-    @code {
-        [Inject]
-        protected AuthService AuthService { get; set; } = null!;
+<script>
+    window.setCookie = (name, value, minutes) => {
+        const date = new Date();
+        date.setTime(date.getTime() + (minutes * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+</script>
 
-        [Inject]
-        protected CatalogUserService CatalogUserService { get; set; } = null!;
+@code {
+    [Inject]
+    protected AuthService AuthService { get; set; } = null!;
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject]
+    protected CatalogUserService CatalogUserService { get; set; } = null!;
 
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; } = null!;
+    [Inject]
+    protected IJSRuntime JsRuntime { get; set; } = null!;
 
-        [Inject]
-        protected MessageService MessageService { get; set; } = null!;
+    [Inject]
+    protected NavigationManager NavigationManager { get; set; } = null!;
 
-        protected CatalogUserDto User { get; set; } = null!;
+    [Inject]
+    protected MessageService MessageService { get; set; } = null!;
 
-        private bool IsLoading { get; set; }
+    protected CatalogUserDto User { get; set; } = null!;
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+    private bool IsLoading { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
         {
-            if (firstRender)
-            {
-                await GetUser();
-                StateHasChanged();
-            }
-        }
-
-        private async Task GetUser()
-        {
-            IsLoading = true;
+            await GetUser();
             StateHasChanged();
-
-            var result = await CatalogUserService.GetEmptyAsync();
-            if (result.Ok)
-                User = result.Value;
-
-            IsLoading = false;
         }
+    }
 
-        private async Task SignIn()
-        {
-            IsLoading = true;
-            StateHasChanged();
+    private async Task GetUser()
+    {
+        IsLoading = true;
+        StateHasChanged();
 
-            var result = await AuthService.LoginAsync(User);
+        var result = await CatalogUserService.GetEmptyAsync();
+        if (result.Ok)
+            User = result.Value;
 
-            if (result.Ok)
-                await JsRuntime.InvokeVoidAsync("setCookie", "AccessToken", result.Value.AccessToken, 60);
-            else
-                await MessageService.Error("Логин или пароль введены неверно"); //TODO: ВОЗВРАЩАТЬ ОШИБКУ ИЗ СЕРВЕРА
+        IsLoading = false;
+    }
 
-            IsLoading = false;
-            StateHasChanged();
+    private async Task SignIn()
+    {
+        IsLoading = true;
+        StateHasChanged();
 
-            NavigationManager.NavigateToPage("", true);
-        }
+        var result = await AuthService.LoginAsync(User);
+
+        if (result.Ok)
+            await JsRuntime.InvokeVoidAsync("setCookie", "AccessToken", result.Value.AccessToken, 60);
+        else
+            await MessageService.Error("Логин или пароль введены неверно"); //TODO: ВОЗВРАЩАТЬ ОШИБКУ ИЗ СЕРВЕРА
+
+        IsLoading = false;
+        StateHasChanged();
+
+        NavigationManager.NavigateToPage("", true);
+    }
     }
