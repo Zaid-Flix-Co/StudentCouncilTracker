@@ -10,8 +10,55 @@
 }
 else
 {
-    <div>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</div>
+    <div class="container">
+        <div class="divwithphoto">
+            <h1 class="hMeeting">@GreetingMessage</h1>
+            <img class="imgMeeting" src="images/ssphoto.jpg" alt="Фото совета" />
+            <p class="pMeeting">фцвфцвцввввввввцвввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввввв</p>
+        </div>
+    </div>
 }
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+    }
+
+    .pMeeting{
+        font-family: Montserrat Light;
+        color: black;
+        margin-top: 10px;
+    }
+
+    .divwithphoto {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgray;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .hMeeting {
+        font-family: Montserrat Medium;
+        font-size: 2em;
+        color: black;
+        margin: 0 0 20px 0;
+    }
+
+    .imgMeeting {
+        width: 80%;
+        height: 50%; 
+        border-radius: 5px;
+    }
+</style>
 
 <script>
     window.getCookie = function (key) {
@@ -32,6 +79,34 @@ else
 
 @code
 {
+    private string? GreetingMessage { get; set; }
+
+    protected override void OnInitialized()
+    {
+        UpdateGreetingMessage();
+    }
+
+    private void UpdateGreetingMessage()
+    {
+        var CurrentTime = DateTime.Now.TimeOfDay;
+        if(CurrentTime < TimeSpan.FromHours(12))
+        {
+            GreetingMessage = "Доброе Утро!";
+        }
+        else if(CurrentTime < TimeSpan.FromHours(18))
+        {
+            GreetingMessage = "Добрый день!";
+        }
+        else if(CurrentTime < TimeSpan.FromHours(22))
+        {
+            GreetingMessage = "Добрый вечер";
+        }
+        else
+        {
+            GreetingMessage = "Доброй ночи!";
+        }
+    }
+
     private bool HasAccessToken { get; set; }
 
     private async Task<string> GetCookieValue(string key)

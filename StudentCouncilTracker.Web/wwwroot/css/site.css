@@ -12,10 +12,18 @@ a, .btn-link {
     color: #0071c1;
 }
 
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+}
+
+.inpp {
+    text-align: center;
+    border-radius: 5px;
+    width: 75%;
+    height: 20%;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {

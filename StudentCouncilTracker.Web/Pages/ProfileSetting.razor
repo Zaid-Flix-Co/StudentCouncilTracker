@@ -1,28 +1,35 @@
 ﻿@page "/settings"
 
-<PageHeadTitle Title="Настройки профиля" />
-
+<h1 class="title">Настройки</h1>
 <Loading Spinning="IsLoading">
     @if (User != null)
     {
-        <EditForm Model="User.Data" OnSubmit="@Update">
-            <div class="row">
-                <div class="col-md-8">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <EditForm Model="User.Data" OnSubmit="@Update">
                     <FormElement @bind-Control="User.Data.Email" />
                     <FormElement @bind-Control="User.Data.PhoneNumber" />
                     <FormElement @bind-Control="User.Data.Password" />
-                </div>
+                    <div class="sticky-bottom">
+                        <SaveButton Text="Обновить данные" TextSuccess="Успешно" IsLoading="IsLoading" />
+                        <NavLink href="@("")">
+                            <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
+                        </NavLink>
+                    </div>
+                </EditForm>
             </div>
-
-            <div class="sticky-bottom">
-                <SaveButton Text="Обновить данные" TextSuccess="Успешно" IsLoading="IsLoading" />
-                <NavLink href="@("")">
-                    <AntDesign.Button Type="@ButtonType.Link">Закрыть</AntDesign.Button>
-                </NavLink>
-            </div>
-        </EditForm>
+        </div>
     }
 </Loading>
+
+<style>
+    .title {
+        font-family: montserrat black;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 24px;
+    }
+</style>
 
 @code {
     [Inject]

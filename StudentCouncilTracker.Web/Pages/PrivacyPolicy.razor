@@ -1,47 +1,46 @@
 ﻿@page "/privacy"
 
-<PageHeadTitle Title="Политика конфиденциальности" />
 
 <div class="privacy-page">
-    <h1>Политика конфиденциальности</h1>
+    <h1 class="privacy-title">Политика конфиденциальности</h1>
 
-    <section>
-        <h2>1. Введение</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">1. Введение</h2>
         <p>Мы ценим вашу конфиденциальность и стремимся защищать ваши личные данные. Эта политика конфиденциальности объясняет, как мы собираем, используем и защищаем вашу информацию.</p>
     </section>
 
-    <section>
-        <h2>2. Сбор информации</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">2. Сбор информации</h2>
         <p>Мы можем собирать личную информацию, такую как ваше имя, адрес электронной почты и контактные данные, когда вы используете наш сайт или связываетесь с нами.</p>
     </section>
 
-    <section>
-        <h2>3. Использование информации</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">3. Использование информации</h2>
         <p>Собранная информация используется для предоставления и улучшения наших услуг, а также для связи с вами по поводу вашего использования нашего сайта.</p>
     </section>
 
-    <section>
-        <h2>4. Защита информации</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">4. Защита информации</h2>
         <p>Мы принимаем соответствующие меры безопасности для защиты ваших личных данных от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
     </section>
 
-    <section>
-        <h2>5. Файлы cookie</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">5. Файлы cookie</h2>
         <p>Мы используем файлы cookie для улучшения вашего опыта на нашем сайте. Вы можете настроить свой браузер на отказ от файлов cookie, но это может повлиять на функциональность сайта.</p>
     </section>
 
-    <section>
-        <h2>6. Раскрытие информации третьим лицам</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">6. Раскрытие информации третьим лицам</h2>
         <p>Мы не передаем вашу личную информацию третьим лицам, за исключением случаев, предусмотренных законом или с вашего согласия.</p>
     </section>
 
-    <section>
-        <h2>7. Изменения в политике конфиденциальности</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">7. Изменения в политике конфиденциальности</h2>
         <p>Мы можем обновлять эту политику конфиденциальности время от времени. Пожалуйста, периодически проверяйте эту страницу на предмет изменений.</p>
     </section>
 
-    <section>
-        <h2>8. Контакты</h2>
+    <section class="privacy-section">
+        <h2 class="privacy-subtitle">8. Контакты</h2>
         <p>Если у вас есть вопросы по поводу нашей политики конфиденциальности, пожалуйста, свяжитесь с нами по email: <a href="mailto:studencheskiy.sovet.kit@mail.ru">studencheskiy.sovet.kit@mail.ru</a>.</p>
     </section>
 </div>
@@ -49,39 +48,47 @@
 <style>
     .privacy-page {
         max-width: 800px;
-        margin: auto;
+        margin: auto; 
         padding: 2rem;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background-color: lightgray; 
+        border-radius: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+        font-family: montserrat-light, Arial, sans-serif; 
+        color: black; 
     }
 
-        .privacy-page h1 {
-            text-align: center;
-            margin-bottom: 2rem;
+    .privacy-title {
+        font-family: montserrat black; 
+        text-align: center; 
+        margin-bottom: 2rem; 
+        font-size: 24px;
+    }
+
+    .privacy-section {
+        margin-bottom: 2rem; 
+    }
+
+    .privacy-subtitle {
+        margin-bottom: 1rem; 
+        font-size: 18px;
+        font-family: Montserrat Medium;
+    }
+
+    .privacy-page p {
+        font-size: 16px; 
+        line-height: 1.6; 
+        color: #333; 
+        margin-left: 30px; 
+        font-family: Montserrat Light;
+    }
+
+    .privacy-page a {
+        color: rgb(0, 0, 156); 
+        text-decoration: none; 
+    }
+
+        .privacy-page a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
         }
 
-        .privacy-page section {
-            margin-bottom: 2rem;
-        }
-
-        .privacy-page h2 {
-            color: #007bff;
-            margin-bottom: 1rem;
-        }
-
-        .privacy-page p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .privacy-page a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-            .privacy-page a:hover {
-                text-decoration: underline;
-            }
 </style>
